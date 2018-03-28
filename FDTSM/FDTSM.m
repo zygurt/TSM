@@ -13,12 +13,10 @@ end
 
                       
 %Sum to mono if required
-if (size(x,2) == 2)
+if (size(x,2) > 1)
     x = sum(x,2);
-    num_chan = size(x,2);
-else
-    num_chan = 1;
 end
+num_chan = 1;
 
 %Calculate the lower bounds of each region
 region_info.lower = [1 region_info.upper(1:end-1)+1];
