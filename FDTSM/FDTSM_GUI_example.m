@@ -28,7 +28,7 @@ end
 N = 2048;
 %Calculate the region parameters
 region.num_regions = length(region.TSM);
-region.upper = 2.^(1:region.num_regions);
+region.upper = [2.^(1:region.num_regions-1) N/2+1];
 
 %Frequency Dependent Time Scale Modification
 y = FDTSM( input, N, region );
