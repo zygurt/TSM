@@ -377,19 +377,20 @@ function pushbutton_open_Callback(hObject, eventdata, handles)
 [file,path] = uigetfile('*.wav');
 set(handles.text_filename,'String',file);
 set(handles.text_path,'String',path);
-[input, FS] = audioread([path file]);
+[~, FS] = audioread([path file]);
 
 freq_middle_cell = {};
 N = 2048;
 bin_freq_width = FS/N;
 
-Lower = 2.^(0:9);
-Upper = [1 Lower(3:end)-1 N/2];
+Upper = [2.^(1:9) N/2+1];
+Lower = [1 Upper(1:end-1)+1];
 
 freq_lower = (Lower-1)*bin_freq_width;
-freq_upper = [bin_freq_width Upper(2:end)*bin_freq_width];
+freq_upper = Upper*bin_freq_width;
 freq_middle = [bin_freq_width/2 ((freq_lower(2:end)-1)+(freq_upper(2:end)-1))/2];
 
+%Display centre frequency of the region
 % for n = 1:length(freq_middle)
 %     if freq_middle(n)<1000
 %         freq_middle_cell{n} = sprintf("%.0f Hz",freq_middle(n));
@@ -398,6 +399,7 @@ freq_middle = [bin_freq_width/2 ((freq_lower(2:end)-1)+(freq_upper(2:end)-1))/2]
 %     end
 % end
 
+%Display Upper and Lower frequency bounds of the region
 for n = 1:length(freq_middle)
     if freq_middle(n)<1000
         freq_middle_cell{n} = sprintf("%.0f -\n%.0f Hz",freq_lower(n),freq_upper(n));
