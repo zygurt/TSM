@@ -1,7 +1,12 @@
 function [ y ] = SOLA_DAFX( x, N, TSM )
-%[ y ] = SOLA_DAFX( x, N, TSM )
-%   Adaptation of SOLA from DAFx 2002 p. 209-211
-%TSM  0.5 < TSM < 4
+% [ y ] = SOLA_DAFX( x, N, TSM )
+%  x is the input signal
+%  N is the frame length. 4096 recommended for FS = 44.1kHz
+%  TSM  0.5 < TSM < 4 (50% to 400%)
+%  Adaptation of SOLA from DAFx 2002 p. 209-211
+%   U. Zölzer, X. Amatriain, D. Arfib, J. Bonada, G. De Poli, P. Dutilleux, G. Evangelista, F. Keiler, A. Loscos, D. Rocchesso, et al.,
+%   DAFX - Digital Audio Effects, John Wiley & Sons, 2002.
+
 DAFx_in = x';
 Sa = N/4;
 M = ceil(length(DAFx_in)/Sa); %Number of segments
@@ -15,7 +20,6 @@ DAFx_in(M*Sa+N)=0;
 Overlap = DAFx_in(1:N);
 
 %SOLA algorithm
-
 for ni = 1:M-1
    grain = DAFx_in(ni*Sa+1:N+ni*Sa);
    XCORRsegment = xcorr(grain(1:L),Overlap(1,ni*Ss:ni*Ss+(L-1)));
