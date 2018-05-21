@@ -55,10 +55,10 @@ A collection of published Time Domain TSM implementations.
   - SOLA_DAFX.m is a modified version of the SOLA implementation in Zolzer et al.
   
 ## References
-Flanagan and Golden, Phase Vocoder, 1966.
-Laroche and Dolson, Improved Phase Vocoder Time-Scale Modification of Audio, 1999.
-Portnoff, Implementation of the Digital Phase Vocoder Using the Fast Fourier Transform, 1985.
-Karrer, Lee and Borchers, PhaVoRIT: A Phase Vocoder for Real-Time Interactive Time-Stretching, 2006.
-Altoe, A Transient-Preserving Audio Time-Stretching Algorithm and a Real-Time Realization for a Commercial Music Product, 2012.
-Bonada, Audio Time-Scale Modification in the Context of Professional Audio Post-production, 2002.
-Zolzer et al., DAFx - Digital Audio Effects, John Willey & Sons, 2002.
+- Flanagan and Golden, Phase Vocoder, 1966.
+- Laroche and Dolson, Improved Phase Vocoder Time-Scale Modification of Audio, 1999.
+- Portnoff, Implementation of the Digital Phase Vocoder Using the Fast Fourier Transform, 1985.
+- Karrer, Lee and Borchers, PhaVoRIT: A Phase Vocoder for Real-Time Interactive Time-Stretching, 2006.
+- Altoe, A Transient-Preserving Audio Time-Stretching Algorithm and a Real-Time Realization for a Commercial Music Product, 2012.
+- Bonada, Audio Time-Scale Modification in the Context of Professional Audio Post-production, 2002.
+- Zolzer et al., DAFx - Digital Audio Effects, John Willey & Sons, 2002.
