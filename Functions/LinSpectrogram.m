@@ -1,10 +1,11 @@
 function [ handle ] = LinSpectrogram( x, Fs, ms, contrast )
-%Create a spectrogram with log scaled frequency
-%The size is set to be useful for 2 column papers.
-%x = input waveform
-%Fs = waveform sampling frequency
-%ms = window period in ms
-%contrast = integer for progressive log scaling of color scale
+% [ handle ] = LinSpectrogram( x, Fs, ms, contrast )
+% Create a spectrogram with log scaled frequency
+% The size is set to be useful for 2 column papers.
+%  x = input waveform
+%  Fs = waveform sampling frequency
+%  ms = window period in ms
+%  contrast = integer for progressive log scaling of color scale
 
 % Tim Roberts - Griffith University 2018
 

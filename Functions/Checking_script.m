@@ -5,6 +5,8 @@ clc
 
 addpath('../Stereo');
 addpath('../N_Channel');
+addpath('../Time_Domain');
+
 
 %% ------------ Testing of Stereo Feature functions --------------
 % pathInput = '../FDTSM/AudioIn/';
@@ -33,14 +35,14 @@ addpath('../N_Channel');
 % [x,fs] = audioread([pathInput filename]);
 
 %Simple Mono testing
-fs = 44100;
-x = sin(2*pi*1000*(linspace(0,3,3*fs))');
-x = [x,x,x,x,x,x];
+% fs = 44100;
+% x = sin(2*pi*1000*(linspace(0,3,3*fs))');
+% x = [x,x,x,x,x,x];
 
-TSM = 0.8;
-N = 2048;
+% TSM = 0.8;
+% N = 2048;
 %Stereo Phase Vocoders
-y_n = PV(x, N, TSM);
+% y_n = PV(x, N, TSM);
 % y_A = PV_Altoe(x, N, TSM);
 % y_B = PV_Bonada(x, N, TSM);
 % y_MS_Fi = PV_MS_File(x, N, TSM);
@@ -90,47 +92,47 @@ y_n = PV(x, N, TSM);
 
 
 %Stereo Phase Locking Phase Vocoders
-y_NPL_PV = PL_PV( x, N, TSM, 0 ); %No Phase Locking
-y_IPL_PV = PL_PV( x, N, TSM, 1 ); %Identity
-y_SPL_PV = PL_PV( x, N, TSM, 2 ); %Scaled
-
-figure
-
-subplot(3,1,1)
-plot((1:length(y_NPL_PV))/fs,y_NPL_PV)
-axis tight
-title('NoPL\_PV')
-xlabel('Time (s)')
-
-subplot(3,1,2)
-plot((1:length(y_IPL_PV))/fs,y_IPL_PV)
-axis tight
-title('IPL\_PV')
-xlabel('Time (s)')
-
-subplot(3,1,3)
-plot((1:length(y_SPL_PV))/fs,y_SPL_PV)
-axis tight
-title('SPL\_PV')
-xlabel('Time (s)')
+% y_NPL_PV = PL_PV( x, N, TSM, 0 ); %No Phase Locking
+% y_IPL_PV = PL_PV( x, N, TSM, 1 ); %Identity
+% y_SPL_PV = PL_PV( x, N, TSM, 2 ); %Scaled
+% 
+% figure
+% 
+% subplot(3,1,1)
+% plot((1:length(y_NPL_PV))/fs,y_NPL_PV)
+% axis tight
+% title('NoPL\_PV')
+% xlabel('Time (s)')
+% 
+% subplot(3,1,2)
+% plot((1:length(y_IPL_PV))/fs,y_IPL_PV)
+% axis tight
+% title('IPL\_PV')
+% xlabel('Time (s)')
+% 
+% subplot(3,1,3)
+% plot((1:length(y_SPL_PV))/fs,y_SPL_PV)
+% axis tight
+% title('SPL\_PV')
+% xlabel('Time (s)')
 
 
 %Phavorit Stereo Phase Locking Phase Vocoders
-y_Phavorit_IPL_PV = Phavorit_PV( x, N, TSM, 0 ); %Identity
-y_Phavorit_SPL_PV = Phavorit_PV( x, N, TSM, 1 ); %Scaled
-
-figure
-subplot(2,1,1)
-plot((1:length(y_Phavorit_IPL_PV))/fs,y_Phavorit_IPL_PV)
-axis tight
-title('y\_Phavorit\_IPL\_PV')
-xlabel('Time (s)')
-
-subplot(2,1,2)
-plot((1:length(y_Phavorit_SPL_PV))/fs,y_Phavorit_SPL_PV)
-axis tight
-title('y\_Phavorit\_SPL\_PV')
-xlabel('Time (s)')
+% y_Phavorit_IPL_PV = Phavorit_PV( x, N, TSM, 0 ); %Identity
+% y_Phavorit_SPL_PV = Phavorit_PV( x, N, TSM, 1 ); %Scaled
+% 
+% figure
+% subplot(2,1,1)
+% plot((1:length(y_Phavorit_IPL_PV))/fs,y_Phavorit_IPL_PV)
+% axis tight
+% title('y\_Phavorit\_IPL\_PV')
+% xlabel('Time (s)')
+% 
+% subplot(2,1,2)
+% plot((1:length(y_Phavorit_SPL_PV))/fs,y_Phavorit_SPL_PV)
+% axis tight
+% title('y\_Phavorit\_SPL\_PV')
+% xlabel('Time (s)')
 
 %Play original followed by time scaled version
 % soundsc(x,fs);
@@ -284,3 +286,56 @@ xlabel('Time (s)')
 %     title(sprintf('Frame %d',c));
 %     
 % end
+
+
+%% ---------------Testing of the maxcrosscorr function-------------------------
+% %This function became maxcrosscorrlag.  The same variable names are used
+% %inside the function
+% x = 10*ones(1,10);
+% y = [0,0,0,0,0,0,10*ones(1,10),0,0,0,1,1,0,0,2,3,4,2,1,2,3,4,2,2,1,2,3,3];
+% 
+% [lag_x, lag_y, max_loc, xc_a] = maxcrosscorr(x,y,4,4);
+% fprintf('lag_x = %d, lag_y = %d, max_loc = %d\n', lag_x, lag_y, max_loc);
+% subplot(311)
+% plot(x)
+% subplot(312)
+% plot(y)
+% subplot(313)
+% plot(xc_a)
+%lag_x is the amount that x needs to move for maximum cross correlation
+%lag_y is the amount that y needs to move for maximum cross correlation
+%positive values mean later in time, negative values mean earlier in time
+%max_loc is the location of the maximum within the cross correlation array
+%xc_a is the cross correlation array
+%low_lim and high_lim are used to remove large cross correlation values at
+%the extreme ranges of the cross correlation.  Values in these ranges will
+%not be calculated, and left as 0.
+
+%% ---------------Testing of Time Domain Time Scale Modification---------------
+
+pathInput = '../FDTSM/AudioIn/';
+filename = 'Male_Speech.wav';
+
+[x,fs] = audioread([pathInput filename]);
+x = sum(x,2)/max(sum(x,2));
+TSM = 0.8;
+ms = 80;
+N = 2^(nextpow2(ms*(10^-3)*fs));
+ 
+%Stereo Phase Vocoders
+y = SOLA(x, N, TSM);
+y_DAFX = SOLA_DAFX(x, N, TSM);
+figure
+subplot(311)
+plot(x)
+subplot(312)
+plot(y)
+subplot(313)
+plot(y_DAFX)
+
+
+soundsc(x,fs)
+pause((length(x)/fs)*1.1);
+soundsc(y,fs)
+pause((length(y)/fs)*1.1);
+soundsc(y_DAFX,fs)

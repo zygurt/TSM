@@ -1,5 +1,6 @@
 function [ peaks ] = find_peaks( mag_X )
-%Find the peaks of an array.  Takes the magnitude spectrum as input
+% [ peaks ] = find_peaks( mag_X )
+% Find the peaks of an array.  Takes the magnitude spectrum as input
 %   The function finds the peaks of an array and returns the peak location
 %   An element is considered a peak if it is greater than its 4 nearest
 %   neighbours 
@@ -12,6 +13,8 @@ function [ peaks ] = find_peaks( mag_X )
 % peaks(c).rl  => Region Lower Bound
 % peaks(c).ru  => Region Upper Bound
 % peaks(c).empty_flag  => 1 = empty, 0 = data
+
+% Tim Roberts - Griffith University 2018
 
 num_chan = size(mag_X,2);
 %Initialise

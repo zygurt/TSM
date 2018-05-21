@@ -1,11 +1,12 @@
 function [ Frame_width, File_width ] = st_width( input, N )
-%Calculate the frame and file width
+% [ Frame_width, File_width ] = st_width( input, N )
+% Calculate the frame and file width
 %   input is a 2 channel signal
 %   N is the frame length.  Larger values give smoother output.
 %   Frame_width is the width for each frame
 %   File_width is the width for the entire file
 
-%Tim Roberts - Griffith University 2018
+% Tim Roberts - Griffith University 2018
 
 %Generate segmental RMS sum and difference vectors
 frames(:,:,1) = buffer(input(:,1), N);

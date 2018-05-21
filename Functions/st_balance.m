@@ -1,5 +1,6 @@
 function [ Frame_mid, File_mid ] = st_balance( input, N, norm )
-%Calculate the frame and file stereo midpoint
+% [ Frame_mid, File_mid ] = st_balance( input, N, norm )
+% Calculate the frame and file stereo midpoint
 %   input is a 2 channel signal
 %   N is the frame length. Larger values give smoother output.
 %   norm is a flag to normalise output -1->1 for R->L for a sine wave
