@@ -12,6 +12,31 @@ Time Scale Modification algorithms scale all frequencies by the same amount.  FD
 
   Output audio files are saved in the AudioOut folder as filename_TSM_ratios_FDTSM.wav
 
+### Functions - Useful MATLAB Functions
+A collection of useful functions for signal processing in MATLAB
+
+**Functions**
+  - Checking_script.m is a script for checking functions and scripts in this repository.
+  - LinSpectrogram.m plots a dual column latex paper suitable spectrogram with a linear frequency axis.
+  - LogSpectrogram.m plots a dual column latex paper suitable spectrogram with a logarithmic frequency axis.
+  - crosscorr_t.m computes the normalised time domain cross correlation between 2 vectors
+  - find_peaks.m finds the peaks in a vector with the qualifying factors proposed by Laroche and Dolson.
+  - find_peaks_log.m finds the peaks in a vector with the qualifying factors proposed by Karrer, Lee and Borchers.
+  - maxcrosscorrlag.m computes the lag for maximum cross-correlation between two vectors.
+  - previous_peak.m finds the location of the related peak in a previous vector. Proposed by Laroche and Dolson.
+  - previous_peak_heuristic.m finds the location of the related peak in the previous vector while considering the distance between the current and previous peak location. Proposed by Karrer, Lee and Borchers.
+  - st_balance.m computes frame and file stereo balance of a stereo signal.
+  - st_phase_coherence.m computes frame and file stereo phase coherence of a stereo signal.
+  - st_width.m computes frame and file stereo width of a stereo signal.
+
+### N_Channel - N Channel Phase Vocoder Based Implementations  
+A collection of Phase Vocoder based Time Scale Modification Implementations.  Easch channel is processed individually, with no regard for relationships between channels.
+
+**N_Channel files:**
+  - PL_PV.m contains Identity Phase Locking and Scaled Phase Locking Phase Vocoders proposed by Laroche and Dolson.
+  - PV.m contains a base Phase Vocoder proposed by Portnoff
+  - Phavorit.m contains the PhaVoRIT: A Phase Vocoder for Real-Time Interactive Time-Stretching (Karrer, Lee and Borchers) without silent passage phase reset.
+
 ### Stereo - Stereo Phase Vocoder Implementations
 A collection of published and unpublished implementations of stereo TSM using the phase vocoder.
 
@@ -22,12 +47,18 @@ A collection of published and unpublished implementations of stereo TSM using th
   - PV_MS_File.m is a stereo capable Phase Vocoder using sum and difference transformation to increase the quality of stereo TSM.  The entire file is processed prior to, and after, TSM.
   - PV_MS_Frame.m is a stereo capable Phase Vocoder using sum and difference transformation to increase the quality of stereo TSM.  The appropriate difference equation is used for each frame in this method.
 
-### Functions - Useful MATLAB Functions
-A collection of useful functions for signal processing in MATLAB
+### Time_Domain - Time Domain Time Scale Modification Implementations
+A collection of published Time Domain TSM implementations.
 
-**Functions**
-  - LinSpectrogram.m plots a dual column latex paper suitable spectrogram with a linear frequency axis.
-  - LogSpectrogram.m plots a dual column latex paper suitable spectrogram with a logarithmic frequency axis.
-  - st_balance.m computes frame and file stereo balance of a stereo signal.
-  - st_phase_coherence.m computes frame and file stereo phase coherence of a stereo signal.
-  - st_width.m computes frame and file stereo width of a stereo signal.
+**Time Domain files:**
+  - SOLA.m is a single channel implementation of the Synchronised Overlap Add method of time-scale modification.
+  - SOLA_DAFX.m is a modified version of the SOLA implementation in Zolzer et al.
+  
+## References
+Flanagan and Golden, Phase Vocoder, 1966.
+Laroche and Dolson, Improved Phase Vocoder Time-Scale Modification of Audio, 1999.
+Portnoff, Implementation of the Digital Phase Vocoder Using the Fast Fourier Transform, 1985.
+Karrer, Lee and Borchers, PhaVoRIT: A Phase Vocoder for Real-Time Interactive Time-Stretching, 2006.
+Altoe, A Transient-Preserving Audio Time-Stretching Algorithm and a Real-Time Realization for a Commercial Music Product, 2012.
+Bonada, Audio Time-Scale Modification in the Context of Professional Audio Post-production, 2002.
+Zolzer et al., DAFx - Digital Audio Effects, John Willey & Sons, 2002.
