@@ -12,7 +12,12 @@ function [ y ] = SOLA( x, N, TSM )
 % adjusted frame.
 
 % Tim Roberts - Griffith University 2018
-
+if(size(x,2) > 1)
+    disp('This SOLA method currently only works for mono signals.');
+    disp('Max cross correlation lag is single channel only.');
+    y = 0;
+    return;
+end
 alpha = 1/TSM;
 %Analysis shift size
 Sa = N/4;
