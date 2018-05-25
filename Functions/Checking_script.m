@@ -311,31 +311,61 @@ addpath('../Time_Domain');
 %the extreme ranges of the cross correlation.  Values in these ranges will
 %not be calculated, and left as 0.
 
-%% ---------------Testing of Time Domain Time Scale Modification---------------
+%% ---------------Testing of SOLA Time Domain Time Scale Modification---------------
+% 
+% pathInput = '../FDTSM/AudioIn/';
+% filename = 'Male_Speech.wav';
+% 
+% [x,fs] = audioread([pathInput filename]);
+% x = sum(x,2)/max(sum(x,2));
+% TSM = 0.8;
+% ms = 80;
+% N = 2^(nextpow2(ms*(10^-3)*fs));
+%  
+% %Stereo Phase Vocoders
+% y = SOLA(x, N, TSM);
+% y_DAFX = SOLA_DAFX(x, N, TSM);
+% figure
+% subplot(311)
+% plot(x)
+% subplot(312)
+% plot(y)
+% subplot(313)
+% plot(y_DAFX)
+% 
+% 
+% soundsc(x,fs)
+% pause((length(x)/fs)*1.1);
+% soundsc(y,fs)
+% pause((length(y)/fs)*1.1);
+% soundsc(y_DAFX,fs)
+
+%% ---------------Testing of WSOLA Time Domain Time Scale Modification---------------
 
 pathInput = '../FDTSM/AudioIn/';
 filename = 'Male_Speech.wav';
 
 [x,fs] = audioread([pathInput filename]);
 x = sum(x,2)/max(sum(x,2));
-TSM = 0.8;
-ms = 80;
+TSM = 0.5;
+ms = 25;
 N = 2^(nextpow2(ms*(10^-3)*fs));
  
 %Stereo Phase Vocoders
-y = SOLA(x, N, TSM);
-y_DAFX = SOLA_DAFX(x, N, TSM);
+y = WSOLA(x, N, TSM);
+y_Driedger = WSOLA_Driedger(x, N, TSM);
+
+soundsc(x,fs)
 figure
 subplot(311)
 plot(x)
+pause((length(x)/fs)*1.1);
+
+soundsc(y,fs)
 subplot(312)
 plot(y)
-subplot(313)
-plot(y_DAFX)
-
-
-soundsc(x,fs)
-pause((length(x)/fs)*1.1);
-soundsc(y,fs)
 pause((length(y)/fs)*1.1);
-soundsc(y_DAFX,fs)
+
+subplot(313)
+plot(y_Driedger)
+soundsc(y_Driedger,fs)
