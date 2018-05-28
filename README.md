@@ -28,6 +28,7 @@ A collection of useful functions for signal processing in MATLAB
   - st_balance.m computes frame and file stereo balance of a stereo signal.
   - st_phase_coherence.m computes frame and file stereo phase coherence of a stereo signal.
   - st_width.m computes frame and file stereo width of a stereo signal.
+  - ZFR.m computes speech epochs (glottal closure instants) proposed by Murt and Yegnanarayana.
 
 ### N_Channel - N Channel Phase Vocoder Based Implementations  
 A collection of Phase Vocoder based Time Scale Modification Implementations.  Easch channel is processed individually, with no regard for relationships between channels.
@@ -53,6 +54,7 @@ A collection of published Time Domain TSM implementations.
 **Time Domain files:**
   - SOLA.m is a single channel implementation of the Synchronised Overlap Add (SOLA) method of time-scale modification. Proposed by Roucos and Wilgus.
   - SOLA_DAFX.m is a modified version of the SOLA implementation in Zolzer et al.
+  - ESOLA.m (Coming soon). Proposed by Rudresh et al.
   - WSOLA.m is a single channel implementation of the Waveform Similarity Overlap Add (WSOLA) method of time-scale modification.  Proposed by Verhelst and Roelands.
   - WSOLA_Driedger.m is a modified version of the WSOLA implementation by Driedger (2014).
   
@@ -61,9 +63,11 @@ A collection of published Time Domain TSM implementations.
 - Laroche and Dolson, Improved Phase Vocoder Time-Scale Modification of Audio, 1999.
 - Portnoff, Implementation of the Digital Phase Vocoder Using the Fast Fourier Transform, 1985.
 - Karrer, Lee and Borchers, PhaVoRIT: A Phase Vocoder for Real-Time Interactive Time-Stretching, 2006.
+- Murt and Yegnanarayana, Epoch Extraction from Speech Signals, 2008.
 - Altoe, A Transient-Preserving Audio Time-Stretching Algorithm and a Real-Time Realization for a Commercial Music Product, 2012.
 - Bonada, Audio Time-Scale Modification in the Context of Professional Audio Post-production, 2002.
 - Roucos and Wilgus, High Quality Time-Scale Modification for Speech, 1985.
 - Zolzer et al., DAFx - Digital Audio Effects, John Willey & Sons, 2002.
+- Rudresh et al., Epoch-Synchronous Overlap-Add (ESOLA) for Time- and Pitch-Scale Modification of Speech Signals, 2018
 - Verhelst and Roelands, An Overlap-Add Technique Based on Waveform Similarity (WSOLA) for High Quality Time-Scale Modification of Speech, 1993
 - Driedger and Mueller, TSM Toolbox: MATLAB Implementations of Time-Scale Modification Algorithms, 2014.
