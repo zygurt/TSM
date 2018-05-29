@@ -342,30 +342,82 @@ addpath('../Time_Domain');
 
 %% ---------------Testing of WSOLA Time Domain Time Scale Modification---------------
 
+% pathInput = '../FDTSM/AudioIn/';
+% filename = 'Male_Speech.wav';
+% 
+% [x,fs] = audioread([pathInput filename]);
+% x = sum(x,2)/max(sum(x,2));
+% TSM = 0.8;
+% ms = 25;
+% N = 2^(nextpow2(ms*(10^-3)*fs));
+% % N = ms*(10^-3)*fs;
+%  
+% %Stereo Phase Vocoders
+% y = WSOLA(x, N, TSM);
+% y_Driedger = WSOLA_Driedger(x, N, TSM);
+% 
+% soundsc(x,fs)
+% figure
+% subplot(311)
+% plot(x)
+% title('Original');
+% pause((length(x)/fs)*1.1);
+% 
+% soundsc(y,fs)
+% subplot(312)
+% plot(y)
+% title('WSOLA');
+% pause((length(y)/fs)*1.1);
+% 
+% subplot(313)
+% plot(y_Driedger)
+% title('WSOLA_Driedger');
+% soundsc(y_Driedger,fs)
+% pause((length(y_Driedger)/fs)*1.1);
+
+%% -------------Zero Frequency Resonator Testing---------------------
+
+% pathInput = '../FDTSM/AudioIn/';
+% filename = 'Male_Speech.wav';
+% 
+% [x,fs] = audioread([pathInput filename]);
+% x = sum(x,2)/max(sum(x,2));
+% 
+% y = ZFR(x, fs);
+% 
+% line(1:length(y),y,'Color','red')
+% hold on
+% plot(x)
+% hold off
+% legend('Epochs','Speech signal','Location','best')
+% title('Epoch locations within speech');
+
+%% -------------ESOLA Testing---------------------
+
 pathInput = '../FDTSM/AudioIn/';
 filename = 'Male_Speech.wav';
 
 [x,fs] = audioread([pathInput filename]);
 x = sum(x,2)/max(sum(x,2));
-TSM = 0.5;
-ms = 25;
-N = 2^(nextpow2(ms*(10^-3)*fs));
- 
-%Stereo Phase Vocoders
-y = WSOLA(x, N, TSM);
-y_Driedger = WSOLA_Driedger(x, N, TSM);
+TSM = 1;
+ms = 20;
+N = ms*(10^-3)*fs;
 
-soundsc(x,fs)
+y_ESOLA = ESOLA(x, N, TSM, fs);
+
 figure
-subplot(311)
+subplot(211)
+soundsc(x,fs)
 plot(x)
+title('Original');
 pause((length(x)/fs)*1.1);
 
-soundsc(y,fs)
-subplot(312)
-plot(y)
-pause((length(y)/fs)*1.1);
+subplot(212)
+soundsc(y_ESOLA,fs)
+plot(y_ESOLA)
+title('ESOLA');
 
-subplot(313)
-plot(y_Driedger)
-soundsc(y_Driedger,fs)
+LogSpectrogram(x,fs,50,2);
+title('Original')
+LogSpectrogram(y_ESOLA,fs,50,2);
+title('ESOLA');
