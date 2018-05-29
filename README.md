@@ -54,7 +54,7 @@ A collection of published Time Domain TSM implementations.
 **Time Domain files:**
   - SOLA.m is a single channel implementation of the Synchronised Overlap Add (SOLA) method of time-scale modification. Proposed by Roucos and Wilgus.
   - SOLA_DAFX.m is a modified version of the SOLA implementation in Zolzer et al.
-  - ESOLA.m (Coming soon). Proposed by Rudresh et al.
+  - ESOLA.m WIP version.  Varied pitch information is lost as speed is reduced. Proposed by Rudresh et al.
   - WSOLA.m is a single channel implementation of the Waveform Similarity Overlap Add (WSOLA) method of time-scale modification.  Proposed by Verhelst and Roelands.
   - WSOLA_Driedger.m is a modified version of the WSOLA implementation by Driedger (2014).
   
