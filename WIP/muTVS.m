@@ -12,14 +12,15 @@ function [ y ] = muTVS( x, fs, TSM )
 %Generate Instantaneous Amplitude (IA) and Instantaneous Phase (IP) without
 %the use for fft, which assumes quasi-stationarity
 
-if TSM > 1
-    disp('Only stretching works for now');
-    y = 0;
-    return
-end
+% if TSM > 1
+%     disp('Only stretching works for now');
+%     y = 0;
+%     return
+% end
 
 %Initial variables
 K = 32;
+K = 2*floor(fs/1000);
 N = 2048;
 S = N/4;
 a = 1/TSM;
@@ -30,29 +31,21 @@ disp('Analysis');
 %Need to add oversampling in here.  Not sure what parameters.
 xr = resample(x,oversample,1);
 Fo = fs*oversample;
-
 %Create window
 w = 0.5*(1 - cos(2*pi*(0:N-1)'/(N-1)));
-
 %Frame the input
 xw = buffer(xr, N, N-S);
-
 %Window the frames
 xw = xw.*repmat(w,1,size(xw,2));
-
 %Convert to frequency domain
 XW = fft(xw,N);
-
 %Generate Filterbanks
 disp('    Generate Filterbanks');
 H_JL = [zeros(K,1) , msf_filterbank(K,Fo,0,fs/2,N)];
-
 %Take the first half of the fft
 XW_crop = XW(1:N/2+1,:);
-
 %Prepare framed filterbank output
 XWF_JL = zeros(size(XW_crop,1),K,size(XW_crop,2));
-
 %Mulitply through with the filterbanks.
 disp('    Multiply filterbanks through signal');
 for k = 1:K
@@ -60,16 +53,12 @@ for k = 1:K
         XWF_JL(:,:,f) = repmat(XW_crop(:,f),[1,K]).*H_JL';
     end
 end
-
 %Reconstruct second half of the signal
 XWF_JL_recon = real(ifft([XWF_JL;conj(XWF_JL(end-1:-1:2,:,:))]));
-
 %Prepare filterbank channels
 xwf_jl = zeros(size(XWF_JL_recon,3)*S+1.75*N,K); %Need to make this longer.  Janky solution for now.
-
 %Create the output window
 wo = repmat(w,1,size(XWF_JL_recon,2));
-
 %Overlap add the signal back together
 disp('    Overlap Add the signal back together');
 for f = 1:size(XWF_JL,3)
@@ -84,18 +73,11 @@ end
 disp('Modification')
 %Hilbert Transform to extract IA and IP
 disp('    Hilbert');
-% xak = xwf_jl + 1j*hilbert(xwf_jl);
-xak_h = hilbert(xwf_jl); %Hilbert function does above line by default
+xak_h = hilbert(xwf_jl); 
 
-% LogSpectrogram(xak(:,2),Fo,50,2);
-% LogSpectrogram(xak_h(:,2),Fo,50,2);
-% LogSpectrogram(xwf_jl(:,2),Fo,50,2);
-
+%Calculate the Instan
 ak = abs(xak_h);
 phik = unwrap(angle(xak_h));
-% figure
-% plot(ak(:,2))
-% title('ak');
 
 %Time scale through interpolation
 ak_hat = zeros(ceil(length(ak)*a),K);
@@ -111,35 +93,18 @@ disp('    Assign new time scale');
 ak_hat(new_points,:) = ak(old_points,:);
 phik_hat(new_points,:) = a*phik(old_points,:);
 
-% LogSpectrogram(ak_hat(:,2),Fo,50,2);
-% title('Prior to interp')
-
 ak_hat_i = zeros(length(ak_hat),K);
 phik_hat_i = zeros(length(phik_hat),K);
 
-disp('    Filterband: ')
+disp('    Interpolate each filterband: ')
 for k = 1:K
     ak_hat_i(:,k) = linear_interp2(ak_hat(:,k), TSM);
     phik_hat_i(:,k) = linear_interp2(phik_hat(:,k), TSM);
     disp(k)
 end
 
-% LogSpectrogram(ak_hat_i(:,2),Fo,50,2);
-% title('Post interp')
-% figure
-% plot(ak_hat_i(:,2))
-% title('ak_hat_i');
-
-% figure
-% plot(phik(:,16))
-% hold on
-% plot(phik_hat_i(:,16))
-% hold off
-
 %Multiply output IA and IP
 x_hat = ak_hat_i.*cos(phik_hat_i);
-
-LogSpectrogram(x_hat(:,2),Fo,50,2);
 
 %% --------------------------Synthesis------------------------------
 disp('Synthesis')
@@ -211,6 +176,12 @@ end
 %     soundsc(xwf_jl(:,k),fs);
 %     pause((length(xwf_jl)/fs)*1.1)
 % end
+
+%Try wrapping instantaneous phase
+%Tried, and wrapping makes no difference.
+% k = round(phik_hat_i/(2*pi)) ;
+% phik_hat_i_adjust = phik_hat_i-k*2*pi;
+
 
 %Playback the resulting signals
 % soundsc(xw_an_sum,fs);
