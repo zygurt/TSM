@@ -3,13 +3,11 @@ close all
 clear all
 clc
 
-addpath('../Stereo');
-addpath('../N_Channel');
+addpath('../Frequency_Domain');
 addpath('../Time_Domain');
 
-
 %% ------------ Testing of Stereo Feature functions --------------
-% pathInput = '../FDTSM/AudioIn/';
+% pathInput = '../Audio_test_files/';
 % filename = 'Electropop.wav';
 
 % [x,fs] = audioread([pathInput filename]);
@@ -29,9 +27,9 @@ addpath('../Time_Domain');
 
 %% ------------ Testing Stereo Phase Vocoder functions --------------
 
-% pathInput = '../FDTSM/AudioIn/';
+% pathInput = '../Audio_test_files/';
 % filename = 'Electropop.wav';
-% 
+%
 % [x,fs] = audioread([pathInput filename]);
 
 %Simple Mono testing
@@ -59,31 +57,31 @@ addpath('../Time_Domain');
 % end
 % axis tight
 % xlabel('Time (s)')
-% 
+%
 % subplot(6,1,2)
 % plot((1:length(y_n))/fs,y_n)
 % axis tight
 % title('PV\_naive')
 % xlabel('Time (s)')
-% 
+%
 % subplot(6,1,3)
 % plot((1:length(y_A))/fs,y_A)
 % axis tight
 % title('PV\_Altoe')
 % xlabel('Time (s)')
-% 
+%
 % subplot(6,1,4)
 % plot((1:length(y_B))/fs,y_B)
 % axis tight
 % title('PV\_Bonada')
 % xlabel('Time (s)')
-% 
+%
 % subplot(6,1,5)
 % plot((1:length(y_MS_Fi))/fs,y_MS_Fi)
 % axis tight
 % title('PV\_MS\_File')
 % xlabel('Time (s)')
-% 
+%
 % subplot(6,1,6)
 % plot((1:length(y_MS_Fr))/fs,y_MS_Fr)
 % axis tight
@@ -95,21 +93,21 @@ addpath('../Time_Domain');
 % y_NPL_PV = PL_PV( x, N, TSM, 0 ); %No Phase Locking
 % y_IPL_PV = PL_PV( x, N, TSM, 1 ); %Identity
 % y_SPL_PV = PL_PV( x, N, TSM, 2 ); %Scaled
-% 
+%
 % figure
-% 
+%
 % subplot(3,1,1)
 % plot((1:length(y_NPL_PV))/fs,y_NPL_PV)
 % axis tight
 % title('NoPL\_PV')
 % xlabel('Time (s)')
-% 
+%
 % subplot(3,1,2)
 % plot((1:length(y_IPL_PV))/fs,y_IPL_PV)
 % axis tight
 % title('IPL\_PV')
 % xlabel('Time (s)')
-% 
+%
 % subplot(3,1,3)
 % plot((1:length(y_SPL_PV))/fs,y_SPL_PV)
 % axis tight
@@ -120,14 +118,14 @@ addpath('../Time_Domain');
 %Phavorit Stereo Phase Locking Phase Vocoders
 % y_Phavorit_IPL_PV = Phavorit_PV( x, N, TSM, 0 ); %Identity
 % y_Phavorit_SPL_PV = Phavorit_PV( x, N, TSM, 1 ); %Scaled
-% 
+%
 % figure
 % subplot(2,1,1)
 % plot((1:length(y_Phavorit_IPL_PV))/fs,y_Phavorit_IPL_PV)
 % axis tight
 % title('y\_Phavorit\_IPL\_PV')
 % xlabel('Time (s)')
-% 
+%
 % subplot(2,1,2)
 % plot((1:length(y_Phavorit_SPL_PV))/fs,y_Phavorit_SPL_PV)
 % axis tight
@@ -284,7 +282,7 @@ addpath('../Time_Domain');
 %     hold off
 %     axis([1 data_points -0.2 1.1])
 %     title(sprintf('Frame %d',c));
-%     
+%
 % end
 
 
@@ -293,7 +291,7 @@ addpath('../Time_Domain');
 % %inside the function
 % x = 10*ones(1,10);
 % y = [0,0,0,0,0,0,10*ones(1,10),0,0,0,1,1,0,0,2,3,4,2,1,2,3,4,2,2,1,2,3,3];
-% 
+%
 % [lag_x, lag_y, max_loc, xc_a] = maxcrosscorr(x,y,4,4);
 % fprintf('lag_x = %d, lag_y = %d, max_loc = %d\n', lag_x, lag_y, max_loc);
 % subplot(311)
@@ -312,16 +310,16 @@ addpath('../Time_Domain');
 %not be calculated, and left as 0.
 
 %% ---------------Testing of SOLA Time Domain Time Scale Modification---------------
-% 
-% pathInput = '../FDTSM/AudioIn/';
+%
+% pathInput = '../Audio_test_files/';
 % filename = 'Male_Speech.wav';
-% 
+%
 % [x,fs] = audioread([pathInput filename]);
 % x = sum(x,2)/max(sum(x,2));
 % TSM = 0.8;
 % ms = 80;
 % N = 2^(nextpow2(ms*(10^-3)*fs));
-%  
+%
 % %Stereo Phase Vocoders
 % y = SOLA(x, N, TSM);
 % y_DAFX = SOLA_DAFX(x, N, TSM);
@@ -332,8 +330,8 @@ addpath('../Time_Domain');
 % plot(y)
 % subplot(313)
 % plot(y_DAFX)
-% 
-% 
+%
+%
 % soundsc(x,fs)
 % pause((length(x)/fs)*1.1);
 % soundsc(y,fs)
@@ -342,33 +340,33 @@ addpath('../Time_Domain');
 
 %% ---------------Testing of WSOLA Time Domain Time Scale Modification---------------
 
-% pathInput = '../FDTSM/AudioIn/';
+% pathInput = '../Audio_test_files/';
 % filename = 'Male_Speech.wav';
-% 
+%
 % [x,fs] = audioread([pathInput filename]);
 % x = sum(x,2)/max(sum(x,2));
 % TSM = 0.8;
 % ms = 25;
 % N = 2^(nextpow2(ms*(10^-3)*fs));
 % % N = ms*(10^-3)*fs;
-%  
+%
 % %Stereo Phase Vocoders
 % y = WSOLA(x, N, TSM);
 % y_Driedger = WSOLA_Driedger(x, N, TSM);
-% 
+%
 % soundsc(x,fs)
 % figure
 % subplot(311)
 % plot(x)
 % title('Original');
 % pause((length(x)/fs)*1.1);
-% 
+%
 % soundsc(y,fs)
 % subplot(312)
 % plot(y)
 % title('WSOLA');
 % pause((length(y)/fs)*1.1);
-% 
+%
 % subplot(313)
 % plot(y_Driedger)
 % title('WSOLA_Driedger');
@@ -377,14 +375,14 @@ addpath('../Time_Domain');
 
 %% -------------Zero Frequency Resonator Testing---------------------
 
-% pathInput = '../FDTSM/AudioIn/';
+% pathInput = '../Audio_test_files/';
 % filename = 'Male_Speech.wav';
-% 
+%
 % [x,fs] = audioread([pathInput filename]);
 % x = sum(x,2)/max(sum(x,2));
-% 
+%
 % y = ZFR(x, fs);
-% 
+%
 % line(1:length(y),y,'Color','red')
 % hold on
 % plot(x)
@@ -394,30 +392,109 @@ addpath('../Time_Domain');
 
 %% -------------ESOLA Testing---------------------
 
-pathInput = '../FDTSM/AudioIn/';
+% pathInput = '../Audio_test_files/';
+% % filename = 'Male_Speech_ESOLA.wav';
+% % filename = 'mrds0_sx447.wav';
+% filename = 'fadg0_sa1.wav';
+%
+% [x,fs] = audioread([pathInput filename]);
+% x = sum(x,2)/max(sum(x,2));
+% TSM = 0.75;
+% ms = 20;
+% N = ms*(10^-3)*fs;
+%
+% y_ESOLA = ESOLA(x, N, TSM, fs);
+%
+% figure
+% subplot(211)
+% % soundsc(x,fs)
+% plot(x)
+% title('Original');
+% % pause((length(x)/fs)*1.1);
+%
+% subplot(212)
+% soundsc(y_ESOLA,fs)
+% plot(y_ESOLA)
+% title('ESOLA');
+%
+% LogSpectrogram(x,fs,50,2);
+% title('Original')
+% LogSpectrogram(y_ESOLA,fs,50,2);
+% title('ESOLA');
+
+%% ------------Checking linear interpolation---------
+
+% TSM = 0.9;
+% ak = rand(10,1);
+% a = 1/TSM;
+%
+% old_points = (1:length(ak))-1;  %-1 to 0 index
+% new_points = round(a*old_points)+1; %+1 to 1 index
+%
+% ak_hat = zeros(1,ceil(length(ak)*a));
+% ak_hat(new_points) = ak(old_points+1);
+%
+% count = 0;
+%
+% n = find(ak_hat);
+% n_ = find(~ak_hat);
+% if(TSM<0.5)
+%     for k = 1:length(n)-1
+%         ak_hat(n(k):n(k+1)) = linspace(ak_hat(n(k)),ak_hat(n(k+1)),n(k+1)-n(k)+1);
+%     end
+% else
+%     for k = 1:length(n_)-1
+% %         ak_hat(n_(k)-1:n_(k)+1) = linspace(ak_hat(n_(k)-1),ak_hat(n_(k+1)-1),n_(k+1)-n_(k)+1);
+%         ak_hat(n_(k)) = (ak_hat(n_(k)-1)+ak_hat(n_(k+1)-1))/2;
+%     end
+% end
+%
+% subplot(211)
+% plot(ak)
+% title('Original')
+% subplot(212)
+% plot(ak_hat)
+% title('Linear interpolation')
+
+%% -----------------Testing mel_filterbank generation---------------------
+
+% [ H ] = mel_filterbank( 88, 22050 8096, 44100*6 );
+% %Plot the filterbanks
+% figure
+% plot(H');
+% %Plot the sum of the filterbanks
+% figure
+% plot(sum(H,1))
+
+%% -------------uTVS Testing---------------------
+
+pathInput = '../Audio_test_files/';
 filename = 'Male_Speech.wav';
+%filename = 'mrds0_sx447.wav';
 
 [x,fs] = audioread([pathInput filename]);
 x = sum(x,2)/max(sum(x,2));
-TSM = 1;
-ms = 20;
-N = ms*(10^-3)*fs;
+TSM = 0.5;
 
-y_ESOLA = ESOLA(x, N, TSM, fs);
+y_uTVS = uTVS(x, fs, TSM);
 
 figure
 subplot(211)
-soundsc(x,fs)
 plot(x)
 title('Original');
-pause((length(x)/fs)*1.1);
 
 subplot(212)
-soundsc(y_ESOLA,fs)
-plot(y_ESOLA)
-title('ESOLA');
+%     soundsc(y_muTVS,fs)
+plot(y_uTVS)
+title('uTVS');
 
-LogSpectrogram(x,fs,50,2);
-title('Original')
-LogSpectrogram(y_ESOLA,fs,50,2);
-title('ESOLA');
+LogSpectrogram(y_uTVS,fs,50,2);
+t = sprintf('uTVS at %g percent',TSM*100);
+title(t);
+f = sprintf('uTVS_%g_percent',TSM*100);
+print(f,'-dpng');
+f = [f '.wav'];
+audiowrite(f,y_uTVS,fs);
+
+
+
