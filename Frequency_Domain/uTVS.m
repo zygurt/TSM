@@ -97,6 +97,6 @@ x_hat_sum = sum(x_hat,2);
 %Resampling the output
 y = resample(x_hat_sum,1,oversample);
 %Normalise the output
-y=y/max(y);
+y=y/max(abs(y));
 disp('File Processing Complete');
 end
