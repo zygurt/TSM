@@ -1,4 +1,4 @@
-function [ y ] = ZFR( s, fs )
+function [ y ] = ZFR( s, fs, N_scale )
 %[ y ] = ZFR( s, N )
 %   Zero Frequency Resonator
 %
@@ -7,7 +7,10 @@ function [ y ] = ZFR( s, fs )
 %   (ESOLA) for Time- and Pitch-Scale Modification of Speech Signals, 2018
 %
 %   s is the speech signal
-%   N is the frame length
+%   fs is the sampling frequency of the signal
+%   N_scale is the used to determine where N lies between 1 to 2 times the
+%   average pitch period of the speaker. 1 < N_scale < 2.
+
 %   Positive zero crossings of y indicate epochs
 
 % Tim Roberts - Griffith University 2018
@@ -26,21 +29,25 @@ a = [-2 2];
 y1 = filter(1,a,x);
 y2 = filter(1,a,y1);
 
+% Additional Step
+%Find the fundamental pitch period.  Made this up.  Maybe I should find a paper.
+%Pitch period is generally determined using autocorrelation.
+%Because I just want an estimate, and the fundamental is usually loudest,
+%I'm just averaging the entire signal and finding the maximum location.
+ms = 40;
+n = 2^(nextpow2(ms*(10^-3)*fs));
+s_buf = buffer(x,n,3*n/4);
+S = fft(s_buf);
+S_avg = mean(abs(S),2);
+[~,max_loc] = max(S_avg(2:n/2+1));  %ignore DC component
+bin_width = fs/n;
+To = 1/(max_loc*bin_width);
+%Calculate N for mean-subtraction process
+N = round((fs*(N_scale*To-1/fs))/2);
+fprintf('ZFR N value = %d\n',N);
+
 %Remove trend in y2 by successively applying a mean-subtraction operation.
 %(2N+1) is chosen to lie between 1 to 2 times the average pitch period of the speaker
-%This could be improved by knowing the average pitch period of the speaker
-
-%Calculating N
-if(fs==44100)
-    N = 217;
-else
-    f0 = [85, 165, 180, 255];   %Male and female ranges of fundamental frequency
-    a = linspace(1,2,length(f0))'; %Acceptable range.
-    N0 = (a.*(fs./f0)+1)/2; %Matrix of possible values of N.
-    N = round(mean([N0(1,1) N0(4,4)])); %Split the difference between lowest male and highest female
-end
-
-
 y3 = zeros(length(s),size(s,2));
 for n = 3:length(y2)
     temp = 0;
