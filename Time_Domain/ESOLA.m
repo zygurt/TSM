@@ -16,42 +16,47 @@ if(num_chan > 1)
     y = 0;
     return;
 end
-alpha = 1/TSM;
+%Calculate alpha
+a = 1/TSM;
+%Calculate Synthesis Shift
 Ss = N/2;
-Sa = round(Ss/alpha);
-
-w = 0.5*(1 - cos(2*pi*(0:N-1)'/(N-1))); %hanning window
-
-y = zeros(ceil(length(x)*alpha),num_chan); %1.1 is to allow for non exct time scaling
-y_epochs = zeros(ceil(length(x)*alpha),num_chan);
-
-epochs = ZFR(x, fs);
-
+%Calculate Analysis Shift
+Sa = round(Ss/a);
+%Generate Hanning window
+w = 0.5*(1 - cos(2*pi*(0:N-1)'/(N-1)));
+%Initialise output
+y = zeros(ceil(length(x)*a),num_chan); %1.1 is to allow for non exct time scaling
+%Initialise output epochs
+y_epochs = zeros(length(y),num_chan);
+%Initialise window overlap output
+win = zeros(length(y),num_chan);
+%Generate epochs
+epochs = ZFR(x, fs, 2);
+%Copy frame 0
 y(1:N,:) = x(1:N,:);
 y_epochs(1:N,:) = epochs(1:N,:);
-m = 2;
+win(1:N,:) = w(1:N,:);
+%Increment frame
+m = 1;
 while m*Sa<length(x)-2*N
     %Create epoch frames
     in_epoch = epochs(m*Sa+1:m*Sa+N);
-    out_epoch = y_epochs((m-1)*Ss+1:(m-1)*Ss+N);
-    
+    out_epoch = y_epochs(m*Ss+1:m*Ss+N);
+    %Calculate delay for epoch match
     if(max(in_epoch) && max(out_epoch))
-        %Must be at least one epoch in the current epoch frames
-        first_out_epoch = 1;
-        while(~out_epoch(first_out_epoch) && first_out_epoch<N)
-            %Find the first epoch
-            first_out_epoch = first_out_epoch+1;
-        end
-        
-        km = 0;
-        while(~in_epoch(first_out_epoch+km) && (first_out_epoch+km)<N)
-            %Find the next closest epoch
-            km = km+1;
-        end
-        if(first_out_epoch+km)==N
-            km = 0;
-        end
+        %Epoch(s) in the current frames
+        %Find epochs in output frame
+        lm = find(out_epoch==1);
+        %Find epochs in input frame
+        nm = find(in_epoch==1);
+        %Find distance from first output epoch to all input epochs.
+        k = nm-lm(1);
+        %Find the number of negative values to exclude them from the search
+        k_diff = find(k<0);
+        %km is the smallest value >= 0
+        km = min(k(length(k_diff)+1:end));
     else
+        %No epochs in one or either frame
         km = 0;
     end
     %Double check accessing bounds
@@ -59,17 +64,20 @@ while m*Sa<length(x)-2*N
         disp('Accessed beyond original signal.  Returning signal processed thus far.')
         return;
     end
-    %Select the final analysis frame
+    %Extract grain to overlap
     in_grain = x(m*Sa+km+1:m*Sa+N+km).*w;
     %Overlap and add the new frame
     y(m*Ss+1:m*Ss+N,:) = y(m*Ss+1:m*Ss+N,:)+in_grain;
     %Overlap and add the epochs for the new frame
     y_epochs(m*Ss+1:m*Ss+N,:) = y_epochs(m*Ss+1:m*Ss+N,:)+epochs(m*Sa+km+1:m*Sa+N+km);
+    %Overlap the window
+    win(m*Ss+1:m*Ss+N,:) = win(m*Ss+1:m*Ss+N,:)+w(1:N,:);
     %Increase the frame counter
     m = m+1;
 end
-
-
-
+%Normalise to window overlap
+win(win<0.98) = 1;
+y = y./win;
+%Normalise overall
+y = y/max(abs(y));
 end
-
