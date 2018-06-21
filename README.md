@@ -54,8 +54,8 @@ A collection of published Time Domain TSM implementations.
 **Time Domain files:**
   - SOLA.m is a single channel implementation of the Synchronised Overlap Add (SOLA) method of time-scale modification. Proposed by Roucos and Wilgus.
   - SOLA_DAFX.m is a modified version of the SOLA implementation in Zolzer et al.
-  - ESOLA.m WIP version.  Varied pitch information is lost as speed is reduced. Proposed by Rudresh et al.
-  - WSOLA.m is a single channel implementation of the Waveform Similarity Overlap Add (WSOLA) method of time-scale modification.  Proposed by Verhelst and Roelands.
+  - ESOLA.m single channel implementation of Epoch Synchronous Overlap Add (ESOLA). Proposed by Rudresh et al.
+  - WSOLA.m is an N channel implementation of the Waveform Similarity Overlap Add (WSOLA) method of time-scale modification.  Proposed by Verhelst and Roelands.
   - WSOLA_Driedger.m is a modified version of the WSOLA implementation by Driedger (2014).
   
 ## References
@@ -68,6 +68,6 @@ A collection of published Time Domain TSM implementations.
 - Bonada, Audio Time-Scale Modification in the Context of Professional Audio Post-production, 2002.
 - Roucos and Wilgus, High Quality Time-Scale Modification for Speech, 1985.
 - Zolzer et al., DAFx - Digital Audio Effects, John Willey & Sons, 2002.
-- Rudresh et al., Epoch-Synchronous Overlap-Add (ESOLA) for Time- and Pitch-Scale Modification of Speech Signals, 2018
+- Rudresh et al., Epoch-Synchronous Overlap-Add (ESOLA) for Time- and Pitch-Scale Modification of Speech Signals, 2018.
 - Verhelst and Roelands, An Overlap-Add Technique Based on Waveform Similarity (WSOLA) for High Quality Time-Scale Modification of Speech, 1993
 - Driedger and Mueller, TSM Toolbox: MATLAB Implementations of Time-Scale Modification Algorithms, 2014.
