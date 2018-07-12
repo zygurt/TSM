@@ -65,7 +65,7 @@ for m = 2:size(xw,2)
     y = [y(1:end-total_overlap) ; y_fade+x_fade ; xw(total_overlap+1:end,m)];
     
 end
-
+    y = y/max(abs(y));
 end
 
 
