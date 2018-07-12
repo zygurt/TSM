@@ -2,7 +2,7 @@ function [ y ] = ESOLA( x, N, TSM, fs )
 %[ y ] = ESOLA( x, fs, TSM )
 %   x = input signal
 %   N = frame size (Normally 3 to 4 pitch periods) (20ms used in paper)
-%   TSM = Time scale
+%   TSM = Time scale ratio 0.5 = 50%, 1 = 100% and 2.0 = 200% speed
 %   fs = sampling frequency of signal
 %   y = output signal
 %   Implementation based on Rudresh et al., Epoch-Synchronous Overlap-Add
