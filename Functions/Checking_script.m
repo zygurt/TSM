@@ -8,22 +8,87 @@ addpath('../Time_Domain');
 
 %% ------------ Testing of Stereo Feature functions --------------
 % pathInput = '../Audio_test_files/';
-% filename = 'Electropop.wav';
-
+% % filename = 'Electropop.wav';
+% filename = 'Sine_Panning.wav';
+% % filename = 'TSM_music_MS_fade.wav';
+% % filename = 'Choral.wav';
+% % filename = 'Jazz.wav';
+% % filename = 'Saxophone_Quartet.wav';
+% %  filename = 'White_MS_fade.wav';
+% % filename = 'Alto_Sax_08.wav';
 % [x,fs] = audioread([pathInput filename]);
-
-% [fr_b_norm, fi_b_norm] = st_balance(x,2048,1);
-% [fr_b, fi_b] = st_balance(x,2048,0);
-% [fr_SPC, fi_SPC] = st_phase_coherence(x,2048);
-% [fr_w, fi_w] = st_width(x,2048);
+% if(size(x,2)~=2)
+%     disp('File is not stereo');
+%     x = [x x];
+% end
+%     %Generate DC signal
+%     % len = 44100;
+%     % x(1:len,1) = ones(len,1);
+%     % x(1:len,2) = zeros(len,1);
+%     %Create features
+%     [fr_b, fi_b] = st_balance(x,2048);
+%     [fr_SPC, fi_SPC] = st_phase_coherence(x,2048);
+% %     [fr_w, fi_w] = st_width(x,2048);
+%     %Plot the features
+%     figure
+%     subplot(211)
+%     plot(fr_SPC(1:end-1),'k')
+%     hold on
+%     plot(fr_b(1:end-1),'k--')
+% %     plot(fr_w(1:end-1))
+%     hold off
+%     plot_title = sprintf("Stereo Features for %s",strrep(filename(1:end-4),'_',' '));
+%     title(plot_title)
+%     axis([1 (length(fr_b)-1) -1.1 1.1]);
+%     xlabel('Time (Analysis Frame)');
+%     ylabel('Feature Value');
+%     legend('Coherence','Balance','location','best');
 %
-% figure
-% plot(fr_b_norm)
-% hold on
-% plot(fr_b)
-% plot(fr_SPC)
-% plot(fr_w)
-% hold off
+% filename = 'White_MS_fade.wav';
+% [x,fs] = audioread([pathInput filename]);
+%     %Generate DC signal
+%     % len = 44100;
+%     % x(1:len,1) = ones(len,1);
+%     % x(1:len,2) = zeros(len,1);
+%     %Create features
+%     [fr_b, fi_b] = st_balance(x,2048);
+%     [fr_SPC, fi_SPC] = st_phase_coherence(x,2048);
+%     %Plot the features
+%     subplot(212)
+%     plot(fr_SPC(1:end-1),'k')
+%     hold on
+%     plot(fr_b(1:end-1),'k--')
+%     plot_title = sprintf("Stereo Features for %s",strrep(filename(1:end-4),'_',' '));
+%     title(plot_title)
+%     axis([1 (length(fr_b)-1) -1.1 1.1]);
+%     xlabel('Time (Analysis Frame)');
+%     ylabel('Feature Value');
+%     legend('Coherence','Balance','location','best');
+%     x0=10;
+%     y0=10;
+%     width=300;
+%     height=300;
+%     set(gcf,'units','points','position',[x0,y0,width,height])
+%
+%
+%
+%
+%
+%     %Plot the stereo signal
+% %     x = x./max(max(abs(x)));
+% %     x_plot = [x(:,1)+1, x(:,2)-1];
+% %     t = (1:length(x_plot))/fs;
+% %     figure
+% %     plot([t',t'],x_plot);
+% %     axis([0 max(t) min(min(x_plot))*1.1 max(max(x_plot))*1.1])
+% %     plot_title = sprintf("%s",strrep(filename(1:end-4),'_',' '));
+% %     title(plot_title);
+% %
+% %     set(gca, 'YLim', [min(min(x_plot))*1.1 max(max(x_plot))*1.1],...
+% %         'YTick', -2:1:2,...
+% %         'YTickLabel', {'-1     ', 'Right Amplitude','1, -1', 'Left Amplitude', '1'})
+% %
+% %     set(gcf,'units','points','position',[x0,y0,width,height])
 
 %% ------------ Testing Stereo Phase Vocoder functions --------------
 
@@ -344,7 +409,7 @@ addpath('../Time_Domain');
 % filename = 'Male_Speech.wav';
 %
 % [x,fs] = audioread([pathInput filename]);
-% x = sum(x,2)/max(sum(x,2));
+% % x = sum(x,2)/max(sum(x,2));
 % TSM = 0.8;
 % ms = 25;
 % N = 2^(nextpow2(ms*(10^-3)*fs));
@@ -393,13 +458,21 @@ addpath('../Time_Domain');
 %% -------------ESOLA Testing---------------------
 
 % pathInput = '../Audio_test_files/';
-% % filename = 'Male_Speech_ESOLA.wav';
-% % filename = 'mrds0_sx447.wav';
+% %  filename = 'Male_Speech_ESOLA.wav';
+% %   filename = 'mrds0_sx447.wav';
 % filename = 'fadg0_sa1.wav';
+% % filename = 'female_waar.wav';
+% % filename = 'Wash.wav';
+% %filename = 'Female_opera_excerpt.wav';
+% % filename = 'Male_Speech.wav';
+% % filename = 'Alto_Sax_08.wav';
+% % filename = 'Drums_2.wav';
+% % filename = 'Mexican_Flute_02.wav';
+% % filename = 'Solo_flute_2.wav';
 %
 % [x,fs] = audioread([pathInput filename]);
 % x = sum(x,2)/max(sum(x,2));
-% TSM = 0.75;
+% TSM = 0.8;
 % ms = 20;
 % N = ms*(10^-3)*fs;
 %
@@ -417,10 +490,12 @@ addpath('../Time_Domain');
 % plot(y_ESOLA)
 % title('ESOLA');
 %
-% LogSpectrogram(x,fs,50,2);
-% title('Original')
-% LogSpectrogram(y_ESOLA,fs,50,2);
-% title('ESOLA');
+% %  audiowrite([filename(1:end-4) '_k2_20ms_50per.wav'],y_ESOLA,fs);
+%
+% % LogSpectrogram(x,fs,50,2);
+% % title('Original')
+% % LogSpectrogram(y_ESOLA,fs,50,2);
+% % title('ESOLA');
 
 %% ------------Checking linear interpolation---------
 
@@ -468,33 +543,83 @@ addpath('../Time_Domain');
 
 %% -------------uTVS Testing---------------------
 
-pathInput = '../Audio_test_files/';
-filename = 'Male_Speech.wav';
-%filename = 'mrds0_sx447.wav';
+% pathInput = '../Audio_test_files/';
+% filename = 'Male_Speech.wav';
+% %filename = 'mrds0_sx447.wav';
+%
+% [x,fs] = audioread([pathInput filename]);
+% x = sum(x,2)/max(sum(x,2));
+% TSM = 0.5;
+%
+% y_uTVS = uTVS(x, fs, TSM);
+%
+% figure
+% subplot(211)
+% plot(x)
+% title('Original');
+%
+% subplot(212)
+% %     soundsc(y_muTVS,fs)
+% plot(y_uTVS)
+% title('uTVS');
+%
+% LogSpectrogram(y_uTVS,fs,50,2);
+% t = sprintf('uTVS at %g percent',TSM*100);
+% title(t);
+% f = sprintf('uTVS_%g_percent',TSM*100);
+% print(f,'-dpng');
+% f = [f '.wav'];
+% audiowrite(f,y_uTVS,fs);
 
-[x,fs] = audioread([pathInput filename]);
-x = sum(x,2)/max(sum(x,2));
-TSM = 0.5;
 
-y_uTVS = uTVS(x, fs, TSM);
+%% ------------------Checking filterbank.m------------------
+% N = 2048;
+% K = 10;
+% c = linspace(1,1024,12);
+% bank = filterbank(c(2:end-1),N);
+% plot(bank')
 
-figure
-subplot(211)
-plot(x)
-title('Original');
-
-subplot(212)
-%     soundsc(y_muTVS,fs)
-plot(y_uTVS)
-title('uTVS');
-
-LogSpectrogram(y_uTVS,fs,50,2);
-t = sprintf('uTVS at %g percent',TSM*100);
-title(t);
-f = sprintf('uTVS_%g_percent',TSM*100);
-print(f,'-dpng');
-f = [f '.wav'];
-audiowrite(f,y_uTVS,fs);
-
-
+%% ------------------Checking my_fft.m----------------------
+% interations = 50;
+% nfreq = [2,5,11,17,29];
+% low = 10;
+% high = 13;
+% t_fft = zeros(high-low+1,1);
+% t_my_fft = zeros(high-low+1,1);
+% for n = low:high
+% %     x = rand(1,2^n);
+% n
+%     xf = zeros(2^n,length(nfreq));
+%     for q = 1:length(nfreq)
+%         xf(:,q) = sin((2*pi*nfreq(q).*(1:2^n))/2^n);
+%     end
+%     x = sum(xf,2);
+%     tic
+%     for k = 1:interations
+%         y_fft = fft(x,length(x));
+%     end
+%     t_fft(n-low+1) = toc;
+% %     figure(1)
+% %     plot(abs(y_fft(2:end/2+1)))
+%     tic
+%     for k = 1:interations
+%         y_my_fft = my_fft(x, length(x));
+%     end
+%     t_my_fft(n-low+1) = toc;
+% %     figure(2)
+% %     plot(abs(y_my_fft(2:end/2+1)))
+%     
+% end
+% figure(3)
+% semilogy(2.^(low:high),t_fft/interations)
+% hold on
+% semilogy(2.^(low:high),t_my_fft/interations)
+% hold off
+% legend('fft','my\_fft','Location','best')
+% %
+% % figure
+% % subplot(211)
+% % plot(diff')
+% % subplot(212)
+% % plot(abs(diff'))
 

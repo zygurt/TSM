@@ -12,8 +12,8 @@ function [ handle ] = LogSpectrogram( x, Fs, ms, contrast )
 N = 2^nextpow2(Fs*ms*10^(-3));
 %Set Latex font
 set(0,'defaulttextinterpreter','latex')
-set(0,'DefaultTextFontname', 'CMU Serif')
-set(0,'DefaultAxesFontName', 'CMU Serif')
+set(0,'DefaultTextFontname', 'Times New Roman')
+set(0,'DefaultAxesFontName', 'Times New Roman')
 %Create new figure
 handle = figure;
 for c = 1:size(x,2)

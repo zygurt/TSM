@@ -45,10 +45,10 @@ for c = 1:size(x,2)
         if(length(in_grain)~=(N+2*tol))
             if(in_grain_low == 1)
                 %Short at the start
-                in_grain = [zeros(N+2*tol-length(in_grain),num_chan);in_grain];
+                in_grain = [zeros(N+2*tol-length(in_grain),1);in_grain];
             else
                 %Short at the end
-                in_grain = [in_grain ; zeros(N+2*tol-length(in_grain),num_chan)];
+                in_grain = [in_grain ; zeros(N+2*tol-length(in_grain),1)];
             end
         end
         
@@ -69,7 +69,7 @@ for c = 1:size(x,2)
         %Ensure the grain is N in length
         if(length(new_grain)~=N)
             %Only padding at end for OLA
-            new_grain = [new_grain ; zeros(N-length(new_grain),num_chan)];
+            new_grain = [new_grain ; zeros(N-length(new_grain),1)];
         end
         %Apply window to the grain
         new_grain = new_grain.*w;

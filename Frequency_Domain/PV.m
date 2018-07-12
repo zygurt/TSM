@@ -74,7 +74,7 @@ while(ptr_input<ptr_end)
     last_Y_phase = Y_phase;
 end
 %Normalise the output
-y = y(N+1:end,:)/max(max(abs(y)));
+% y = y(N+1:end,:)/max(max(abs(y)));
 
 end
 

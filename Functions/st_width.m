@@ -8,7 +8,7 @@ function [ Frame_width, File_width ] = st_width( input, N )
 
 % Tim Roberts - Griffith University 2018
 
-%Generate segmental RMS sum and difference vectors
+% %Generate segmental RMS sum and difference vectors
 frames(:,:,1) = buffer(input(:,1), N);
 frames(:,:,2) = buffer(input(:,2), N);
 input_sum_framed = frames(:,:,1)+frames(:,:,2);
@@ -25,7 +25,7 @@ for n = 1:length(sum_RMS)
     elseif (sum_RMS(n) == 0 && diff_RMS(n) == 0)
         Frame_width(n) = 0;
     else
-        Frame_width(n) = log10(sum_RMS(n)/diff_RMS(n));
+        Frame_width(n) = 20*log10(sum_RMS(n)/diff_RMS(n));
     end
 end
 
@@ -34,6 +34,23 @@ if(max(abs(Frame_width))~=0)
 end
 
 File_width = mean(Frame_width);
+
+
+% input_sum = input(:,1)+input(:,2);
+% input_diff =  input(:,1)-input(:,2);
+% 
+% if max(max(abs([input_sum input_diff]))) ~= 0
+%     input_sum=abs(input_sum)./max(max(abs([input_sum input_diff])));
+%     input_diff=abs(input_diff)./max(max(abs([input_sum input_diff])));
+%     res = (abs(input_sum)-abs(input_diff));
+%     Frame_width = mean(buffer(res,N));
+%     File_width = mean(Frame_width);
+% else
+%     %Signal is silence
+%     Frame_width = 0;
+%     File_width = 0;
+% end
+
 
 end
 

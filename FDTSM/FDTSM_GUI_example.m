@@ -15,13 +15,13 @@ audio_file = gui_return.filename;
 audio_path = gui_return.path;
 
 %Load audio file
-[input, FS] = audioread([audio_path audio_file]);
+[x, FS] = audioread([audio_path audio_file]);
 
 %Sum to mono
-num_chan = size(input,2);
+num_chan = size(x,2);
 if (num_chan == 2)
-    input = sum(input,2);
-    num_chan = size(input,2);
+    x = sum(x,2);
+    num_chan = size(x,2);
 end
 
 %Set window length
@@ -31,11 +31,12 @@ region.num_regions = length(region.TSM);
 region.upper = [2.^(1:region.num_regions-1) N/2+1];
 
 %Frequency Dependent Time Scale Modification
-y = FDTSM( input, N, region );
+y = FDTSM( x, N, region );
 
 %Create the output name
 output_filename = [audio_file(1:end-4) '_' sprintf('%.2f_',region.TSM) 'FDTSM.wav'];
 %Save audio file
 audiowrite(['AudioOut/' output_filename], y, FS);
 
+LogSpectrogram(y,FS,50,2);
 
