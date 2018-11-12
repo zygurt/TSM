@@ -38,5 +38,5 @@ output_filename = [audio_file(1:end-4) '_' sprintf('%.2f_',region.TSM) 'FDTSM.wa
 %Save audio file
 audiowrite(['AudioOut/' output_filename], y, FS);
 
-LogSpectrogram(y,FS,50,2);
+% LogSpectrogram(y,FS,50,2);
 

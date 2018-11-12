@@ -402,9 +402,9 @@ freq_middle = [bin_freq_width/2 ((freq_lower(2:end)-1)+(freq_upper(2:end)-1))/2]
 %Display Upper and Lower frequency bounds of the region
 for n = 1:length(freq_middle)
     if freq_middle(n)<1000
-        freq_middle_cell{n} = sprintf("%.0f -\n%.0f Hz",freq_lower(n),freq_upper(n));
+        freq_middle_cell{n} = sprintf('%.0f -\n%.0f Hz',freq_lower(n),freq_upper(n));
     else
-        freq_middle_cell{n} = sprintf("%.1f -\n%.1f kHz",freq_lower(n)/1000,freq_upper(n)/1000);
+        freq_middle_cell{n} = sprintf('%.1f -\n%.1f kHz',freq_lower(n)/1000,freq_upper(n)/1000);
     end
 end
 
