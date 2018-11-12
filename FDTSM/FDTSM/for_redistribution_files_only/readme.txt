@@ -11,7 +11,7 @@ squashed in the Windows version. If you have ideas of ways the user interface co
 
 It is possible with the algorithm implemented to have up to 1024 frequency ranges, I just haven't implemented a GUI for that yet.  If you are interested in further testing, please also email me, or check out the source code at www.github.com/zygurt/TSM/FDTSM
 
-
+Also, you will need to create a folder called 'AudioOut' for the program to store output files into.
 
 
 
