@@ -2,7 +2,7 @@ function [ y ] = ZFR( s, fs, N_scale )
 %[ y ] = ZFR( s, N )
 %   Zero Frequency Resonator
 %
-%   Proposed by Murt and Yegnanarayana, Epoch Extraction from Speech Signals, 2008
+%   Proposed by Murty and Yegnanarayana, Epoch Extraction from Speech Signals, 2008
 %   Implementation based on Rudresh et al., Epoch-Synchronous Overlap-Add
 %   (ESOLA) for Time- and Pitch-Scale Modification of Speech Signals, 2018
 %
