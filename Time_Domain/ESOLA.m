@@ -2,7 +2,7 @@ function [ y ] = ESOLA( x, N, TSM, fs )
 %[ y ] = ESOLA( x, fs, TSM )
 %   x = input signal
 %   N = frame size (Normally 3 to 4 pitch periods) (20ms used in paper)
-%   TSM = Time scale ratio 0.5 = 50%, 1 = 100% and 2.0 = 200% speed
+%   TSM = Time scale
 %   fs = sampling frequency of signal
 %   y = output signal
 %   Implementation based on Rudresh et al., Epoch-Synchronous Overlap-Add
@@ -31,7 +31,7 @@ y_epochs = zeros(length(y),num_chan);
 %Initialise window overlap output
 win = zeros(length(y),num_chan);
 %Generate epochs
-epochs = ZFR(x, fs, 2);
+epochs = ZFR(x, 1, fs, 2);
 %Copy frame 0
 y(1:N,:) = x(1:N,:);
 y_epochs(1:N,:) = epochs(1:N,:);
@@ -53,8 +53,12 @@ while m*Sa<length(x)-2*N
         k = nm-lm(1);
         %Find the number of negative values to exclude them from the search
         k_diff = find(k<0);
+        if length(k_diff)==length(k)
+            km=0;
+        else
         %km is the smallest value >= 0
-        km = min(k(length(k_diff)+1:end));
+            km = min(k(length(k_diff)+1:end));
+        end
     else
         %No epochs in one or either frame
         km = 0;
@@ -72,6 +76,30 @@ while m*Sa<length(x)-2*N
     y_epochs(m*Ss+1:m*Ss+N,:) = y_epochs(m*Ss+1:m*Ss+N,:)+epochs(m*Sa+km+1:m*Sa+N+km);
     %Overlap the window
     win(m*Ss+1:m*Ss+N,:) = win(m*Ss+1:m*Ss+N,:)+w(1:N,:);
+    
+    %Lets do some plotting
+%     F=figure(4);%,'Position',[0 0 500 300])
+%     F.Position = [1920-500 200 500 300];
+%     plot(m*Ss+1:m*Ss+N,out_epoch+1,'k--')
+%     hold on
+%     plot(m*Ss+1:m*Ss+N,epochs(m*Sa+km+1:m*Sa+N+km),'k');
+%     hold off
+%     title('Aligned Epochs Using ESOLA');
+%     xlabel('Time (Samples)')
+%     ylabel('Epoch Amplitude')
+%     legend('Output Epochs','Input Epochs','Location', 'SouthEast')
+%     axis([m*Ss+1,m*Ss+floor(N/2), -0.1 2.1])
+%     
+%     
+%     if(max(in_epoch)>0)
+%         if input('Save frame? ')
+%             print('../ESOLA_Epoch_Alignment','-dpng')
+%             print('../ESOLA_Epoch_Alignment','-depsc')
+%         end
+%         disp('movement')
+%     end
+    
+    
     %Increase the frame counter
     m = m+1;
 end
