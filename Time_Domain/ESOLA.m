@@ -31,7 +31,7 @@ y_epochs = zeros(length(y),num_chan);
 %Initialise window overlap output
 win = zeros(length(y),num_chan);
 %Generate epochs
-epochs = ZFR(x, 1, fs, 2);
+[epochs, ~] = ZFR(x, 1, fs, 2);
 %Copy frame 0
 y(1:N,:) = x(1:N,:);
 y_epochs(1:N,:) = epochs(1:N,:);
