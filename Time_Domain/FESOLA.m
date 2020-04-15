@@ -14,10 +14,10 @@ function [ y, ZFR_N ] = FESOLA( x, N, TSM, fs )
 num_chan = size(x,2);
 if(num_chan > 1)
     disp('This ESOLA method currently only works for mono signals.');
-    y = 0;
-    return;
+    disp('Summing to mono.')
+    x = sum(x,2);
 end
-
+x = x/max(abs(x));
 alpha = 1/TSM;
 Ss = N/2;
 Sa = round(Ss/alpha);
@@ -45,8 +45,17 @@ m = 1;
 while m*Sa<length(x)-2*N
     %Create epoch frames
     in_epoch = epochs(m*Sa+1:m*Sa+N);
+
+    if(m*Ss+N>size(y_epochs,1))
+        %Sometimes the output vector isn't long enough for the final frame
+        %This concatenates silence to the end of the output signals.
+        y = [y ; zeros((m*Ss+N)-size(y,1),1)];
+        y_epochs = [y_epochs ;zeros((m*Ss+N)-size(y_epochs,1),1)];
+        win = [win ; zeros((m*Ss+N)-size(win,1),1)];
+    end
+
     out_epoch = y_epochs(m*Ss+1:m*Ss+N);
-    
+
     if(max(in_epoch) && max(out_epoch))
         %Generate cross correlations for epochs
         k_arr = zeros(round(0.75*Ss),1);
@@ -55,13 +64,13 @@ while m*Sa<length(x)-2*N
             k_arr(k) = sum(out_epoch(1:end-k+1).*in_epoch(k:end));
             k_arr2(k) = sum(out_epoch(k:end).*in_epoch(1:end-k+1));
         end
-        %This could be optimised for speed by removing fuzzyness and 
+        %This could be optimised for speed by removing fuzzyness and
         %summing after element-wise AND operations
-       
+
         %This priorities the maximum for forwards and backwards
         %Find overall max in each correlation, then find the location
         [max_correlation, loc] = max([k_arr; k_arr2]);
-        
+
         if loc < length(k_arr)
             km = min(find(k_arr==max_correlation))-1;
         else
@@ -73,7 +82,7 @@ while m*Sa<length(x)-2*N
     else
         km = 0;
     end
-    
+
     %Double check accessing bounds
     if(m*Sa+N+km)>length(x)
         disp('Accessed beyond original signal.  Returning signal processed thus far.')
@@ -85,7 +94,7 @@ while m*Sa<length(x)-2*N
     else
         in_grain = x(m*Sa+1:m*Sa+N).*w;
     end
-    
+
     %Overlap and add the new frame
     y(m*Ss+1:m*Ss+N,:) = y(m*Ss+1:m*Ss+N,:)+in_grain;
     %Overlap and add the epochs for the new frame
@@ -105,8 +114,8 @@ while m*Sa<length(x)-2*N
 %     ylabel('Epoch Amplitude')
 %     legend('Output Epochs','Input Epochs','Location', 'SouthEast')
 %     axis([m*Ss+1,m*Ss+floor(N/2), -0.1 2.1])
-%     
-%     
+%
+%
 %     if(max(in_epoch)>0)
 %         if input('Save frame? ')
 %             print('../FESOLA_Epoch_Alignment','-dpng')
@@ -114,11 +123,11 @@ while m*Sa<length(x)-2*N
 %         end
 %         disp('movement')
 %     end
-    
-    
+
+
     %Increase the frame counter
     m = m+1;
-    
+
 end
 win(win<0.98) = 1;
 y = y./win;
@@ -142,7 +151,7 @@ end
 %     subplot(313)
 %     plot(epochs(m*Sa+km+1:m*Sa+km+N));
 %     title('Adjusted Epoch');
-%     
+%
 %     %     figure(2)
 %     %     subplot(211)
 %     %     plot(x(m*Sa+1:m*Sa+N).*w);
@@ -151,7 +160,7 @@ end
 %     %     subplot(212)
 %     %     plot(in_grain)
 %     %     title('In Grain Final')
-%     
+%
 %     figure(2)
 %     plot(m*Ss+1:m*Ss+N,out_epoch+1)
 %     hold on
@@ -159,7 +168,7 @@ end
 %     hold off
 %     title('Aligned km epochs');
 %     legend('Output','Next Frame');
-%     
+%
 %     figure(3)
 %     subplot(211)
 %     plot(k_arr)
@@ -167,7 +176,7 @@ end
 %     subplot(212)
 %     plot(k_arr2)
 %     title('k array 2')
-%     
+%
 %     figure(4)
 %     plot(m*Ss+1:m*Ss+N,out_epoch+1)
 %     hold on
@@ -175,7 +184,7 @@ end
 %     hold off
 %     title('Aligned k2 epochs');
 %     legend('Output','Next Frame');
-%     
+%
 %     figure(5)
 %     plot(m*Ss+1:m*Ss+N,out_epoch+1)
 %     hold on
@@ -183,7 +192,7 @@ end
 %     hold off
 %     title('Aligned k4 epochs');
 %     legend('Output','Next Frame');
-%     
+%
 %     figure(6)
 %     plot(m*Ss+1:m*Ss+N,out_epoch+1)
 %     hold on
@@ -191,7 +200,7 @@ end
 %     hold off
 %     title('Aligned k7 epochs');
 %     legend('Output','Next Frame');
-    
+
 
 
 % figure
