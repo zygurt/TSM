@@ -13,9 +13,11 @@ function [ y ] = ESOLA( x, N, TSM, fs )
 num_chan = size(x,2);
 if(num_chan > 1)
     disp('This ESOLA method currently only works for mono signals.');
-    y = 0;
-    return;
+    disp('Summing to mono.')
+    x = sum(x,2);
 end
+%Normalise input
+x = x/max(abs(x));
 %Calculate alpha
 a = 1/TSM;
 %Calculate Synthesis Shift
@@ -41,6 +43,13 @@ m = 1;
 while m*Sa<length(x)-2*N
     %Create epoch frames
     in_epoch = epochs(m*Sa+1:m*Sa+N);
+    if(m*Ss+N>size(y_epochs,1))
+        %Sometimes the output vector isn't long enough for the final frame
+        %This concatenates silence to the end of the output signals.
+        y = [y ; zeros((m*Ss+N)-size(y,1),1)];
+        y_epochs = [y_epochs ;zeros((m*Ss+N)-size(y_epochs,1),1)];
+        win = [win ; zeros((m*Ss+N)-size(win,1),1)];
+    end
     out_epoch = y_epochs(m*Ss+1:m*Ss+N);
     %Calculate delay for epoch match
     if(max(in_epoch) && max(out_epoch))
