@@ -45,18 +45,16 @@ XW = fft(xw,N);
 disp('    Generate Filterbanks');
 H = single(mel_filterbank(K,fs/2,N,fo));
 %Take the first half of the fft
-XW_mag = abs(XW(1:N/2+1,:));
-XW_phase = angle(XW(1:N/2+1,:));
-XW_pow = (1/N)*XW_phase.^2;
+XW_crop = XW(1:N/2+1,:);
 %Prepare framed filterbank output
-XWF = single(zeros(size(XW_mag,1),K,size(XW_mag,2)));
+XWF = single(zeros(size(XW_crop,1),K,size(XW_crop,2)));
 %Mulitply through with the filterbanks.
 disp('    Multiply filterbanks through signal');
 for k = 1:K
     fprintf('%d, ',k);
     for f = 1:size(XW,2)
-        XWF(:,:,f) = repmat(XW_pow(:,f),[1,K]).*H';
-        XWF(:,:,f) = sqrt(N*XWF(:,:,f)).*exp(repmat(XW_phase(:,f),[1,K]));
+        XWF(:,:,f) = repmat(XW_crop(:,f),[1,K]).*H';
+%         XWF(:,:,f) = sqrt(N*XWF(:,:,f)).*exp(repmat(XW_phase(:,f),[1,K]));
     end
 end
 %Reconstruct second half of the signal
