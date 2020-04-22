@@ -84,8 +84,8 @@ disp('    Interpolate each filterband: ')
 ak_hat_i = zeros(length(ak_hat),K);
 phik_hat_i = zeros(length(phik_hat),K);
 for k = 1:K
-    ak_hat_i(:,k) = linear_interp_zeros(ak_hat(:,k), TSM);
-    phik_hat_i(:,k) = linear_interp_zeros(phik_hat(:,k), TSM);
+    ak_hat_i(:,k) = linear_interp_zeros_subj(ak_hat(:,k), TSM);
+    phik_hat_i(:,k) = linear_interp_zeros_subj(phik_hat(:,k), TSM);
     fprintf('    Band %d complete\n',k);
 end
 %Multiply output IA and IP
