@@ -1,11 +1,24 @@
-# Header 1
-## Header 2
-### Header 3
+# Repository Contents
 
--Bullet list
--Bullet list
-1. Numbered
-2. List
+A full list of the TSM methods contained in this repository can be found [here](https://zygurt.github.io/TSM/methods).
 
-**Bold** and _Italic_ and `Code` text
-[Time-Scale Modification Methods Included](https://zygurt.github.io/TSM/methods)
+A wide variety of additional files have also been included that may be of use beyond Time-Scale Modification.
+
+# Published work
+
+- [Stereo time-scale modification using sum and difference transformation](https://maxwell.ict.griffith.edu.au/spl/publications/papers/icspcs18_roberts_stereotsm.pdf)
+- [Frequency dependent time-scale modification](https://maxwell.ict.griffith.edu.au/spl/publications/papers/icspcs18_roberts_fdtsm.pdf)
+- [Time-Scale Modification Using Fuzzy Epoch-Synchronous Overlap-Add (FESOLA)](https://maxwell.ict.griffith.edu.au/spl/publications/papers/iwaspaa19_roberts.pdf)
+
+
+## Links to additional TSM implementations
+[Driedger and Müller's TSM Toolbox](https://www.audiolabs-erlangen.de/resources/MIR/TSMtoolbox/) (MATLAB)
+This toolbox contains MATLAB implementations of:
+- WSOLA
+- Identity Phase Locking Phase Vocoder
+- Harmonic Percussive Separation Time-Scale Modification
+- MATLAB wrapper for Elastique
+
+[Phase Vocoder with Fuzzy Classification of Bins](http://research.spa.aalto.fi/publications/papers/applsci-ats/) (MATLAB)
+
+[Time Scale Modification of Audio using Non-Negative Matrix Factorization](https://github.com/flucoma/DAFX-2019) (Python 3)
