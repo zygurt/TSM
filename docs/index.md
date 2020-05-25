@@ -1,4 +1,3 @@
-Index.md file
 # Header 1
 ## Header 2
 ### Header 3
@@ -9,3 +8,4 @@ Index.md file
 2. List
 
 **Bold** and _Italic_ and `Code` text
+[Time-Scale Modification Methods Included](https://zygurt.github.io/TSM/methods)
