@@ -1,5 +1,6 @@
 # TSM
 Matlab Implementations of Time Scale Modification
+Documentation is gradually being moved to https://zygurt.github.io/TSM/
 
 ### FDTSM - Frequency Dependent Time Scale Modification
 Time Scale Modification algorithms scale all frequencies by the same amount.  FDTSM allows for frequency ranges to be scaled arbitarily.  The frequency range is split into regions (up to N/2+1 regions) with time scaling applied to each region.
