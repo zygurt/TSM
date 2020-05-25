@@ -1,6 +1,7 @@
 function [ x ] = linear_interp( x )
 %[ y ] = linear_interp( x )
-%   Replaces zeros left after assigning new time scale
+%   x is a sparse vector
+%   This function linearly interpolates between given values
 %I should probably just write the new values
 %Also I should allow this to work for arrays, not just vectors.
 low = 0;

@@ -29,7 +29,7 @@ x = s(:)-[0;s(1:end-1)];
 %   G = 1
 %   a1 = -2
 %   a2 = 2
-% Thanks to Novak3 who pointed out that the filter coefficients should be
+% Thanks to Novak3 (github) who pointed out that the filter coefficients should be
 % a = [1, -2, 1]
 % This was an error on my part treating a2 and a3 as a1 and a2 as well as a
 % mathematical error as I turned a page.

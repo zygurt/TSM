@@ -204,8 +204,6 @@ addpath('../Time_Domain');
 % pause(1.1*length(y_SPL_PV)/fs)
 % soundsc(y_Phavorit_SPL_PV,fs);
 
-
-
 %% ------------ Checking the find peaks function ------------
 %
 % channels = 5;
@@ -350,7 +348,6 @@ addpath('../Time_Domain');
 %
 % end
 
-
 %% ---------------Testing of the maxcrosscorr function-------------------------
 % %This function became maxcrosscorrlag.  The same variable names are used
 % %inside the function
@@ -441,61 +438,71 @@ addpath('../Time_Domain');
 %% -------------Zero Frequency Resonator Testing---------------------
 
 % pathInput = '../Audio_test_files/';
-% filename = 'Male_Speech.wav';
-%
+% % filename = 'Male_Speech.wav';
+% filename = 'Solo_flute_2.wav';
+% 
 % [x,fs] = audioread([pathInput filename]);
 % x = sum(x,2)/max(sum(x,2));
-%
-% y = ZFR(x, fs);
-%
-% line(1:length(y),y,'Color','red')
+% 
+% y = ZFR(x, 1, fs, 1);
+% % s, N_CALC, fs, N_scale
+% figure('Position',[0 0 500 300])
+% H = line((1:length(y))/fs,y,'LineStyle',':','Color','black');
 % hold on
-% plot(x)
+% plot((1:length(x))/fs,x,'k');
 % hold off
-% legend('Epochs','Speech signal','Location','best')
-% title('Epoch locations within speech');
+% % legend('Epochs','Speech signal','Location','best')
+% title('Epoch Locations');
+% xlabel('Time(s)')
+% ylabel('Amplitude')
+% % axis([0.165 0.215 -0.01 1.01]) %Male Speech
+% axis([2.909 2.923 -0.01 0.27]) %Flute
+% savename = sprintf('../%s_Epochs',filename(1:end-4));
+% print(savename,'-dpng')
+% print(savename,'-depsc')
 
 %% -------------ESOLA Testing---------------------
 
-% pathInput = '../Audio_test_files/';
-% %  filename = 'Male_Speech_ESOLA.wav';
-% %   filename = 'mrds0_sx447.wav';
+pathInput = '../Audio_test_files/';
+%  filename = 'Male_Speech_ESOLA.wav';
+%   filename = 'mrds0_sx447.wav';
 % filename = 'fadg0_sa1.wav';
-% % filename = 'female_waar.wav';
-% % filename = 'Wash.wav';
-% %filename = 'Female_opera_excerpt.wav';
-% % filename = 'Male_Speech.wav';
-% % filename = 'Alto_Sax_08.wav';
-% % filename = 'Drums_2.wav';
-% % filename = 'Mexican_Flute_02.wav';
-% % filename = 'Solo_flute_2.wav';
-%
-% [x,fs] = audioread([pathInput filename]);
-% x = sum(x,2)/max(sum(x,2));
-% TSM = 0.8;
-% ms = 20;
-% N = ms*(10^-3)*fs;
-%
-% y_ESOLA = ESOLA(x, N, TSM, fs);
-%
-% figure
-% subplot(211)
-% % soundsc(x,fs)
-% plot(x)
-% title('Original');
-% % pause((length(x)/fs)*1.1);
-%
-% subplot(212)
-% soundsc(y_ESOLA,fs)
-% plot(y_ESOLA)
+% filename = 'female_waar.wav';
+% filename = 'Wash.wav';
+%filename = 'Female_opera_excerpt.wav';
+% filename = 'Male_Speech.wav';
+% filename = 'Alto_Sax_08.wav';
+% filename = 'Drums_2.wav';
+% filename = 'Mexican_Flute_02.wav';
+filename = 'Solo_flute_2.wav';
+
+[x,fs] = audioread([pathInput filename]);
+x = sum(x,2)/max(sum(x,2));
+TSM = 0.8;
+ms = 20;
+N = ms*(10^-3)*fs;
+
+y_ESOLA = ESOLA(x, N, TSM, fs);
+[y_FESOLA, N_ZFR] = FESOLA(x, N, TSM, fs);
+
+figure
+subplot(211)
+% soundsc(x,fs)
+plot(x)
+title('Original');
+% pause((length(x)/fs)*1.1);
+
+subplot(212)
+soundsc(y_ESOLA,fs)
+plot(y_ESOLA)
+title('ESOLA');
+
+%  audiowrite([filename(1:end-4) '_k2_20ms_50per.wav'],y_ESOLA,fs);
+
+% LogSpectrogram(x,fs,50,2);
+% title('Original')
+% LogSpectrogram(y_ESOLA,fs,50,2);
 % title('ESOLA');
-%
-% %  audiowrite([filename(1:end-4) '_k2_20ms_50per.wav'],y_ESOLA,fs);
-%
-% % LogSpectrogram(x,fs,50,2);
-% % title('Original')
-% % LogSpectrogram(y_ESOLA,fs,50,2);
-% % title('ESOLA');
 
 %% ------------Checking linear interpolation---------
 
@@ -543,13 +550,13 @@ addpath('../Time_Domain');
 
 %% -------------uTVS Testing---------------------
 
-% pathInput = '../Audio_test_files/';
-% filename = 'Male_Speech.wav';
+% pathInput = '../Subjective_Testing/AudioIn/Music/';
+% filename = 'C_minor_Aeolian.wav';
 % %filename = 'mrds0_sx447.wav';
 %
 % [x,fs] = audioread([pathInput filename]);
 % x = sum(x,2)/max(sum(x,2));
-% TSM = 0.5;
+% TSM = 0.4427;
 %
 % y_uTVS = uTVS(x, fs, TSM);
 %
@@ -570,7 +577,6 @@ addpath('../Time_Domain');
 % print(f,'-dpng');
 % f = [f '.wav'];
 % audiowrite(f,y_uTVS,fs);
-
 
 %% ------------------Checking filterbank.m------------------
 % N = 2048;
@@ -608,7 +614,7 @@ addpath('../Time_Domain');
 %     t_my_fft(n-low+1) = toc;
 % %     figure(2)
 % %     plot(abs(y_my_fft(2:end/2+1)))
-%     
+%
 % end
 % figure(3)
 % semilogy(2.^(low:high),t_fft/interations)
@@ -622,4 +628,216 @@ addpath('../Time_Domain');
 % % plot(diff')
 % % subplot(212)
 % % plot(abs(diff'))
+
+%% -------------FESOLA Testing---------------------
+
+% % TSM = [0.3838 0.4427 0.5383 0.6524 0.7821 0.8258 0.9961 1.246 1.496 1.684 1.8891];
+% TSM = [0.3838 0.5383 0.7821 0.9961 1.496 1.8891];
+% pathInput = '../Audio_test_files/FESOLA_TEST/';
+% % pathInput = '../Audio_test_files/FESOLA_Sine/';
+% % pathInput = '../Audio_test_files/';
+% pathOutput = '../WIP/FESOLA/FESOLA_Output/';
+% d = dir(pathInput);
+% % TSM = 0.3838;
+% % TSM=1;
+% ms = 20;
+%
+% for n = 3:numel(d)
+%     [x,fs] = audioread([pathInput d(n).name]);
+%     %     [x,fs] = audioread('../Audio_test_files/FESOLA_Speech/Female_5.wav');
+%     x = sum(x,2)/max(sum(x,2));
+%     N = 2^nextpow2(ms*(10^-3)*fs);
+%     final_ms = N/44.1;
+%     disp(d(n).name);
+%     for t = 1:length(TSM)
+%
+%         [y_FESOLA, ZFR_N] = FESOLA( x, N, TSM(t), fs );
+%         out_filename = sprintf('%s%s_FESOLA_%g_ms_%g_per_ZFR_%d.wav',pathOutput,d(n).name(1:end-4),final_ms,TSM(t)*100, ZFR_N);
+%         audiowrite(out_filename,y_FESOLA,fs);
+%     end
+% end
+%
+% figure
+% subplot(211)
+% % soundsc(x,fs)
+% plot(x)
+% title('Original');
+% % pause((length(x)/fs)*1.1);
+%
+% subplot(212)
+% soundsc(y_FESOLA,fs)
+% plot(y_FESOLA)
+% title('FESOLA');
+%
+%
+%
+% LogSpectrogram(x,fs,50,2);
+% title('Original')
+% LogSpectrogram(y_ESOLA,fs,50,2);
+% title('ESOLA');
+
+%% -------------Checking SliceTSM---------------------
+
+% file1 = '../Subjective_Testing/Source/Solo/Perc_2.wav';
+% file2 = '../Subjective_Testing/Source/Solo/Tambourine_01.wav';
+% % file2b = '../Subjective_Testing/Source/Solo/Tambourine_02.wav';
+% % file3 = '../Audio_test_files/Transient.wav';
+% file4 = '../Subjective_Testing/Source/Solo/Drums_2.wav';
+% % file5 = '../Subjective_Testing/Source/Music/Chiptune.wav';
+% % file6 = '../Subjective_Testing/Source/Solo/Alto_Sax_07.wav';
+% % file7 = '../Subjective_Testing/Source/Solo/Alto_Sax_08.wav';
+% file8 = '../Subjective_Testing/Source/Solo/Bass_2.wav';
+% file9 = '../Audio_test_files/FFperc110-001.wav';
+% file10 = '../Audio_test_files/FFperc110-003.wav';
+% file11 = '../Audio_test_files/Dubstep Slow-126bpm.wav';
+% [x,fs] = audioread(file11);
+% x = sum(x,2)/max(abs(sum(x,2)));
+% TSM = 0.8;
+% % x = [0 0 0 0 5 10 10 9 9 8 8 7 7 6 6 5 5 4 4 3 3 2 2 1 1 0 0 0 0];
+% % x(1:2:end) = x(1:2:end)*-1;
+% % x = x';
+%
+% sensitivity = 0.5;
+%
+% y_SliceTSM = SliceTSM_overlap(x, fs, TSM, sensitivity);
+%
+% figure
+% plot(x+1);
+% hold on
+% plot(y_SliceTSM-1);
+% hold off
+%
+% soundsc(x,fs)
+% pause(length(x)/fs)
+% soundsc(y_SliceTSM,fs);
+% % subplot(211)
+% % plot(x)
+% % title('Original');
+
+%% -----------LPC Residual--------------
+
+% file1 = '../Subjective_Testing/Source/Solo/Perc_2.wav';
+% file2 = '../Subjective_Testing/Source/Solo/Tambourine_01.wav';
+% file2b = '../Subjective_Testing/Source/Solo/Tambourine_02.wav';
+% file3 = '../Audio_test_files/Transient.wav';
+% file4 = '../Subjective_Testing/Source/Solo/Drums_2.wav';
+% file5 = '../Subjective_Testing/Source/Music/Chiptune.wav';
+% file6 = '../Subjective_Testing/Source/Solo/Alto_Sax_07.wav';
+% file7 = '../Subjective_Testing/Source/Solo/Alto_Sax_08.wav';
+% file8 = '../Subjective_Testing/Source/Solo/Bass_2.wav';
+% file9 = '../Audio_test_files/FFperc110-001.wav';
+% file10 = '../Audio_test_files/FFperc110-003.wav';
+% file11 = '../Audio_test_files/Dubstep Slow-126bpm.wav';
+% [x,fs] = audioread(file4);
+% x = sum(x,2)/max(abs(sum(x,2)));
+%
+% N = 1024;
+% H = N/4;
+% [est_x, est_x_2] = LPC_residual( x, fs, N, H );
+%
+% % mesh(est_x);
+% % view([0 90])
+%
+% est_x_vec = sum(est_x);
+% abslogestx = abs(log10(est_x_vec));
+% abslogestx_diff = abslogestx(2:end) - abslogestx(1:end-1);
+% est_x_2_vec = sum(abs(est_x_2));
+%
+% figure
+% subplot(311)
+% plot(x)
+% subplot(312)
+% plot(abslogestx)
+% subplot(313)
+% plot(abslogestx_diff)
+
+%% ------------------Test the onset detect function------------
+
+% file2 = '../Subjective_Testing/Source/Solo/Alto_Sax_08.wav';
+%
+% [x,fs] = audioread(file2);
+% x = sum(x,2)/max(abs(sum(x,2)));
+%
+% [ onsets ] = onset_detect( x, fs );
+%
+% figure
+% plot(x)
+% hold on
+% y_line = ones(size(onsets));
+% line([onsets;onsets],[-1*y_line ; y_line],'Color','red');
+% hold off
+
+%% PV processing
+
+%  pathInput = '../Audio_test_files/';
+%  filename = 'Alto_Sax_16.wav';
+%
+% [x,fs] = audioread([pathInput filename]);
+%
+% TSM = 0.41;
+% N = 2048;
+% y_n = PV(x, N, TSM);
+%
+% soundsc(y_n,fs);
+% audiowrite('../Alto_sax_16_PV_41_per.wav',y_n,fs);
+
+
+%% ------------------------ ESOLA vs FESOLA Audio File Generation ----------------
+
+
+% % TSM = [0.3838 0.4427 0.5383 0.6524 0.7821 0.8258 0.9961 1.246 1.496 1.684 1.8891];
+% TSM = [0.5383 0.7821];
+% pathInput = '../WIP/FESOLA/AudioIn/';
+% % pathInput = '../Audio_test_files/FESOLA_Sine/';
+% % pathInput = '../Audio_test_files/';
+% pathOutput = '../WIP/FESOLA/AudioOut/';
+% d = dir(pathInput);
+% % TSM = 0.3838;
+% % TSM=1;
+% ms = 20;
+% 
+% for n = 3:numel(d)
+%     [x,fs] = audioread([pathInput d(n).name]);
+%     x = sum(x,2)/max(sum(x,2));
+%     N = 2^nextpow2(ms*(10^-3)*fs);
+%     final_ms = N/44.1;
+%     disp(d(n).name);
+%     for t = 1:length(TSM)
+%         [y_ESOLA] = ESOLA( x, N, TSM(t), fs );
+%         out_filename = sprintf('%s%s_ESOLA_%g_per.wav',pathOutput,d(n).name(1:end-4),TSM(t)*100);
+%         audiowrite(out_filename,y_ESOLA,fs);
+%         [y_FESOLA, ~] = FESOLA( x, N, TSM(t), fs );
+%         out_filename = sprintf('%s%s_FESOLA_%g_per.wav',pathOutput,d(n).name(1:end-4),TSM(t)*100);
+%         audiowrite(out_filename,y_FESOLA,fs);
+%     end
+% end
+
+%% ---------------- Generate simple test files ---------------
+% global debug_var
+% debug_var = 1;
+% General.TSM = 0.56;
+% General.version = 'basic';
+% General.model = 'FFT';
+% General.N = 2048;
+% General.StepSize = 1024;
+% General.Testname = 'Sine';
+% General.fs = 44100;
+% % [x,General.fs] = audioread('../Audio_test_files/Sine_Fade_Left.wav');
+% % x = mean(x,2);
+% 
+% % x = rand(4*General.fs,1);
+% t = (1:(4*General.fs))/General.fs;
+% f = 1000;
+% x = sin(2*pi*f*t');
+% x = [zeros(General.fs,1) ; x ; zeros(General.fs,1)];
+% % x = x-mean(x);
+% y = PV(x,2048,General.TSM);
+% 
+% addpath(genpath('../Objective_MOQ/Functions'));
+% 
+% 
+% [x, y, General] = Signal_Prep(x, y, General);
+% 
+% [p_ave, p_std] = Phasiness2(x,y,General);
+
 

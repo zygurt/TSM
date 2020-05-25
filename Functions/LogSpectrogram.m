@@ -1,6 +1,6 @@
 function [ handle ] = LogSpectrogram( x, Fs, ms, contrast )
 % [ handle ] = LogSpectrogram( x, Fs, ms, contrast )
-% Create a spectrogram with log scaled frequency
+% Create a magnitude spectrogram with log scaled frequency
 % The size is set to be useful for 2 column papers.
 %  x = input waveform
 %  Fs = waveform sampling frequency

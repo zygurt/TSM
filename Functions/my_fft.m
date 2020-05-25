@@ -1,8 +1,9 @@
 function [ X ] = my_fft( x, N )
 %[ X ] = my_fft( x, N )
-%   My own implementation of the fft
+%   My own implementation of a recursive fft
 %   Using radix 2 for simplicity
 %   Working from https://en.wikipedia.org/wiki/Cooley%E2%80%93Tukey_FFT_algorithm
+% Tim Roberts 2018
 
 if(size(x,1)<size(x,2))
     x = x';

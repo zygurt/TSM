@@ -1,5 +1,5 @@
 function [lag_x, lag_y] = maxcrosscorrlag(x, y, low_lim, high_lim)
-% [k, lag] = maxcrosscorrlag(x, y, low_lim, high_lim)
+% [lag_x, lag_y] = maxcrosscorrlag(x, y, low_lim, high_lim)
 % Compute the location and lag of the maximum cross correlation between 2 vectors
 % x    |=============| -->
 % y                |=============|

@@ -1,5 +1,5 @@
 function [ H ] = mel_filterbank( K, high, N, fs )
-%[ H ] = mel_filterbank( K, N, fs )
+%[ H ] = mel_filterbank( K, high, N, fs )
 %   Creates mel spaced filterbanks from 0:high(Hz) and 1:N/2+1
 % K = number of filters
 % high = highest frequency to create filter banks up to

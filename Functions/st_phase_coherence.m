@@ -1,5 +1,5 @@
 function [ Frame_SPC, File_SPC  ] = st_phase_coherence( x, N )
-% [ Frame_SPC, File_SPC  ] = st_phase_coherence( input, N )
+% [ Frame_SPC, File_SPC  ] = st_phase_coherence( x, N )
 % Calculate the frame and file stereo phase coherence (SPC)
 %   x is a 2 channel signal
 %   N is the frame length.  Larger values give smoother output.

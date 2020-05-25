@@ -1,4 +1,11 @@
 function [ y ] = FFT_DIF_R2( x )                                            % entry point to the function of FFT decimation in frequency
+% Radix 2 Decimation in Frequency
+% Input : Normal Order
+% Output: Normal Order (Output Bits reversed)
+% For the any length of N (RADIX 2 DIF)
+% Done by Nevin Alex Jacob
+% Modified by Nazar Hnydyn
+% example : FFT_DIF_R2([1 2 3 4 5 ])
 p=nextpow2(length(x));                                                      % checking the size of the input array
 x=[x zeros(1,(2^p)-length(x))];                                             % complementing an array of zeros if necessary
 N=length(x);                                                                % computing the array size
@@ -16,7 +23,7 @@ for stage=1:S                                                              % sta
             x(pos+Half)=b;                                                  % saving computation of the 2-nd part
         end
     end
-Half=Half/2;                                                                % computing the next "Half" value
+    Half=Half/2;                                                                % computing the next "Half" value
 end
 y=bitrevorder(x);                                                           % performing bit-reverse operation and returning the result from function
 end

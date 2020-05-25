@@ -1,6 +1,6 @@
 function [ handle ] = LinSpectrogram( x, Fs, ms, contrast )
 % [ handle ] = LinSpectrogram( x, Fs, ms, contrast )
-% Create a spectrogram with log scaled frequency
+% Create a magnitude spectrogram with linear frequency
 % The size is set to be useful for 2 column papers.
 %  x = input waveform
 %  Fs = waveform sampling frequency
