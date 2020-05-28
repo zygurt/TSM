@@ -1,39 +1,147 @@
-# Time-Scale Modification Methods Included
+# An Objective Measure of Quality for Time-Scale Modification
 
-## Frequency Domain
+Currently under development, with more information to come on the acceptance of the paper.
 
-- Phase Vocoder (PV)
-- Identity Phase Locking Phase Vocoder (IPL)
-- Scaled Phase Locking Phase Vocoder (SPL)
-- Phavorit Identity Phase Locking Phase Vocoder (PhIPL)
-- Phavorit Scaled Phase Locking Phase Vocoder (PhSPL)
-- Mel-scale sub-band modelling (uTVS)
+## Supplementary Information
 
-## Time Domain
+When hand-crafting features, it can be useful to plot the features.  Below are animated graphs for each of the features used in the Objective Measure of Quality.
+They have been grouped according to source.
 
-- Epoch Synchronous Overlap-Add (ESOLA)
-- Fuzzy Epoch Synchronous Overlap-Add (FESOLA)
-- Synchronous Overlap-Add (SOLA)
-- Waveform Similarity Overlap-Add (WSOLA)
+### PEAQ Basic
+<video width="960" height="540" controls loop>
+ <source src="https://github.com/zygurt/TSM/raw/master/Objective_MOQ/Features/Video/Winmoddiff1b-27.m4v" type="video/mp4">
+Your browser does not support the video tag.
+</video>
 
-## Stereo
+<video width="960" height="540" controls loop>
+ <source src="https://github.com/zygurt/TSM/raw/master/Objective_MOQ/Features/Video/Avgmoddiff1b-3" type="video/mp4">
+Your browser does not support the video tag.
+</video>
 
-- Altoe Phase Vocoder
-- Bonada Phase Vocoder
-- Roberts Phase Vocoder (File Mid-Side)
-- Roberts Phase Vocoder (Frame Mid-Side)
+<video width="960" height="540" controls loop>
+ <source src="https://github.com/zygurt/TSM/raw/master/Objective_MOQ/Features/Video/Avgmoddiff2b-4" type="video/mp4">
+Your browser does not support the video tag.
+</video>
 
-## Audio Effect
+<video width="960" height="540" controls loop>
+ <source src="https://github.com/zygurt/TSM/raw/master/Objective_MOQ/Features/Video/Rmsnoiseloudb-18" type="video/mp4">
+Your browser does not support the video tag.
+</video>
 
-- Frequency Dependent Time-Scale Modification (FDTSM)
+<video width="960" height="540" controls loop>
+ <source src="https://github.com/zygurt/TSM/raw/master/Objective_MOQ/Features/Video/Bandwidthrefb-5" type="video/mp4">
+Your browser does not support the video tag.
+</video>
 
-## Batch
+<video width="960" height="540" controls loop>
+ <source src="https://github.com/zygurt/TSM/raw/master/Objective_MOQ/Features/Video/Bandwidthtestb-7" type="video/mp4">
+Your browser does not support the video tag.
+</video>
 
-Processing speed for some methods can be improved by batch processing.
-- FESOLA
-- PV
-- Phase Locking PV
-- Phavorit PV
-- SOLA
-- WSOLA
-- uTVS (Normal and version with bug used in subjective testing)
+<video width="960" height="540" controls loop>
+ <source src="https://github.com/zygurt/TSM/raw/master/Objective_MOQ/Features/Video/Bandwidthtestb_New-6" type="video/mp4">
+Your browser does not support the video tag.
+</video>
+
+<video width="960" height="540" controls loop>
+ <source src="https://github.com/zygurt/TSM/raw/master/Objective_MOQ/Features/Video/Totalnmrb-25" type="video/mp4">
+Your browser does not support the video tag.
+</video>
+
+<video width="960" height="540" controls loop>
+ <source src="https://github.com/zygurt/TSM/raw/master/Objective_MOQ/Features/Video/Reldistframesb-15" type="video/mp4">
+Your browser does not support the video tag.
+</video>
+
+<video width="960" height="540" controls loop>
+ <source src="https://github.com/zygurt/TSM/raw/master/Objective_MOQ/Features/Video/Mfpdb-12" type="video/mp4">
+Your browser does not support the video tag.
+</video>
+
+<video width="960" height="540" controls loop>
+ <source src="https://github.com/zygurt/TSM/raw/master/Objective_MOQ/Features/Video/Adbb-1" type="video/mp4">
+Your browser does not support the video tag.
+</video>
+
+<video width="960" height="540" controls loop>
+ <source src="https://github.com/zygurt/TSM/raw/master/Objective_MOQ/Features/Video/Ehsb-10" type="video/mp4">
+Your browser does not support the video tag.
+</video>
+
+### PEAQ Advanced
+<video width="960" height="540" controls loop>
+ <source src="https://github.com/zygurt/TSM/raw/master/Objective_MOQ/Features/Video/Rmsmoddiffa-16" type="video/mp4">
+Your browser does not support the video tag.
+</video>
+
+<video width="960" height="540" controls loop>
+ <source src="https://github.com/zygurt/TSM/raw/master/Objective_MOQ/Features/Video/Rmsnoiseloudasyma-17" type="video/mp4">
+Your browser does not support the video tag.
+</video>
+
+<video width="960" height="540" controls loop>
+ <source src="https://github.com/zygurt/TSM/raw/master/Objective_MOQ/Features/Video/Avglindista-2" type="video/mp4">
+Your browser does not support the video tag.
+</video>
+
+<video width="960" height="540" controls loop>
+ <source src="https://github.com/zygurt/TSM/raw/master/Objective_MOQ/Features/Video/Segmentalnmrb-24" type="video/mp4">
+Your browser does not support the video tag.
+</video>
+
+### Novel TSM Features
+<video width="960" height="540" controls loop>
+ <source src="https://github.com/zygurt/TSM/raw/master/Objective_MOQ/Features/Video/Mphnw-14" type="video/mp4">
+Your browser does not support the video tag.
+</video>
+
+<video width="960" height="540" controls loop>
+ <source src="https://github.com/zygurt/TSM/raw/master/Objective_MOQ/Features/Video/Sphnw-21" type="video/mp4">
+Your browser does not support the video tag.
+</video>
+
+<video width="960" height="540" controls loop>
+ <source src="https://github.com/zygurt/TSM/raw/master/Objective_MOQ/Features/Video/Mphmw-13" type="video/mp4">
+Your browser does not support the video tag.
+</video>
+
+<video width="960" height="540" controls loop>
+ <source src="https://github.com/zygurt/TSM/raw/master/Objective_MOQ/Features/Video/Sphmw-20" type="video/mp4">
+Your browser does not support the video tag.
+</video>
+
+<video width="960" height="540" controls loop>
+ <source src="https://github.com/zygurt/TSM/raw/master/Objective_MOQ/Features/Video/Ssmad-22" type="video/mp4">
+Your browser does not support the video tag.
+</video>
+
+<video width="960" height="540" controls loop>
+ <source src="https://github.com/zygurt/TSM/raw/master/Objective_MOQ/Features/Video/Ssmd-23" type="video/mp4">
+Your browser does not support the video tag.
+</video>
+
+<video width="960" height="540" controls loop>
+ <source src="https://github.com/zygurt/TSM/raw/master/Objective_MOQ/Features/Video/Deltap-9" type="video/mp4">
+Your browser does not support the video tag.
+</video>
+
+<video width="960" height="540" controls loop>
+ <source src="https://github.com/zygurt/TSM/raw/master/Objective_MOQ/Features/Video/Trrat-26" type="video/mp4">
+Your browser does not support the video tag.
+</video>
+
+<video width="960" height="540" controls loop>
+ <source src="https://github.com/zygurt/TSM/raw/master/Objective_MOQ/Features/Video/Hpstrrat-11" type="video/mp4">
+Your browser does not support the video tag.
+</video>
+
+### Previous Measures of Quality for TSM
+<video width="960" height="540" controls loop>
+ <source src="https://github.com/zygurt/TSM/raw/master/Objective_MOQ/Features/Video/Dm-8" type="video/mp4">
+Your browser does not support the video tag.
+</video>
+
+<video width="960" height="540" controls loop>
+ <source src="https://github.com/zygurt/TSM/raw/master/Objective_MOQ/Features/Video/Ser-19" type="video/mp4">
+Your browser does not support the video tag.
+</video>
