@@ -2,9 +2,9 @@
 
 A full list of the TSM methods contained in this repository can be found [here](https://zygurt.github.io/TSM/methods).
 
-Additional information about the Time-Scale Modification Dataset with Subjective Labels can be found [here](https://zygurt.github.io/TSM/subjective).
+Additional information about the [Time-Scale Modification Dataset with Subjective Labels](https://zygurt.github.io/TSM/subjective).
 
-Additional information about the Objective Measure of Quality for Time-Scale Modification can be found [here](https://zygurt.github.io/TSM/objective).
+Additional information about the [Objective Measure of Quality for Time-Scale Modification](https://zygurt.github.io/TSM/objective).
 
 A wide variety of additional files have also been included that may be of use beyond Time-Scale Modification.
 
