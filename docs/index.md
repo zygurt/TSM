@@ -8,6 +8,11 @@ Additional information about the [Objective Measure of Quality for Time-Scale Mo
 
 A wide variety of additional files have also been included that may be of use beyond Time-Scale Modification.
 
+## Software Requirements
+- Tested with MATLAB 2018a on Windows 10.  Everything except multi-column labels will work on earlier versions.
+- Python 3.6
+- Pytorch 1.3.1
+
 # Published work
 
 - [Stereo time-scale modification using sum and difference transformation](https://maxwell.ict.griffith.edu.au/spl/publications/papers/icspcs18_roberts_stereotsm.pdf)
