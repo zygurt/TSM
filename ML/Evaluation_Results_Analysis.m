@@ -136,8 +136,10 @@ hold off
 xlabel('Time-Scale Ratio (\beta)')
 ylabel('OMOS')
 axis([0.2 2.2 1 5])
-legend(Methods(chosen_methods),'Location','NorthOutside','NumColumns',5)
-
+% legend(Methods(chosen_methods),'Location','NorthOutside','NumColumns',5)
+overlay_text = text(1.7,1.3,'(d) All Signals');
+overlay_text.FontSize = 12;
+overlay_text.FontName = 'Times';
 set(gca,...
     'FontSize', 12, ...
     'FontName', 'Times');
@@ -271,7 +273,7 @@ set(gca,...
 
 
 %Make the plot that does the mean of each column for each method
-figure('Position',[50 50 688 386])
+figure('Position',[50 50 688 464])
 hold on
 for n = chosen_methods
    plot(TSM,mean(Music(:,:,n)),points_spec{n})%,'LineWidth',1.2)
@@ -283,7 +285,9 @@ xlabel('Time-Scale Ratio (\beta)')
 ylabel('OMOS')
 axis([0.2 2.2 1 5])
 legend(Methods(chosen_methods),'Location','NorthOutside','NumColumns',5)
-
+overlay_text = text(1.7,1.3,'(a) Music Signals');
+overlay_text.FontSize = 12;
+overlay_text.FontName = 'Times';
 set(gca,...
     'FontSize', 12, ...
     'FontName', 'Times');
@@ -364,8 +368,10 @@ hold off
 xlabel('Time-Scale Ratio (\beta)')
 ylabel('OMOS')
 axis([0.2 2.2 1 5])
-legend(Methods(chosen_methods),'Location','NorthOutside','NumColumns',5)
-
+% legend(Methods(chosen_methods),'Location','NorthOutside','NumColumns',5)
+overlay_text = text(1.7,1.3,'(b) Solo Signals');
+overlay_text.FontSize = 12;
+overlay_text.FontName = 'Times';
 set(gca,...
     'FontSize', 12, ...
     'FontName', 'Times');
@@ -449,8 +455,10 @@ hold off
 xlabel('Time-Scale Ratio (\beta)')
 ylabel('OMOS')
 axis([0.2 2.2 1 5])
-legend(Methods(chosen_methods),'Location','NorthOutside','NumColumns',5)
-
+% legend(Methods(chosen_methods),'Location','NorthOutside','NumColumns',5)
+overlay_text = text(1.7,1.3,'(c) Voice Signals');
+overlay_text.FontSize = 12;
+overlay_text.FontName = 'Times';
 set(gca,...
     'FontSize', 12, ...
     'FontName', 'Times');
