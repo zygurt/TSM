@@ -1,5 +1,5 @@
 # TSM
-Matlab Implementations of Time Scale Modification
+Matlab Implementations of Time-Scale Modification
 
 ## Documentation
 [Github.io Reference](https://zygurt.github.io/TSM/)

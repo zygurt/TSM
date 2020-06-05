@@ -2,11 +2,15 @@
 
 A full list of the TSM methods contained in this repository can be found [here](https://zygurt.github.io/TSM/methods).
 
-Additional information about the [Time-Scale Modification Dataset with Subjective Labels](https://zygurt.github.io/TSM/subjective).
+Information about [Stereo Time-Scale Modification](https://zygurt.github.io/TSM/stereo).
 
-Additional information about the [Objective Measure of Quality for Time-Scale Modification](https://zygurt.github.io/TSM/objective).
+Information about [Frequency Dependent Time-Scale Modification](https://zygurt.github.io/TSM/fdtsm).
 
-A wide variety of additional files have also been included that may be of use beyond Time-Scale Modification.
+Information about the [Time-Scale Modification Dataset with Subjective Labels](https://zygurt.github.io/TSM/subjective).
+
+Information about the [Objective Measure of Quality for Time-Scale Modification](https://zygurt.github.io/TSM/objective).
+
+A wide variety of [additional functions](https://zygurt.github.io/TSM/functions) have also been included that may be of use beyond Time-Scale Modification.
 
 ## Software Requirements
 - Tested with MATLAB 2018a on Windows 10.  Everything except multi-column labels will work on earlier versions.
