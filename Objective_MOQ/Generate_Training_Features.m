@@ -8,8 +8,6 @@ function [processing_time] = Generate_Training_Features(match_method)
 %   match_method = 'Interpolate_fd_down'
 %   match_method = 'Interpolate_to_ref'
 %   match_method = 'Interpolate_to_test'
-%   match_method = 'Combination'
-
 if nargin <1
     match_method = 'Interpolate_to_test';
 end
@@ -28,10 +26,10 @@ addpath(genpath('../Functions/')); %Additional Functions
 addpath(genpath('../Subjective_Testing/Sets/'));
 addpath(genpath('../Subjective_Testing/Source/'));
 
-% load('../Subjective_Testing/TSM_MOS_Scores.mat');
+load('../Subjective_Testing/TSM_MOS_Scores.mat');
 % load('../Subjective_Testing/TSM_MOS_Scores_29-Aug-2019.mat');
 % load('../Subjective_Testing/TSM_MOS_Scores_22-Nov-2019.mat');
-load('../Subjective_Testing/TSM_MOS_Scores.mat');
+% load('../Subjective_Testing/TSM_MOS_Scores_06-Feb-2020.mat');
 
 data_in = data;
 
@@ -42,8 +40,8 @@ fprintf(f,'Starting Processing at %s%s%s',num2str(c_date(1)),num2str(c_date(2),'
 fclose(f);
 N = length(data_in);
 
-OMOV = {'MeanOS', 'MedianOS', 'StdOS', ...
-    'MeanOS_RAW', 'MedianOS_RAW', 'StdOS_RAW', ...
+OMOV = {'MeanOS', 'MedianOS', ...
+    'MeanOS_RAW', 'MedianOS_RAW', ...
     'TSM', ...
     'WinModDiff1B', 'AvgModDiff1B', 'AvgModDiff2B', ...
     'RmsNoiseLoudB', ...
@@ -57,7 +55,8 @@ OMOV = {'MeanOS', 'MedianOS', 'StdOS', ...
     'peak_delta', 'transient_ratio', 'hpsep_transient_ratio', ...
     'MPhNW', 'SPhNW', ...
     'MPhMW', 'SPhMW', ...
-    'SS_MAD','SS_MD'};
+    'SSMAD','SSMD'};
+
 
 
 MOVs = zeros(N,size(OMOV,2));
@@ -67,16 +66,16 @@ for n = 1: length(data_in)
     side_data(n).TSM = str2double(data_in(n).TSM)/100;
     side_data(n).MeanOS = data_in(n).MeanOS;
     side_data(n).MedianOS = data_in(n).MedianOS;
-    side_data(n).StdOS = data_in(n).std;
+    % side_data(n).StdOS = data_in(n).std;
     side_data(n).MeanOS_RAW = data_in(n).MeanOS_RAW;
     side_data(n).MedianOS_RAW = data_in(n).MedianOS_RAW;
-    side_data(n).StdOS_RAW = data_in(n).std_RAW;
+    % side_data(n).StdOS_RAW = data_in(n).std_RAW;
 end
 
-% % load('MOVs_20191121Framing.mat')
-% % t = 5250:size(MOVs,1);
-% % t = 346;
-% % %
+% load('MOVs_20191121Framing.mat')
+% t = 5250:size(MOVs,1);
+% t = 346;
+% %
 % for n = 1:size(data_in,2)
 %     ref = [data_in(n).ref_loc data_in(n).ref_name];
 %     test = [data_in(n).test_loc data_in(n).test_name];
@@ -98,11 +97,11 @@ end
 % end
 %
 % c_date = clock;
-% sname = sprintf('TransientMOVs_%s%s%s%s.mat',num2str(c_date(1)),num2str(c_date(2),'%02d'),num2str(c_date(3),'%02d'),match_method);
+% sname = sprintf('TSMMOVs_%s%s%s%s.mat',num2str(c_date(1)),num2str(c_date(2),'%02d'),num2str(c_date(3),'%02d'),match_method);
 % save(sname,'MOVs','OMOV');
 % processing_time = toc;
 % fprintf('Processing Complete.  Time taken = %.3f hours\n',processing_time/3600);
-% % fprintf(f, 'Processing Complete.  Time taken = %.3f hours\n',processing_time/3600);
+% fprintf(f, 'Processing Complete.  Time taken = %.3f hours\n',processing_time/3600);
 
 
 %% ------  Parallel processing -------

@@ -8,7 +8,9 @@ function [processing_time] = Generate_Source_Features(match_method)
 %   match_method = 'Interpolate_fd_down'
 %   match_method = 'Interpolate_to_ref'
 %   match_method = 'Interpolate_to_test'
-
+if nargin <1
+    match_method = 'Interpolate_to_test';
+end
 
 % close all
 % clear all
@@ -65,7 +67,7 @@ for n = 1:size(filelist,1)
 end
 
 
-log_name = sprintf('%s_Feature_log.txt',match_method);
+log_name = sprintf('Logs/%s_Feature_log.txt',match_method);
 
 
 %Set OMOV for parallel processing
@@ -84,7 +86,7 @@ OMOV = {'MeanOS', 'MedianOS', ...
     'peak_delta', 'transient_ratio', 'hpsep_transient_ratio', ...
     'MPhNW', 'SPhNW', ...
     'MPhMW', 'SPhMW', ...
-    'SS_MAD','SS_MD'};
+    'SSMAD','SSMD'};
 
 
 
@@ -96,10 +98,10 @@ for n = 1:N
     side_data(n).TSM = filelist.TSM_per(n)/100;
     side_data(n).MeanOS = 5;
     side_data(n).MedianOS = 5;
-    side_data(n).StdOS = 1;
+    % side_data(n).StdOS = 1;
     side_data(n).MeanOS_RAW = 5;
     side_data(n).MedianOS_RAW = 5;
-    side_data(n).StdOS_RAW = 1;
+    % side_data(n).StdOS_RAW = 1;
 end
 
 % K = 10; %Number of groups to split processing into

@@ -1,4 +1,4 @@
-function SER = SER_Calc( Ref_Model, Test_Model)
+function SER = SER_Calc_OLD( Ref_Model, Test_Model)
 %SER = SER_Calc( Ref_Model, Test_Model)
 %   Measure of consistancy proposed by Griffin and Lim
 %   in LSEE_MSTFTM paper, quoted by Roucos an Wilgus in
@@ -12,14 +12,14 @@ end
 X = Ref_Model.X_MAG;
 Y = Test_Model.X_MAG;
 
-SER = 10*log10(sum(sum(Y.^2))/sum(sum((X-Y).^2)));
+SER = 10*log10(sum(sum(Y.^2))/sum(sum(X-Y).^2));
 
 %SER can go to infinity if files are identical
 % Therefore, SER needs to be bounded
-%Maximum value found experimentally was 82.8801
+%Maximum value found experimentally was 80.5852
 %For non-identical files, values above 20 are rare
-if SER > 82
-    SER=82;
+if SER > 80
+    SER=80;
 end
 
 

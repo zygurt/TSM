@@ -27,8 +27,8 @@ addpath(genpath('../Functions/')); %Additional Functions
 
 addpath(genpath('../Subjective_Testing/Sets/'));
 addpath(genpath('../Subjective_Testing/Source/'));
-Test_File_Path = '../Subjective_Testing/Eval/';  %Update this to point to your processed files
-Ref_File_Path = '../Subjective_Testing/Source/Objective/'; %Update this to point to your reference files
+Test_File_Path = '../Subjective_Testing/Eval/';
+Ref_File_Path = '../Subjective_Testing/Source/Objective/';
 %Initial load to get the number of files
 temp = rec_filelist(Test_File_Path);
 N = size(temp,1);
@@ -64,7 +64,7 @@ for n = 1:size(filelist,1)
 end
 
 
-log_name = sprintf('%s_Feature_log.txt',match_method);
+log_name = sprintf('Logs/%s_Feature_log.txt',match_method);
 
 
 %Set OMOV for parallel processing
@@ -86,8 +86,6 @@ OMOV = {'MeanOS', 'MedianOS', ...
     'SSMAD','SSMD'};
 
 
-
-
 %% ------  Parallel processing -------
 % N = height(filelist); %Calculated earlier
 
@@ -97,6 +95,8 @@ for n = 1:N
     side_data(n).MedianOS = 5;
     side_data(n).MeanOS_RAW = 5;
     side_data(n).MedianOS_RAW = 5;
+    % side_data(n).StdOS = 1;
+    % side_data(n).StdOS_RAW = 1;
 end
 
 K = 10; %Number of groups to split processing into
@@ -134,7 +134,7 @@ save(sname,'MOVs','OMOV','-v7');
 
 MOV_Table = array2table(MOVs,'VariableNames',OMOV);
 filelist = [filelist MOV_Table];
-sname = sprintf('MOVs_Eval_Table_%s%s%s%s.csv',num2str(c_date(1)),num2str(c_date(2),'%02d'),num2str(c_date(3),'%02d'),match_method);
+sname = sprintf('MOVs_Eval_%s%s%s%s.csv',num2str(c_date(1)),num2str(c_date(2),'%02d'),num2str(c_date(3),'%02d'),match_method);
 writetable(filelist,sname)
 
 processing_time = toc;
