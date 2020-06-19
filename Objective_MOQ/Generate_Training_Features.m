@@ -72,15 +72,15 @@ for n = 1: length(data_in)
     % side_data(n).StdOS_RAW = data_in(n).std_RAW;
 end
 
-% load('MOVs_20191121Framing.mat')
-% t = 5250:size(MOVs,1);
-% t = 346;
-% %
+% % load('MOVs_20191121Framing.mat')
+% % t = 5250:size(MOVs,1);
+% % t = 346;
+% % %
 % for n = 1:size(data_in,2)
 %     ref = [data_in(n).ref_loc data_in(n).ref_name];
 %     test = [data_in(n).test_loc data_in(n).test_name];
 %     fprintf('%d: %s: \n',n, test);
-%
+% 
 % %     side_data.TSM = str2double(data_in(t(n)).TSM)/100;
 % %     side_data.MeanOS = data_in(n).MeanOS;
 % %     side_data.MedianOS = data_in(n).MedianOS;
@@ -88,14 +88,14 @@ end
 % %     side_data.MeanOS_RAW = data_in(n).MeanOS_RAW;
 % %     side_data.MedianOS_RAW = data_in(n).MedianOS_RAW;
 % %     side_data.StdOS_RAW = data_in(n).std_RAW;
-%
-%
+% 
+% 
 %     [MOVs(n,:),~] = OMOQ(ref, test, side_data(n), match_method);
 % %     [MOVs(t(n),:),~] = OMOQ('Audio/Ref/My_Song_9.wav', 'Audio/Test/My_Song_9_72bpm.wav', 0.72, 0, 0, 0, match_method);
 % %     fprintf('%g\n',MOVs(t(n),5));
-%
+% 
 % end
-%
+% 
 % c_date = clock;
 % sname = sprintf('TSMMOVs_%s%s%s%s.mat',num2str(c_date(1)),num2str(c_date(2),'%02d'),num2str(c_date(3),'%02d'),match_method);
 % save(sname,'MOVs','OMOV');
