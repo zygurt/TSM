@@ -10,7 +10,7 @@ testing_var = 0;
 
 % figure %Maximize this figure before continuing
 % file_to_load = 'MOVs_Final_Interp_to_test_with_source.mat';  %TSMDB Add 88 to 5280 below
-file_to_load = 'Features/RMSE_Outliers/MOVs_Final_To_Test_Source_20200416.mat';  %TSMDB
+file_to_load = 'Features/MOVs_20200620Combine_Unique.mat';  %TSMDB
 MOV_start = 6;
 % file_to_load = 'MOVs_20191123Interpolate_to_test.mat';
 % MOV_start = 5;
@@ -22,7 +22,9 @@ M = MOVs;
 New_Figure = 3;
 O = OMOV';
 n = size(MOVs,1);
-chosen_features = 1:size(M,2);
+% chosen_features = 1:size(M,2);
+[~,OMOV_I] = sort(OMOV(6:end));
+chosen_features = [1:5,OMOV_I+5];
 % chosen_features = [1,4,7:32,37,38];
 chosen_OMOV = OMOV(chosen_features);
 % M(isinf(M(:,18)),18) = 80; %Remove INF values from old SER calculation
@@ -57,18 +59,18 @@ end
 % 
 % chosen_OMOV(42) = {'Anchor DM'};
 
-%To Test Modifications
-chosen_OMOV(5) = {'Time-Scale Ratio (\beta)'};
-chosen_OMOV(12) = {'BandwidthTestB New'};
-chosen_OMOV(24) = {'\DeltaP'};
-chosen_OMOV(25) = {'TrRat'};
-chosen_OMOV(26) = {'HPSTrRat'};
-chosen_OMOV(27) = {'MPhNW'};
-chosen_OMOV(28) = {'SPhNW'};
-chosen_OMOV(29) = {'MPhMW'};
-chosen_OMOV(30) = {'SPhMW'};
-chosen_OMOV(31) = {'SSMAD'};
-chosen_OMOV(32) = {'SSMD'};
+% %Interpolate To Test Feature Name Modifications
+% chosen_OMOV(5) = {'Time-Scale Ratio (\beta)'};
+% chosen_OMOV(12) = {'BandwidthTestB New'};
+% chosen_OMOV(24) = {'\DeltaP'};
+% chosen_OMOV(25) = {'TrRat'};
+% chosen_OMOV(26) = {'HPSTrRat'};
+% chosen_OMOV(27) = {'MPhNW'};
+% chosen_OMOV(28) = {'SPhNW'};
+% chosen_OMOV(29) = {'MPhMW'};
+% chosen_OMOV(30) = {'SPhMW'};
+% chosen_OMOV(31) = {'SSMAD'};
+% chosen_OMOV(32) = {'SSMD'};
 
 %Must be old adjustments
 % chosen_OMOV(2) = {'MeanOS Raw'};
@@ -95,12 +97,12 @@ chosen_OMOV(32) = {'SSMD'};
 % M_std = std(small_MOV(1:5280,MOV_start:end));
 % small_MOV(:,MOV_start:end) = (small_MOV(:,MOV_start:end)-M_mean)./M_std;
 
-% M_min = min(small_MOV(1:5280,MOV_start:end));
-% M_max = max(small_MOV(1:5280,MOV_start:end));
-M_min = min(small_MOV(88:end,MOV_start:end));
-M_max = max(small_MOV(88:end,MOV_start:end));
+M_min = min(small_MOV(1:5280,MOV_start:end));
+M_max = max(small_MOV(1:5280,MOV_start:end));
+% M_min = min(small_MOV(88:end,MOV_start:end));
+% M_max = max(small_MOV(88:end,MOV_start:end));
 small_MOV(:,MOV_start:end) = (small_MOV(:,MOV_start:end)-M_min)./(M_max-M_min);
-[~,I] = sort(small_MOV(:,3));
+[~,I] = sort(small_MOV(:,5));
 s = small_MOV(I,:);
 
 feat_corr_slow = abs(corr(s(1:3876,:)));

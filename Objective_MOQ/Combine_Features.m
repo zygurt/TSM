@@ -29,13 +29,13 @@ load('Features/MOVs_20200620Interpolate_to_test.mat');
 load('Features/MOVs_20200620Interpolate_to_ref.mat');
 [Comb_MOV,Comb_OMOV] = Cat_Unique(Comb_MOV,Comb_OMOV,MOVs,OMOV,'ToRef');
 load('Features/MOVs_20200620Interpolate_fd_up.mat');
-[Comb_MOV,Comb_OMOV] = Cat_Unique(Comb_MOV,Comb_OMOV,MOVs,OMOV,'ToTest');
+[Comb_MOV,Comb_OMOV] = Cat_Unique(Comb_MOV,Comb_OMOV,MOVs,OMOV,'Up');
 load('Features/MOVs_20200620Interpolate_fd_down.mat');
-[Comb_MOV,Comb_OMOV] = Cat_Unique(Comb_MOV,Comb_OMOV,MOVs,OMOV,'ToRef');
+[Comb_MOV,Comb_OMOV] = Cat_Unique(Comb_MOV,Comb_OMOV,MOVs,OMOV,'Down');
 load('Features/MOVs_20200620Framing_Test.mat');
 [Comb_MOV,Comb_OMOV] = Cat_Unique(Comb_MOV,Comb_OMOV,MOVs,OMOV,'AnchorTest');
-% load('Features/MOVs_20200620Framing_Ref.mat');
-% [Comb_MOV,Comb_OMOV] = Cat_Unique(Comb_MOV,Comb_OMOV,MOVs,OMOV,'AnchorRef');
+load('Features/MOVs_20200620Framing_Ref.mat');
+[Comb_MOV,Comb_OMOV] = Cat_Unique(Comb_MOV,Comb_OMOV,MOVs,OMOV,'AnchorRef');
 
 
 MOVs = Comb_MOV;
