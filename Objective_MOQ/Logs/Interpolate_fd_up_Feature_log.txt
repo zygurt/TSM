@@ -1,0 +1,43 @@
+Starting Processing at 20200619
+250 Completed
+
+500 Completed
+
+750 Completed
+
+1000 Completed
+
+1250 Completed
+
+1500 Completed
+
+1750 Completed
+
+2000 Completed
+
+2250 Completed
+
+2500 Completed
+
+2750 Completed
+
+3000 Completed
+
+3250 Completed
+
+3500 Completed
+
+3750 Completed
+
+4000 Completed
+
+4250 Completed
+
+4500 Completed
+
+4750 Completed
+
+5000 Completed
+
+5250 Completed
+Processing Complete.  Time taken = 19.9294 hours
