@@ -2,5 +2,9 @@
 #ML/models/FCN/2020-05-19_11-15-31TO_TEST_SOURCE/**
 #ML/logs/Eval/To_Test_MeanOS_Folder/**
 Objective_MOQ/Features/Framing_Ref/
+Objective_MOQ/Features/Framing_Test/
 Objective_MOQ/Features/Interpolate_to_ref/
+Objective_MOQ/Features/Interpolate_to_test/
+Objective_MOQ/Features/Interpolate_fd_up/
+Objective_MOQ/Features/Interpolate_fd_down/
 Subjective_Testing/Sets/
