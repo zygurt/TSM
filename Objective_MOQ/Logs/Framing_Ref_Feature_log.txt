@@ -41,3 +41,4 @@ Starting Processing at 20200619Starting Processing at 20200619Starting Processin
 
 5250 Completed
 Processing Complete.  Time taken = 5.80221 hours
+This time is less than the actual processing time, as features were calculated across multiple sessions.
