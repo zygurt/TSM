@@ -10,7 +10,10 @@ testing_var = 0;
 
 % figure %Maximize this figure before continuing
 % file_to_load = 'MOVs_Final_Interp_to_test_with_source.mat';  %TSMDB Add 88 to 5280 below
-file_to_load = 'Features/MOVs_20200620Combine_Unique.mat';  %TSMDB
+file_to_load = 'Features/MOVs_20200620Interpolate_to_test.mat';  %TSMDB
+num_files = 5280;
+% file_to_load = 'Features/MOVs_20200620ToTest_Incl_Source.mat';  %TSMDB
+% num_files = 5520;
 MOV_start = 6;
 % file_to_load = 'MOVs_20191123Interpolate_to_test.mat';
 % MOV_start = 5;
@@ -22,9 +25,9 @@ M = MOVs;
 New_Figure = 3;
 O = OMOV';
 n = size(MOVs,1);
-% chosen_features = 1:size(M,2);
-[~,OMOV_I] = sort(OMOV(6:end));
-chosen_features = [1:5,OMOV_I+5];
+chosen_features = 1:size(M,2);
+% [~,OMOV_I] = sort(OMOV(6:end));
+% chosen_features = [1:5,OMOV_I+5];
 % chosen_features = [1,4,7:32,37,38];
 chosen_OMOV = OMOV(chosen_features);
 % M(isinf(M(:,18)),18) = 80; %Remove INF values from old SER calculation
@@ -60,17 +63,17 @@ end
 % chosen_OMOV(42) = {'Anchor DM'};
 
 % %Interpolate To Test Feature Name Modifications
-% chosen_OMOV(5) = {'Time-Scale Ratio (\beta)'};
-% chosen_OMOV(12) = {'BandwidthTestB New'};
-% chosen_OMOV(24) = {'\DeltaP'};
-% chosen_OMOV(25) = {'TrRat'};
-% chosen_OMOV(26) = {'HPSTrRat'};
-% chosen_OMOV(27) = {'MPhNW'};
-% chosen_OMOV(28) = {'SPhNW'};
-% chosen_OMOV(29) = {'MPhMW'};
-% chosen_OMOV(30) = {'SPhMW'};
-% chosen_OMOV(31) = {'SSMAD'};
-% chosen_OMOV(32) = {'SSMD'};
+chosen_OMOV(5) = {'Time-Scale Ratio (\beta)'};
+chosen_OMOV(12) = {'BandwidthTestB New'};
+chosen_OMOV(24) = {'\DeltaP'};
+chosen_OMOV(25) = {'TrRat'};
+chosen_OMOV(26) = {'HPSTrRat'};
+chosen_OMOV(27) = {'MPhNW'};
+chosen_OMOV(28) = {'SPhNW'};
+chosen_OMOV(29) = {'MPhMW'};
+chosen_OMOV(30) = {'SPhMW'};
+chosen_OMOV(31) = {'SSMAD'};
+chosen_OMOV(32) = {'SSMD'};
 
 %Must be old adjustments
 % chosen_OMOV(2) = {'MeanOS Raw'};
@@ -97,8 +100,8 @@ end
 % M_std = std(small_MOV(1:5280,MOV_start:end));
 % small_MOV(:,MOV_start:end) = (small_MOV(:,MOV_start:end)-M_mean)./M_std;
 
-M_min = min(small_MOV(1:5280,MOV_start:end));
-M_max = max(small_MOV(1:5280,MOV_start:end));
+M_min = min(small_MOV(1:num_files,MOV_start:end));
+M_max = max(small_MOV(1:num_files,MOV_start:end));
 % M_min = min(small_MOV(88:end,MOV_start:end));
 % M_max = max(small_MOV(88:end,MOV_start:end));
 small_MOV(:,MOV_start:end) = (small_MOV(:,MOV_start:end)-M_min)./(M_max-M_min);
@@ -111,7 +114,7 @@ feat_corr_slow = abs(corr(s(1:3876,:)));
 % title('Slower')
 % add_labels(chosen_OMOV)
 % % set(gcf, 'Position', get(0, 'Screensize'));
-% f = sprintf('Features/Plots/Chosen_Feat_%s_Slower_Correlation',file_to_load(1:end-4));
+% f = sprintf('Plots/Chosen_Feat_%s_Slower_Correlation',file_to_load(1:end-4));
 % % print([f '.png'],'-dpng')
 % % print([f '.eps'],'-depsc')
 
@@ -122,21 +125,22 @@ feat_corr_fast = abs(corr(s(3877:end,:)));
 % title('Faster')
 % add_labels(chosen_OMOV)
 % % set(gcf, 'Position', get(0, 'Screensize'));
-% f = sprintf('Features/Plots/Chosen_Feat_%s_Faster_Correlation',file_to_load(1:end-4));
+% f = sprintf('Plots/Chosen_Feat_%s_Faster_Correlation',file_to_load(1:end-4));
 % % print([f '.png'],'-dpng')
 % % print([f '.eps'],'-depsc')
 
 
 feat_corr_split = 0.5.*(feat_corr_slow+feat_corr_fast);
 figure('Position',[0 0 880 600])
+% set(groot,'defaultAxesTickLabelInterpreter','latex');  
 imshow(feat_corr_split,'InitialMagnification','fit','colormap',parula)
 % title('Average')
-add_labels( chosen_OMOV)
+add_labels(chosen_OMOV)
 xticks([])
 % set(gcf, 'Position', get(0, 'Screensize'));
-% f = sprintf('/Features/Plots/Combination_Feat_%s_AvgSplit_Correlation',file_to_load(1:end-4));
-print('Feature_corr.png','-dpng')
-print('Feature_corr.eps','-depsc')
+% f = sprintf('/Plots/Combination_Feat_%s_AvgSplit_Correlation',file_to_load(1:end-4));
+print('Plots/PNG/Feature_corr.png','-dpng')
+print('Plots/EPSC/Feature_corr.eps','-depsc')
 
 % feature_corr = (corr(small_MOV)+1)/2;
 % feature_corr_abs = abs(corr(small_MOV));
@@ -145,7 +149,7 @@ print('Feature_corr.eps','-depsc')
 % title('Overall')
 % add_labels(chosen_OMOV)
 % % set(gcf, 'Position', get(0, 'Screensize'));
-% f = sprintf('Features/Plots/Chosen_Feat_%s_Correlation',file_to_load(1:end-4));
+% f = sprintf('Plots/Chosen_Feat_%s_Correlation',file_to_load(1:end-4));
 % % print([f '.png'],'-dpng')
 % % print([f '.eps'],'-depsc')
 
@@ -206,7 +210,7 @@ print('Feature_corr.eps','-depsc')
 % %         axis([1 5 0.2 2 min(10*log10(MOVs(:,feat))) max(10*log10(MOVs(:,feat)))])
 % %         legend({'PV', 'IPL', 'WSOLA', 'FESOLA', 'HPTSM', 'uTVS', 'Elastique', 'FuzzyTSM', 'NMFTSM'})
 % %         grid on
-% %         v = VideoWriter(['./Features/Plots/Video/10log10_' char(OMOV(feat))]);
+% %         v = VideoWriter(['./Plots/Video/10log10_' char(OMOV(feat))]);
 % %         v.FrameRate = 25;
 % %         open(v)
 % %         w = 0.5*(1 - cos(2*pi*(0:100-1)'/(100-1)));
@@ -286,7 +290,7 @@ print('Feature_corr.eps','-depsc')
 %     axis([1 5 0.2 2 min(MOVs(:,feat)) max(MOVs(:,feat))])
 %     legend({'PV', 'IPL', 'WSOLA', 'FESOLA', 'HPTSM', 'uTVS', 'Elastique', 'FuzzyTSM', 'NMFTSM'})
 %     grid on
-%     v = VideoWriter(['./Features/Plots/Video/' char(chosen_OMOV(feat))]);
+%     v = VideoWriter(['./Plots/Video/' char(chosen_OMOV(feat))]);
 %     v.FrameRate = 25;
 %     open(v)
 %     w = 0.5*(1 - cos(2*pi*(0:100-1)'/(100-1)));
@@ -384,9 +388,9 @@ print('Feature_corr.eps','-depsc')
 % end
 %
 %
-% print('Features/Plots/TIFF/Phasiness_Features_MOS', '-dtiff');
-% print('Features/Plots/EPSC/Phasiness_Features_MOS', '-depsc');
-% print('Features/Plots/PNG/Phasiness_Features_MOS', '-dpng');
+% print('Plots/TIFF/Phasiness_Features_MOS', '-dtiff');
+% print('Plots/EPSC/Phasiness_Features_MOS', '-depsc');
+% print('Plots/PNG/Phasiness_Features_MOS', '-dpng');
 %
 %
 % tsm = small_MOV(:,4);
@@ -450,9 +454,9 @@ print('Feature_corr.eps','-depsc')
 %
 % end
 %
-% print('Features/Plots/TIFF/Phasiness_Features_TSM', '-dtiff');
-% print('Features/Plots/EPSC/Phasiness_Features_TSM', '-depsc');
-% print('Features/Plots/PNG/Phasiness_Features_TSM', '-dpng');
+% print('Plots/TIFF/Phasiness_Features_TSM', '-dtiff');
+% print('Plots/EPSC/Phasiness_Features_TSM', '-depsc');
+% print('Plots/PNG/Phasiness_Features_TSM', '-dpng');
 %
 
 % %% Plot Feature comparison to MOS and TSM Ratio
@@ -461,13 +465,13 @@ print('Feature_corr.eps','-depsc')
 % clf
 % MOV_start = 4;
 % MOVs = small_MOV;
-% n = 5520;
+% n = num_files;
 % for k = MOV_start:size(MOVs,2)
 %     if(mod(k-MOV_start,New_Figure)==0)
 %         if(k>MOV_start)
-%             f = sprintf('Features/Plots/PNG/%s_Features_%d_to_%d.png',file_to_load,k-(mod(size(MOVs,2)-MOV_start,New_Figure))-1,k-1);
+%             f = sprintf('Plots/PNG/%s_Features_%d_to_%d.png',file_to_load,k-(mod(size(MOVs,2)-MOV_start,New_Figure))-1,k-1);
 %             print(f,'-dpng')
-%             f = sprintf('Features/Plots/EPSC/%s_Features_%d_to_%d.eps',file_to_load,k-(mod(size(MOVs,2)-MOV_start,New_Figure))-1,k-1);
+%             f = sprintf('Plots/EPSC/%s_Features_%d_to_%d.eps',file_to_load,k-(mod(size(MOVs,2)-MOV_start,New_Figure))-1,k-1);
 %             print(f,'-depsc')
 %             clf %Clear currrent figure
 %         end
@@ -525,9 +529,9 @@ print('Feature_corr.eps','-depsc')
 %
 % end
 % % mod(size(MOVs,2)-MOV_start,k)
-% f = sprintf('Features/Plots/PNG/%s_Features_%d_to_%d.png',file_to_load,k-(mod(size(MOVs,2)-MOV_start,New_Figure)),k);
+% f = sprintf('Plots/PNG/%s_Features_%d_to_%d.png',file_to_load,k-(mod(size(MOVs,2)-MOV_start,New_Figure)),k);
 % print(f,'-dpng')
-% f = sprintf('Features/Plots/EPSC/%s_Features_%d_to_%d.eps',file_to_load,k-(mod(size(MOVs,2)-MOV_start,New_Figure)),k);
+% f = sprintf('Plots/EPSC/%s_Features_%d_to_%d.eps',file_to_load,k-(mod(size(MOVs,2)-MOV_start,New_Figure)),k);
 % print(f,'-depsc')
 %
 % close all
@@ -542,7 +546,7 @@ print('Feature_corr.eps','-depsc')
 % % clf
 % MOV_start = 6;
 % MOVs = small_MOV;
-% n = 5520;
+% n = num_files;
 % for k = MOV_start:size(MOVs,2)
 %     subplot(1,2,1);
 %     h = histogram2(MOVs(1:n,1),MOVs(1:n,k),[75 75],'FaceColor','flat');
@@ -583,9 +587,9 @@ print('Feature_corr.eps','-depsc')
 % end
 
 % mod(size(MOVs,2)-MOV_start,k)
-% f = sprintf('Features/Plots/PNG/%s_Features_%d_to_%d.png',file_to_load,k-(mod(size(MOVs,2)-MOV_start,New_Figure)),k);
+% f = sprintf('Plots/PNG/%s_Features_%d_to_%d.png',file_to_load,k-(mod(size(MOVs,2)-MOV_start,New_Figure)),k);
 % print(f,'-dpng')
-% f = sprintf('Features/Plots/EPSC/%s_Features_%d_to_%d.eps',file_to_load,k-(mod(size(MOVs,2)-MOV_start,New_Figure)),k);
+% f = sprintf('Plots/EPSC/%s_Features_%d_to_%d.eps',file_to_load,k-(mod(size(MOVs,2)-MOV_start,New_Figure)),k);
 % print(f,'-depsc')
 
 %% Plot Phasiness Feature comparison to MOS and TSM Ratio
@@ -596,7 +600,7 @@ source = 88;
 MOV_start = 27;
 MOV_end = 30;
 MOVs = small_MOV;
-n = 5520;
+n = num_files;
 for k = MOV_start:MOV_end
     subplot(MOV_end-MOV_start+1,2,mod((k-MOV_start),MOV_end-MOV_start+1)*2+1);
     h = histogram2(MOVs(source+1:source+n,1),MOVs(source+1:source+n,k),[75 75],'FaceColor','flat');
@@ -633,9 +637,9 @@ for k = MOV_start:MOV_end
     %     clf
 end
 
-f = sprintf('Features/Plots/PNG/Phasiness_Features.png');%,file_to_load(1:end-4),strrep(char(chosen_OMOV{k}),'\',''));
+f = sprintf('Plots/PNG/Phasiness_Features.png');%,file_to_load(1:end-4),strrep(char(chosen_OMOV{k}),'\',''));
 print(f,'-dpng')
-f = sprintf('Features/Plots/EPSC/Phasiness_Features.eps');%,file_to_load(1:end-4),strrep(char(chosen_OMOV{k}),'\',''));
+f = sprintf('Plots/EPSC/Phasiness_Features.eps');%,file_to_load(1:end-4),strrep(char(chosen_OMOV{k}),'\',''));
 print(f,'-depsc')
 
 %% Plot Transient Feature comparison to MOS and TSM Ratio
@@ -645,7 +649,7 @@ figure('Position',[0 0 618 651])
 MOV_start = 24;
 MOV_end = 26;
 MOVs = small_MOV;
-n = 5520;
+n = num_files;
 for k = MOV_start:MOV_end
     subplot(MOV_end-MOV_start+1,2,mod((k-MOV_start),MOV_end-MOV_start+1)*2+1);
     h = histogram2(MOVs(source+1:source+n,1),MOVs(source+1:source+n,k),[75 75],'FaceColor','flat');
@@ -682,9 +686,9 @@ for k = MOV_start:MOV_end
     %     clf
 end
 
-f = sprintf('Features/Plots/PNG/Transient_Features.png');%,file_to_load(1:end-4),strrep(char(chosen_OMOV{k}),'\',''));
+f = sprintf('Plots/PNG/Transient_Features.png');%,file_to_load(1:end-4),strrep(char(chosen_OMOV{k}),'\',''));
 print(f,'-dpng')
-f = sprintf('Features/Plots/EPSC/Transient_Features.eps');%,file_to_load(1:end-4),strrep(char(chosen_OMOV{k}),'\',''));
+f = sprintf('Plots/EPSC/Transient_Features.eps');%,file_to_load(1:end-4),strrep(char(chosen_OMOV{k}),'\',''));
 print(f,'-depsc')
 
 %% Plot Spectral Similarity Feature comparison to MOS and TSM Ratio
@@ -694,7 +698,7 @@ figure('Position',[0 0 618 420])
 MOV_start = 31;
 MOV_end = 32;
 MOVs = small_MOV;
-n = 5520;
+n = num_files;
 for k = MOV_start:MOV_end
     subplot(MOV_end-MOV_start+1,2,mod((k-MOV_start),MOV_end-MOV_start+1)*2+1);
     h = histogram2(MOVs(source+1:source+n,1),MOVs(source+1:source+n,k),[75 75],'FaceColor','flat');
@@ -731,9 +735,9 @@ for k = MOV_start:MOV_end
     %     clf
 end
 
-f = sprintf('Features/Plots/PNG/Spec_Sim_Features.png');%,file_to_load(1:end-4),strrep(char(chosen_OMOV{k}),'\',''));
+f = sprintf('Plots/PNG/Spec_Sim_Features.png');%,file_to_load(1:end-4),strrep(char(chosen_OMOV{k}),'\',''));
 print(f,'-dpng')
-f = sprintf('Features/Plots/EPSC/Spec_Sim_Features.eps');%,file_to_load(1:end-4),strrep(char(chosen_OMOV{k}),'\',''));
+f = sprintf('Plots/EPSC/Spec_Sim_Features.eps');%,file_to_load(1:end-4),strrep(char(chosen_OMOV{k}),'\',''));
 print(f,'-depsc')
 
 
@@ -746,6 +750,7 @@ h.Visible = 'On';
 % xticklabels(chosen_OMOV)
 % xtickangle(90)
 yticks(1:size(chosen_OMOV,2))
+set(h,'TickLabelInterpreter', 'tex');
 yticklabels(chosen_OMOV)
 c = colorbar;
 c.Label.String = '|\rho|';

@@ -5,24 +5,6 @@ clear all
 clc
 addpath('./Functions/');
 addpath('../Functions/');
-% eval = Import_Evaluation_CSV('log/Eval/2020-01-30_17-24-33_EVAL/Eval.csv', 2, 1301);
-% eval2 = Import_Evaluation_CSV('log/Eval/2020-01-31_16-26-25_EVAL/Eval.csv', 2, 781);
-% eval = Import_Evaluation_CSV('log/Eval/2020-02-05_14-37-57_EVAL/Eval.csv', 2, 2081);
-% eval = Import_Evaluation_CSV('log/Eval/2020-02-04_21-30-41_EVAL/Eval.csv', 2, 2081);
-% eval = Import_Evaluation_CSV('log/Eval/2020-02-19_17-12-46_EVAL/Eval.csv', 2, 2081);
-% eval = Import_Evaluation_CSV('log/Eval/2020-02-28_15-43-14_EVAL275/Eval.csv', 2, 2081);
-
-% eval = Import_Evaluation_CSV('log/Eval/2020-02-28_15-45-43_EVAL279/Eval.csv', 2, 2081);
-% eval = Import_Evaluation_CSV('log/Eval/2020-02-28_15-46-02_EVAL519/Eval.csv', 2, 2081);
-% eval = Import_Evaluation_CSV('log/Eval/2020-02-28_15-46-37_EVAL_Other_301/Eval.csv', 2, 2081);
-% eval = Import_Evaluation_CSV('log/Eval/2020-03-06_18-06-20_EVAL_455/Eval.csv', 2, 2081);
-% eval = Import_Evaluation_CSV('log/Eval/2020-03-11_17-43-42_EVAL_Combination/Eval.csv', 2, 2081);
-
-% eval = Import_Evaluation_CSV('log/Eval/2020-04-06_15-17-14_EVAL_Combination/Eval.csv', 2, 2081); %MeanOS?
-% eval = Import_Evaluation_CSV('log/Eval/2019-04-06_15-42-07_EVAL_Combination/Eval.csv', 2, 2081); %MeanOS Raw?
-% eval = Import_Evaluation_CSV('log/Eval/2020-04-16_23-36-05_RMSE_TO_TEST_MEANOS/Eval.csv', 2, 2081); %MeanOS Raw?
-
-
 % RMSE Best models
 % eval = Import_Evaluation_CSV('log/Eval/2020-04-17_10-57-45_TO_TEST_INCL_Source_MEANOS/Eval.csv', 2, 5201); %MeanOS
 % eval = Import_Evaluation_CSV('log/Eval/2020-04-19_15-35-50_RMSE_EVAL_COMBINATION/Eval.csv', 2, 5201); %Combination
@@ -31,10 +13,11 @@ addpath('../Functions/');
 % eval = Import_Evaluation_CSV('log/Eval/2020-04-23_16-39-11_RMSE_EVAL_COMBINATION_EXTENDED/Eval.csv', 2, 5601); %Combination
 % eval = Import_Evaluation_CSV('log/Eval/2020-04-29_17-26-58_PEAQBSmall_MEANOS_Extended/Eval.csv', 2, 5601); %PEAQB SmallMeanOS
 % eval = Import_Evaluation_CSV('log/Eval/2020-05-15_15-23-28_TO_TEST_INCL_Source_MEANOS_Raw_Extended/Eval.csv', 2, 5601); %MeanOS Raw
-eval = Import_Evaluation_CSV('log/Eval/EVAL_ALL/Eval_All.csv', 2, 6001); %MeanOS
 
-% eval2 = Import_Evaluation_CSV('log/Eval/2020-02-03_15-49-20_EVAL/Eval.csv', 2, 781);
-% eval = [eval;eval2];
+% eval = Import_Evaluation_CSV('logs/Eval/EVAL_ALL/Eval_All.csv', 2, 6001);%MeanOS For Previous DM and SER
+eval = Import_Evaluation_CSV('logs/Eval/2020-06-22_09-49-25_TO_TEST_Source/Eval.csv', 2, 6001); %MeanOS
+% eval = Import_Evaluation_CSV('logs/Eval/2020-06-22_13-58-25_TO_TEST_Source_Raw/Eval.csv', 2, 6001); %MeanOS Raw
+
 category = {};
 for n = 1:height(eval)
     name = split(char(eval.RefFile(n)),'/');
@@ -83,7 +66,6 @@ for n = 1:height(eval)
 end
 
 eval = [eval category];
-% TSM = [0.3268, 0.5620, 0.7641, 0.8375, 0.9109, 1, 1.241, 1.4543];
 TSM = [0.2257,0.2635,0.3268,0.4444,0.5620,0.6631,0.7641,0.8008,0.8375,0.8742,0.9109,0.9555,1,1.1205,1.241,1.3477,1.4543,1.6272,1.8042,2.1632]; %All Eval Values
 
 % TSM = eval.TSM(2:6);  %Offset because 145 is before 32
@@ -91,7 +73,8 @@ eval = sortrows(eval,[3 4 1],'ascend');
 
 %Remove MOS for Elastique for Beta <0.25
 eval.OMOS(801:820) = NaN;
-Overall_order = [8,2,4,9,5,11,14,10,15,6,13,12,3,1,7];
+Overall_order_a = [8,2,4,9,5,11,14,10,15,6,13,12,3,1,7];
+
 Methods = {'DIPL','ESOLA','EL','FESOLA','FuzzyPV','HPTSM','IPL','NMFTSM','PV','PIPL','PSPL','SPL','WSOLA','SuTVS','uTVS'};
 % chosen_methods = [8,6,12,3,5,14,2,4,7];
 % 'PV','IPL','WSOLA','FESOLA','HPTSM','uTVS','Elastique','FuzzyPV','NMFTSM',
@@ -116,6 +99,8 @@ end
 
 method_TSM_means = mean(results,1,'omitnan');
 method_means = mean(method_TSM_means(:,[2:12 14:20],:));
+overall = reshape(method_TSM_means(:,:,:),size(method_TSM_means,2),size(method_TSM_means,3));
+[~,Overall_order] = sort(mean(overall([2:12,14:end],:),1),'ascend');
 % method_means = mean(method_TSM_means(:,[2:12 14:20],:));
 for n = 1:length(method_means)
   fprintf('%s mean: %g\n',char(Methods(n)),method_means(:,:,n))
@@ -143,11 +128,11 @@ overlay_text.FontName = 'Times';
 set(gca,...
     'FontSize', 12, ...
     'FontName', 'Times');
-print('plots/MATLAB/TIFF/Method_Means_To_Test_Incl_Source_MeanOS', '-dtiff');
+% print('plots/MATLAB/TIFF/Method_Means_To_Test_Incl_Source_MeanOS', '-dtiff');
 print('plots/MATLAB/EPSC/Method_Means_To_Test_Incl_Source_MeanOS', '-depsc');
 print('plots/MATLAB/PNG/Method_Means_To_Test_Incl_Source_MeanOS', '-dpng');
 
-figure('Position',[50 50 640 320])
+% figure('Position',[50 50 640 320])
 figure(45)
 subplot(2,2,1)
 overall = reshape(method_TSM_means(:,:,:),size(method_TSM_means,2),size(method_TSM_means,3));
@@ -291,7 +276,7 @@ overlay_text.FontName = 'Times';
 set(gca,...
     'FontSize', 12, ...
     'FontName', 'Times');
-print('plots/MATLAB/TIFF/Music_Means_To_Test_Incl_Source_MeanOS', '-dtiff');
+% print('plots/MATLAB/TIFF/Music_Means_To_Test_Incl_Source_MeanOS', '-dtiff');
 print('plots/MATLAB/EPSC/Music_Means_To_Test_Incl_Source_MeanOS', '-depsc');
 print('plots/MATLAB/PNG/Music_Means_To_Test_Incl_Source_MeanOS', '-dpng');
 
@@ -333,7 +318,7 @@ end
 % legend(Methods,'location','bestoutside')
 
 method_TSM_means_Solo = mean(Solo,1,'omitnan');
-figure('Position',[50 50 640 320])
+% figure('Position',[50 50 640 320])
 figure(45)
 subplot(2,2,3)
 overall = reshape(method_TSM_means_Solo(:,:,:),size(method_TSM_means_Solo,2),size(method_TSM_means_Solo,3));
@@ -355,7 +340,7 @@ set(gca,...
 % print('plots/MATLAB/TIFF/Solo_Image', '-dtiff');
 % print('plots/MATLAB/EPSC/Solo_Image', '-depsc');
 % print('plots/MATLAB/PNG/Solo_Image', '-dpng');
-
+fprintf('Difference between most methods at beta=0.87 for solo files is %g\n',max(overall(10,[1:7,9:end]))-min(overall(10,[1:7,9:end])))
 %Make the plot that does the mean of each column for each method
 figure('Position',[50 50 688 386])
 hold on
@@ -375,7 +360,7 @@ overlay_text.FontName = 'Times';
 set(gca,...
     'FontSize', 12, ...
     'FontName', 'Times');
-print('plots/MATLAB/TIFF/Solo_Means_To_Test_Incl_Source_MeanOS', '-dtiff');
+% print('plots/MATLAB/TIFF/Solo_Means_To_Test_Incl_Source_MeanOS', '-dtiff');
 print('plots/MATLAB/EPSC/Solo_Means_To_Test_Incl_Source_MeanOS', '-depsc');
 print('plots/MATLAB/PNG/Solo_Means_To_Test_Incl_Source_MeanOS', '-dpng');
 
@@ -416,7 +401,7 @@ end
 % legend(Methods,'location','bestoutside')
 
 method_TSM_means_Voice = mean(Voice,1,'omitnan');
-figure('Position',[50 50 640 320])
+% figure('Position',[50 50 640 320])
 figure(45) 
 subplot(2,2,4)
 overall = reshape(method_TSM_means_Voice(:,:,:),size(method_TSM_means_Voice,2),size(method_TSM_means_Voice,3));
@@ -436,7 +421,7 @@ set(gca,...
     'FontSize', 12, ...
     'FontName', 'Times');
 set(gcf, 'Position', get(0, 'Screensize'));
-print('plots/MATLAB/TIFF/Class_Means_Subplot', '-dtiff');
+% print('plots/MATLAB/TIFF/Class_Means_Subplot', '-dtiff');
 print('plots/MATLAB/EPSC/Class_Means_Subplot', '-depsc');
 print('plots/MATLAB/PNG/Class_Means_Subplot', '-dpng');
 % print('plots/MATLAB/TIFF/Voice_Image', '-dtiff');
@@ -462,14 +447,14 @@ overlay_text.FontName = 'Times';
 set(gca,...
     'FontSize', 12, ...
     'FontName', 'Times');
-print('plots/MATLAB/TIFF/Voice_Means_To_Test_Incl_Source_MeanOS', '-dtiff');
+% print('plots/MATLAB/TIFF/Voice_Means_To_Test_Incl_Source_MeanOS', '-dtiff');
 print('plots/MATLAB/EPSC/Voice_Means_To_Test_Incl_Source_MeanOS', '-depsc');
 print('plots/MATLAB/PNG/Voice_Means_To_Test_Incl_Source_MeanOS', '-dpng');
 
 % close all
 %% Create Eval.tex table
 
-addpath('..\..\External\');
+% addpath('..\..\External\');
 % load('../Subjective_Testing/Plotting_Data_RMSE.mat');
 %Create the array to be converted to a table
 
@@ -645,20 +630,24 @@ fclose(fid);
 
 %%
 %Code for saving out each eval result
-% d = input.data([1:13,15],:);
+% When using MeanOS evaluation uncomment this line
+% d = input.data;
 % save('To_Test_MeanOS.mat','d','-v7');
+% When using MeanOS Raw evaluation uncomment this line
+% d = input.data;
+% save('To_Test_MeanOS_Raw.mat','d','-v7');
 
 D = load('To_Test_MeanOS.mat');
 TO_TEST_MEANOS = D.d;
 D = load('To_Test_MeanOS_Raw.mat');
 TO_TEST_MEANOS_RAW = D.d;
-D = load('Combination_MeanOS.mat');
-COMBINATION_MEANOS = D.d;
+% D = load('Combination_MeanOS.mat');
+% COMBINATION_MEANOS = D.d;
 delta_MOS = TO_TEST_MEANOS-TO_TEST_MEANOS_RAW;
 figure('Position',[50 50 627 313])
 set(groot,'defaultAxesTickLabelInterpreter','latex'); 
-im = image(1:20,1:14,delta_MOS(:,1:20),'CDataMapping','scaled');
-set(im,'AlphaData',~isnan(delta_MOS(:,1:20)))
+im = image(1:24,1:15,delta_MOS(:,1:24),'CDataMapping','scaled');
+set(im,'AlphaData',~isnan(delta_MOS))
 colormap(parula);
 c = colorbar;
 c.Label.String = '\Delta OMOS (Norm-Raw)';
@@ -667,7 +656,7 @@ c.Label.String = '\Delta OMOS (Norm-Raw)';
 xlabel('Time-Scale Ratio (\beta)')
 % ylabel(h,'\Delta OMOS (Norm-Raw)')
 xticks(1:size(delta_MOS,2))
-xticklabels(TSM);
+xticklabels([{TSM},'Music','Solo','Voice','Overall']);
 xtickangle(45);
 yticks(1:size(delta_MOS,1))
 yticklabels(input.tableRowLabels([1:13,15]));
@@ -676,9 +665,15 @@ yticklabels(input.tableRowLabels([1:13,15]));
 set(gca,...
     'FontSize', 12, ...
     'FontName', 'Times');
-print('plots/MATLAB/TIFF/OMOS_Norm_Raw', '-dtiff');
+% print('plots/MATLAB/TIFF/OMOS_Norm_Raw', '-dtiff');
 print('plots/MATLAB/EPSC/OMOS_Norm_Raw', '-depsc');
 print('plots/MATLAB/PNG/OMOS_Norm_Raw', '-dpng');
+
+
+load('../Subjective_Testing/Plotting_Data_Anon_No_Outliers.mat');
+d = [a.mean_MOS_norm]-[a.mean_MOS];
+fprintf('The average difference between Subjective Norm and Raw scores is %g\n',mean(d));
+fprintf('The average difference between Norm and Raw Predictions is %g\n',mean(mean(delta_MOS,'omitnan')));
 
 figure('Position',[50 50 640 320])
 plot(TSM,mean(TO_TEST_MEANOS(:,1:20),'omitnan'))
@@ -690,20 +685,158 @@ axis([0.2 2.2 1 5])
 legend('Norm','Raw','Location','Best') %,'Combination'
 
 
-%% Cohen's d calculation
 
 
+%% Consideration of statistical significance between methods
+% Cohen's d calculation
+d = zeros(15,15,19);
+TT2 = zeros(15,15,19);
+T_val = zeros(15,15,19);
+for ts = 2:20
 for n = 1:15
-    for k = 1:15
-        d(n,k) = cohen(results(:,2,Overall_order(n)),results(:,2,Overall_order(k)));
+    for k = 1:n
+        d(n,k,ts) = cohen(results(:,ts,Overall_order(n)),results(:,ts,Overall_order(k)));
+        TT2(n,k,ts) = ttest2(results(:,ts,Overall_order(n)),results(:,ts,Overall_order(k)),'alpha',0.1);
+        if TT2(n,k,ts)
+            if mean(results(:,ts,Overall_order(n))) > mean(results(:,ts,Overall_order(k)))
+                T_val(n,k,ts) = 1;
+            elseif mean(results(:,ts,Overall_order(n))) < mean(results(:,ts,Overall_order(k)))
+                T_val(n,k,ts) = -1;
+            end
+        end
     end
+end
 end
 
 figure
-image(1:15,1:15,abs(d),'CDataMapping','scaled');
-colorbar;
+image(1:15,1:15,mean(abs(d),3),'CDataMapping','scaled');
+title('Mean Absolute Cohen''s d for \beta>0.25')
 xticks(1:size(Methods,2))
 xticklabels(Methods(Overall_order));
 xtickangle(90);
 yticks(1:size(Methods,2))
 yticklabels(Methods(Overall_order));
+c = colorbar;
+c.Label.String = 'Cohen''s d';
+set(gca,...
+    'FontSize', 12, ...
+    'FontName', 'Times');
+print('plots/MATLAB/EPSC/Cohens_d', '-depsc');
+print('plots/MATLAB/PNG/Cohens_d', '-dpng');
+
+figure
+image(1:15,1:15,sum(T_val,3),'CDataMapping','scaled');
+title('Sum tTest H (A>B=1, A<B=-1, Else=0) for \beta>0.25')
+xticks(1:size(Methods,2))
+xticklabels(Methods(Overall_order));
+xtickangle(90);
+xlabel('B')
+yticks(1:size(Methods,2))
+yticklabels(Methods(Overall_order));
+ylabel('A')
+c = colorbar;
+c.Label.String = '\Sigma(H=\pm1 or 0)';
+set(gca,...
+    'FontSize', 12, ...
+    'FontName', 'Times');
+print('plots/MATLAB/EPSC/Sum_tTest2_H', '-depsc');
+print('plots/MATLAB/PNG/Sum_tTest2_H', '-dpng');
+
+for n = 1:15
+    for k = 1:15
+        [ttest_H(n,k),ttest_P(n,k)] = ttest2(reshape(results(:,[2:12,14:20],Overall_order(n)),[360,1]), ...
+                                             reshape(results(:,[2:12,14:20],Overall_order(k)),[360,1]), ...
+                                             'alpha',0.05);
+        mean_diff(n,k) = method_means(1,1,Overall_order(n))-method_means(1,1,Overall_order(k));
+    end
+end
+
+figure
+image(1:15,1:15,ttest_H,'CDataMapping','scaled');
+title('tTest2(A,B) H for All Evaluation Files')
+xticks(1:size(Methods,2))
+xticklabels(Methods(Overall_order));
+xtickangle(90);
+xlabel('B')
+yticks(1:size(Methods,2))
+yticklabels(Methods(Overall_order));
+ylabel('A')
+c = colorbar;
+c.Label.String = 'H (Reject Equal Means)';
+set(gca,...
+    'FontSize', 12, ...
+    'FontName', 'Times');
+print('plots/MATLAB/EPSC/Overall_tTest2_H', '-depsc');
+print('plots/MATLAB/PNG/Overall_tTest2_H', '-dpng');
+
+figure
+image(1:15,1:15,ttest_P,'CDataMapping','scaled');
+title('tTest2(A,B) P Value for All Evaluation Files')
+xticks(1:size(Methods,2))
+xticklabels(Methods(Overall_order));
+xtickangle(90);
+xlabel('B')
+yticks(1:size(Methods,2))
+yticklabels(Methods(Overall_order));
+ylabel('A')
+c = colorbar;
+c.Label.String = 'P Value';
+
+set(gca,...
+    'FontSize', 12, ...
+    'FontName', 'Times');
+print('plots/MATLAB/EPSC/Overall_tTest2_P', '-depsc');
+print('plots/MATLAB/PNG/Overall_tTest2_P', '-dpng');
+
+figure
+image(1:15,1:15,mean_diff,'CDataMapping','scaled');
+title('Overall Mean Difference (A-B)')
+xticks(1:size(Methods,2))
+xticklabels(Methods(Overall_order));
+xtickangle(90);
+xlabel('B')
+yticks(1:size(Methods,2))
+yticklabels(Methods(Overall_order));
+ylabel('A')
+c = colorbar;
+c.Label.String = 'A-B';
+
+set(gca,...
+    'FontSize', 12, ...
+    'FontName', 'Times');
+print('plots/MATLAB/EPSC/Overall_Mean_Difference', '-depsc');
+print('plots/MATLAB/PNG/Overall_Mean_Difference', '-dpng');
+
+%Threshold
+threshold = 0.098;
+figure
+im=image(1:15,1:15,mean_diff,'CDataMapping','scaled');
+set(im,'AlphaData',abs(mean_diff)>threshold)
+title('Overall Mean Difference (A-B)>0.098')
+xticks(1:size(Methods,2))
+xticklabels(Methods(Overall_order));
+xtickangle(90);
+xlabel('B')
+yticks(1:size(Methods,2))
+yticklabels(Methods(Overall_order));
+ylabel('A')
+c = colorbar;
+c.Label.String = 'A-B';
+
+set(gca,...
+    'FontSize', 12, ...
+    'FontName', 'Times');
+print('plots/MATLAB/EPSC/Threshold_Overall_Mean_Difference', '-depsc');
+print('plots/MATLAB/PNG/Threshold_Overall_Mean_Difference', '-dpng');
+
+% %Top block
+% fprintf('Top Block\n')
+% fprintf('Minimum difference: %g\n',min(min(mean_diff(13:15,13:15))))
+% fprintf('Maximum difference: %g\n',max(max(mean_diff(13:15,13:15))))
+% 
+% fprintf('Difference to next block: %g\n',method_means(1,1,))
+% 
+% fprintf('Middle Block\n')
+% fprintf('Minimum difference: %g\n',min(min(mean_diff(6:12,6:12))))
+% fprintf('Maximum difference: %g\n',max(max(mean_diff(6:12,6:12))))
+% 

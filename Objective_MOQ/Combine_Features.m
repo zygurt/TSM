@@ -44,32 +44,49 @@
 
 
 %Create Incl Source features
+% close all
+% clear all
+% clc
+% 
+% load('Features/MOVs_20200620Interpolate_to_test.mat');
+% M = MOVs;
+% load('Features/MOVs_Source_20200620Interpolate_to_test.mat');
+% Comb_MOV = [MOVs;M];
+% MOVs = Comb_MOV;
+% save('Features/MOVs_20200620ToTest_Incl_Source.mat','MOVs','OMOV','-v7')
+% 
+% load('Features/MOVs_20200620Framing_Test.mat');
+% M = MOVs;
+% load('Features/MOVs_Source_20200620Framing_Test.mat');
+% Comb_MOV = [MOVs;M];
+% MOVs = Comb_MOV;
+% save('Features/MOVs_20200620Framing_Test_Incl_Source.mat','MOVs','OMOV','-v7')
+
+%Combine Interpolate to Test with Anchor Test Including Source
+
+% load('Features/MOVs_20200620ToTest_Incl_Source.mat');
+% M = MOVs;
+% O = OMOV;
+% load('Features/MOVs_20200620Framing_Test_Incl_Source.mat');
+% Comb_MOV = [M,MOVs(:,[6:9,13:17,22,23])];
+% Comb_OMOV = [O,OMOV(:,[6:9,13:17,22,23])];
+% MOVs = Comb_MOV;
+% OMOV = Comb_OMOV;
+% save('Features/MOVs_20200620Combine_ToTest_AnchorTest_Incl_Source.mat','MOVs','OMOV','-v7')
+
+
+%Combine Evaluation Features
 close all
 clear all
 clc
 
-load('Features/MOVs_20200620Interpolate_to_test.mat');
-M = MOVs;
-load('Features/MOVs_Source_20200620Interpolate_to_test.mat');
-Comb_MOV = [MOVs;M];
-MOVs = Comb_MOV;
-save('Features/MOVs_20200620ToTest_Incl_Source.mat','MOVs','OMOV','-v7')
-
-load('Features/MOVs_20200620Framing_Test.mat');
-M = MOVs;
-load('Features/MOVs_Source_20200620Framing_Test.mat');
-Comb_MOV = [MOVs;M];
-MOVs = Comb_MOV;
-save('Features/MOVs_20200620Framing_Test_Incl_Source.mat','MOVs','OMOV','-v7')
-
-%Combine Interpolate to Test with Anchor Test Including Source
-
-load('Features/MOVs_20200620ToTest_Incl_Source.mat');
+load('Features/MOVs_Eval_20200622Interpolate_to_test.mat');
 M = MOVs;
 O = OMOV;
-load('Features/MOVs_20200620Framing_Test_Incl_Source.mat');
+load('Features/MOVs_Eval_20200622Framing_Test.mat');
 Comb_MOV = [M,MOVs(:,[6:9,13:17,22,23])];
 Comb_OMOV = [O,OMOV(:,[6:9,13:17,22,23])];
 MOVs = Comb_MOV;
 OMOV = Comb_OMOV;
-save('Features/MOVs_20200620Combine_ToTest_AnchorTest_Incl_Source.mat','MOVs','OMOV','-v7')
+save('Features/MOVs_Eval_20200622Combine_ToTest_AnchorTest.mat','MOVs','OMOV','-v7')
+

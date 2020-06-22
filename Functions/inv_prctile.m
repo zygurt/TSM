@@ -10,12 +10,12 @@ if size(V,2)>size(V,1)
 end
 switch d
     case 'up'
-        p = 0:100;
+        p = 0:99;
     case 'down'
-        p = 100:-1:0;
+        p = 99:-1:0;
     otherwise
         fprintf('Direction unknown.  Using greater as improvement\n')
-        p = 0:100;
+        p = 0:99;
 end
 P = prctile(V,p);
 dP = P-x;

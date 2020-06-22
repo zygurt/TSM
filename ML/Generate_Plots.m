@@ -7,7 +7,7 @@ addpath('./Functions/');
 addpath('../Functions/');
 % load('../Subjective_Testing/Plotting_Data.mat')
 
-folder_name = './models/FCN/2020-04-16_20-08-31RMSE_TO_TEST_SOURCE_ADAMW/';%MeanOS
+folder_name = './models/FCN/2020-06-21_05-13-02TO_TEST_SOURCE/';%MeanOS
 distcsv = [folder_name 'Dist.csv']; 
 epochs = 800;
 Dist = Import_Dist_CSV(distcsv, 2, epochs+1);
@@ -45,7 +45,7 @@ set(gca,...
     'FontSize', 12, ...
     'FontName', 'Times');
 
-print('Plots/MATLAB/TIFF/All_Results_Hist_Mean', '-dtiff');
+% print('Plots/MATLAB/TIFF/All_Results_Hist_Mean', '-dtiff');
 print('Plots/MATLAB/EPSC/All_Results_Hist_Mean', '-depsc');
 print('Plots/MATLAB/PNG/All_Results_Hist_Mean', '-dpng');
 
@@ -87,7 +87,7 @@ set(gca,...
     'FontSize', 12, ...
     'FontName', 'Times');
 
-print('Plots/MATLAB/TIFF/All_Results_Hist_Mean', '-dtiff');
+% print('Plots/MATLAB/TIFF/All_Results_Hist_Mean', '-dtiff');
 print('Plots/MATLAB/EPSC/All_Results_Hist_Mean', '-depsc');
 print('Plots/MATLAB/PNG/All_Results_Hist_Mean', '-dpng');
 
@@ -127,7 +127,7 @@ set(gca,...
     'FontSize', 12, ...
     'FontName', 'Times');
 
-print('Plots/MATLAB/TIFF/All_Results_Hist_Mean', '-dtiff');
+% print('Plots/MATLAB/TIFF/All_Results_Hist_Mean', '-dtiff');
 print('Plots/MATLAB/EPSC/All_Results_Hist_Mean', '-depsc');
 print('Plots/MATLAB/PNG/All_Results_Hist_Mean', '-dpng');
 
@@ -167,7 +167,7 @@ set(gca,...
     'FontSize', 12, ...
     'FontName', 'Times');
 
-print('Plots/MATLAB/TIFF/All_Results_Hist_Mean', '-dtiff');
+% print('Plots/MATLAB/TIFF/All_Results_Hist_Mean', '-dtiff');
 print('Plots/MATLAB/EPSC/All_Results_Hist_Mean', '-depsc');
 print('Plots/MATLAB/PNG/All_Results_Hist_Mean', '-dpng');
 
@@ -208,9 +208,8 @@ addpath('../Functions');
 load('../Subjective_Testing/Plotting_Data_Anon_No_Outliers.mat')
 
 %MeanOS
-RMSE = 0.487;
-rho = 0.865;
-
+RMSE = 0.4903;
+rho = 0.8642;
 % fid = fopen('log_Final.txt','a');
 p = inv_prctile(rho,[u.pearson_corr_MeanOS_norm],'up');
 fprintf('PCC Percentile for To Test MeanOS is %d\n', p);
@@ -220,8 +219,8 @@ fprintf('RMSE Percentile for To Test MeanOS is %d\n', p);
 % fclose(fid);
 
 %MeanOS Raw
-RMSE = 0.478;
-rho = 0.853;
+RMSE = 0.4740;
+rho = 0.8586;
 p = inv_prctile(rho,[u.pearson_corr_mean],'up');
 fprintf('PCC Percentile for To Test MeanOS Raw is %d\n', p);
 p = inv_prctile(RMSE,[u.RMSE],'down');
@@ -229,8 +228,8 @@ fprintf('RMSE Percentile for To Test MeanOS Raw is %d\n', p);
 
 
 %Combination
-RMSE = 0.458;
-rho = 0.882;
+RMSE = 0.4774;
+rho = 0.8728;
 p = inv_prctile(rho,[u.pearson_corr_MeanOS_norm],'up');
 fprintf('PCC Percentile for Combination is %d\n', p);
 p = inv_prctile(RMSE,[u.RMSE_norm],'down');
