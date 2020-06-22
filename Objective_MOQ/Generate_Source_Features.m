@@ -139,7 +139,7 @@ save(sname,'MOVs','OMOV','-v7');
 
 MOV_Table = array2table(MOVs,'VariableNames',OMOV);
 filelist = [filelist MOV_Table];
-sname = sprintf('MOVs_Source_Table_%s%s%s%s.csv',num2str(c_date(1)),num2str(c_date(2),'%02d'),num2str(c_date(3),'%02d'),match_method);
+sname = sprintf('MOVs_Source_%s%s%s%s.csv',num2str(c_date(1)),num2str(c_date(2),'%02d'),num2str(c_date(3),'%02d'),match_method);
 writetable(filelist,sname)
 
 processing_time = toc;
