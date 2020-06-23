@@ -1,0 +1,35 @@
+
+FCN with input normalisation to training data
+
+My Seed = 49
+Feature File = data/Features/MOVs_20200620ToTest_Incl_Source.mat
+Enable Early Stopping Threshold = 150
+Early Stopping Threshold = -5e-05
+Batch Size = 4831
+Which Features = 
+[ 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23
+ 24 25 26 27 28 29 30 31]
+Training target = MeanOS_RAW
+Epochs = 800
+Training Loss Type = RMSE
+Reporting Loss Type = RMSE
+Dropout = 0
+Residual Connections = TRUE
+Activation Function: Relu
+Final Training Loss (RMSE) = 0.4000143789297914
+Final Validation Loss (RMSE) = 0.4532323740010176
+Final Testing Loss (RMSE) = 0.5512343240004574
+Final Training PCC = 0.8961762915608309
+Final Validation PCC = 0.8546167223389266
+Final Testing PCC = 0.8395600016448408
+Best Epoch = 650
+Maximum Training PCC = 0.8961762915608309
+Maximum Validation PCC = 0.8546636585999827
+Maximum Testing PCC = 0.8538502611506438
+Training Loss (RMSE) at best epoch = 0.41937211289827564
+Validation Loss (RMSE) at best epoch = 0.4565541380924121
+Testing Loss at best epoch = 0.5417274710504485
+Training PCC at best epoch = 0.8851386635882676
+Validation PCC at best epoch = 0.852255837040351
+Testing PCC at best epoch = 0.844607301271931
+Best Distance Epoch = 571

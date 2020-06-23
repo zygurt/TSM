@@ -5,15 +5,16 @@ clear all
 clc
 addpath('./Functions/');
 addpath('../Functions/');
-addpath('../../External/');
+% addpath('../../External/');
 make_video = 1;
-Eval_folder = 'log/Eval/To_Test_MeanOS_Folder/';
-best_epoch=476  ; %MeanOS
-% best_epoch=573; %MeanOS Raw
+Eval_folder = 'logs/Eval/To_Test_MeanOS_Folder/';
+best_epoch=454  ; %MeanOS
+% Eval_folder = 'logs/Eval/To_Test_MeanOS_Raw_Folder/';
+% best_epoch=571; %MeanOS Raw
 d = rec_filelist(Eval_folder);
 d = natsort(d);
 
-vid = VideoWriter('log/OMOQ_To_Test_MeanOS_v2','MPEG-4');
+vid = VideoWriter('Video/OMOQ_To_Test_MeanOS_Linewidth1.2','MPEG-4');
 vid.FrameRate = 25;
 vid.Quality = 100;
 open(vid)
@@ -23,7 +24,7 @@ overall_means = zeros(14,length(d));
 epochs = zeros(1,length(d));
 for v = 1:length(d)
     fprintf('Frame: %d, file: %s\n',v, char(d(v)));
-    eval = Import_Evaluation_CSV(char(d(v)), 2, 5601);
+    eval = Import_Evaluation_CSV(char(d(v)), 2, 6001);
 
     category = {};
     for n = 1:height(eval)
@@ -76,12 +77,12 @@ for v = 1:length(d)
     TSM = [0.2257,0.2635,0.3268,0.4444,0.5620,0.6631,0.7641,0.8008,0.8375,0.8742,0.9109,0.9555,1,1.1205,1.241,1.3477,1.4543,1.6272,1.8042,2.1632]; %All Eval Values
     % TSM = eval.TSM(2:6);  %Offset because 145 is before 32
     eval = sortrows(eval,[3 4 1],'ascend');
-    eval.OMOS(401:420) = NaN;
-    Methods = {'ESOLA','Elastique','FESOLA','FuzzyPV','HPTSM','IPL','NMFTSM','PV','Phavorit IPL','Phavorit SPL','SPL','WSOLA','uTVSSubj','uTVS'};
-    lines_spec = {'o-','o-','o-','+-','+-','+-','--','--','--','x--','x--','x--','x--'};
-    points_spec = {'o','o','o','+','+','+','.','.','.','x','x','x','x'};
-    grey_lines= {'k-', 'k--d', 'k.-', 'k--^', 'k-x', 'k-+','k--v', 'k-o', 'k-', 'k-', 'k-', 'k-*', 'k->', 'k-s'};
-    lines= {'-', '-d', '.-', '-^', '-x', '-+','-v', '-o', '-', '-', '-', '-*', '-s'};
+    eval.OMOS(801:820) = NaN;
+    Methods = {'DIPL','ESOLA','Elastique','FESOLA','FuzzyPV','HPTSM','IPL','NMFTSM','PV','Phavorit IPL','Phavorit SPL','SPL','WSOLA','uTVSSubj','uTVS'};
+%     lines_spec = {'o-','o-','o-','+-','+-','+-','--','--','--','x--','x--','x--','x--'};
+%     points_spec = {'o','o','o','+','+','+','.','.','.','x','x','x','x'};
+    grey_lines= {'k-^','k-', 'k--d', 'k.-', 'k--^', 'k-x', 'k-+','k--v', 'k-o', 'k-', 'k-', 'k-', 'k-*', 'k->', 'k-s'};
+%     lines= {'-', '-d', '.-', '-^', '-x', '-+','-v', '-o', '-', '-', '-', '-*', '-s'};
     % o+*.xs dv^ are the marker options
     m = 1;
     results = zeros(20,length(TSM),length(Methods)); % (source files,TSM,methods)
@@ -102,7 +103,7 @@ for v = 1:length(d)
     end
 %     fprintf('Methods used in Subjective Testing\n')
     % % chosen_methods = [2,3,4,5,6,7,8,12,13];
-    chosen_methods = [8,6,12,3,5,14,2,4,7];
+    chosen_methods = [9,7,13,4,6,15,3,5,8];
 %     figure('Position',[1680-500 200 500 350])
     figure(1)
     clf
@@ -121,7 +122,7 @@ for v = 1:length(d)
     else
       %green
       for n = chosen_methods
-        plot(TSM,method_TSM_means(:,:,n),grey_lines{n}, 'Color',[0.4660, 0.6740, 0.1880])%,'LineWidth',1.2)
+        plot(TSM,method_TSM_means(:,:,n),grey_lines{n}, 'Color',[0.4660, 0.6740, 0.1880],'LineWidth',1.2)
        % fprintf('%s mean: %g\n',char(Methods(n)),method_means(:,:,n))
       end
     end
@@ -140,7 +141,7 @@ for v = 1:length(d)
 %     set(gcf, 'Position', get(0, 'Screensize'));
     legend(Methods(chosen_methods),'location','northoutside','NumColumns',3)
     set(gca,...
-        'FontSize', 12, ...
+        'FontSize', 18, ...
         'FontName', 'Times');
     set(gcf, 'Position', [0 0 1920 1080])
         writeVideo(vid,getframe(gcf));

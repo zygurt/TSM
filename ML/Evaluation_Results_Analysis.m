@@ -15,8 +15,8 @@ addpath('../Functions/');
 % eval = Import_Evaluation_CSV('log/Eval/2020-05-15_15-23-28_TO_TEST_INCL_Source_MEANOS_Raw_Extended/Eval.csv', 2, 5601); %MeanOS Raw
 
 % eval = Import_Evaluation_CSV('logs/Eval/EVAL_ALL/Eval_All.csv', 2, 6001);%MeanOS For Previous DM and SER
-eval = Import_Evaluation_CSV('logs/Eval/2020-06-22_09-49-25_TO_TEST_Source/Eval.csv', 2, 6001); %MeanOS
-% eval = Import_Evaluation_CSV('logs/Eval/2020-06-22_13-58-25_TO_TEST_Source_Raw/Eval.csv', 2, 6001); %MeanOS Raw
+eval = Import_Evaluation_CSV('logs/Eval/2020-06-23_14-10-46_TO_TEST_Source/Eval.csv', 2, 6001); %MeanOS
+% eval = Import_Evaluation_CSV('logs/Eval/2020-06-23_14-11-18_TO_TEST_Source_Raw/Eval.csv', 2, 6001); %MeanOS Raw
 
 category = {};
 for n = 1:height(eval)
