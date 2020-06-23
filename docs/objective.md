@@ -24,6 +24,6 @@ The following video shows the mean objective mean opinion score for Training and
 The colour changes from red to green at the chosen epoch.
 
 <video width="960" height="540" controls loop>
- <source src="https://github.com/zygurt/TSM/blob/master/ML/Video/OMOQ_To_Test_MeanOS.m4v?raw=true" type="video/mp4">
+ <source src="https://github.com/zygurt/TSM/raw/master/ML/Video/OMOQ_To_Test_MeanOS.m4v" type="video/mp4">
 Your browser does not support the video tag.
 </video>
