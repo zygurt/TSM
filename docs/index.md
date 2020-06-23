@@ -13,7 +13,7 @@ Information about the [Objective Measure of Quality for Time-Scale Modification]
 A wide variety of [additional functions](https://zygurt.github.io/TSM/functions) have also been included that may be of use beyond Time-Scale Modification.
 
 ## Software Requirements
-- Tested with MATLAB 2018a on Windows 10.  Everything except multi-column labels will work on earlier versions.
+- MATLAB 2017a or newer
 - Python 3.6
 - Pytorch 1.3.1
 
