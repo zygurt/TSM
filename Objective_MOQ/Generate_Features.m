@@ -19,7 +19,7 @@ end
 % clc
 
 global debug_var
-debug_var = 0 ;
+debug_var = 1 ;
 
 tic
 addpath(genpath('Functions/')); %OMOQ functions
@@ -29,6 +29,8 @@ addpath(genpath('../Subjective_Testing/Sets/'));
 addpath(genpath('../Subjective_Testing/Source/'));
 Test_File_Path = '../Subjective_Testing/Eval/';
 Ref_File_Path = '../Subjective_Testing/Source/Objective/';
+% Test_File_Path = 'Audio/Test/';
+% Ref_File_Path = 'Audio/Reference/';
 %Initial load to get the number of files
 temp = rec_filelist(Test_File_Path);
 N = size(temp,1);
@@ -49,8 +51,10 @@ for n = 1:size(filelist,1)
         source = split(ref_filelist(q),'/');
         source = char(source(end));
         match = startsWith(test_name,source(1:end-4));
-        if(test_name(length(source(1:end-3)))~= '_')
-            match = 0;
+        if match
+            if(test_name(length(source(1:end-3)))~= '_' && test_name(length(source(1:end-3)))~= '.')
+                match = 0;
+            end
         end
         if ~match
             q = q+1;
@@ -63,6 +67,8 @@ for n = 1:size(filelist,1)
     filelist.method(n) = methods(end-1);
 end
 
+%If Time-scale is given in alpha,
+filelist.TSM_per = 100*(1./filelist.TSM_per);
 
 log_name = sprintf('Logs/%s_Feature_log.txt',match_method);
 
@@ -85,6 +91,10 @@ OMOV = {'MeanOS', 'MedianOS', ...
     'MPhMW', 'SPhMW', ...
     'SSMAD','SSMD'};
 
+% OMOV = {'MeanOS', 'MedianOS', ...
+%              'MeanOS_RAW', 'MedianOS_RAW', ...
+%              'TSM', ...
+%              'es', 'et', 'en'};
 
 %% ------  Parallel processing -------
 % N = height(filelist); %Calculated earlier
@@ -99,8 +109,8 @@ for n = 1:N
     % side_data(n).StdOS_RAW = 1;
 end
 
-K = 10; %Number of groups to split processing into
-% K = 4;
+% K = 10; %Number of groups to split processing into
+K = 1;
 nsize = N/K;
 MOVs = zeros(N,size(OMOV,2));
 %M = load('MOVs_20200130Interpolate_to_test.mat');

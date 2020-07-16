@@ -9,6 +9,7 @@ end
 
 %Sum the stereo test file to mono
 sig_ref = sum(sig_ref,2);
+sig_test = sum(sig_test,2);  %Signals are already a single channel, but this is a double check.
 
 %Remove any initial silence
 n = 1;

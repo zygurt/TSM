@@ -76,8 +76,8 @@ set(gca,...
     'FontName', 'Times');
 % set(gcf, 'Position', get(0, 'Screensize'));
 % print('plots/MATLAB/TIFF/RMSE_PCC_Best_All_Alignments', '-dtiff');
-print('plots/MATLAB/EPSC/RMSE_PCC_Best_All_Alignments', '-depsc');
-print('plots/MATLAB/PNG/RMSE_PCC_Best_All_Alignments', '-dpng');
+% print('plots/MATLAB/EPSC/RMSE_PCC_Best_All_Alignments', '-depsc');
+% print('plots/MATLAB/PNG/RMSE_PCC_Best_All_Alignments', '-dpng');
 
 
 
@@ -88,7 +88,7 @@ for n = 1:size(res,2)
     best_a_data(:,n) = res(n).data.Best_Final_distance;
 end
 
-[~,I] = sort(median(best_a_data),'descend');
+[~,I] = sort(min(best_a_data),'descend');
 figure('Position',[146 318 551 360])
 boxplot(best_a_data(:,I),'labels',legend_labels(I),'notch','on');
 
@@ -101,8 +101,8 @@ set(gca,...
 
 % set(gcf, 'Position', get(0, 'Screensize'));
 % print('plots/MATLAB/TIFF/Boxplot_Overall_Dist_Median_Sort', '-dtiff');
-print('plots/MATLAB/EPSC/Boxplot_Overall_Dist_Median_Sort', '-depsc');
-print('plots/MATLAB/PNG/Boxplot_Overall_Dist_Median_Sort', '-dpng');
+% print('plots/MATLAB/EPSC/Boxplot_Overall_Dist_Median_Sort', '-depsc');
+% print('plots/MATLAB/PNG/Boxplot_Overall_Dist_Median_Sort', '-dpng');
 
 % close all
 

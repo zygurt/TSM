@@ -47,9 +47,11 @@ for n = 1:size(filelist,1)
         source = split(ref_filelist(q),'/');
         source = char(source(end));
         match = startsWith(test_name,source(1:end-4));
-%         if(test_name(length(source(1:end-3)))~= '_')
-%             match = 0;
-%         end
+        if match
+            if(test_name(length(source(1:end-3)))~= '_' && test_name(length(source(1:end-3)))~= '.')
+                match = 0;
+            end
+        end
         if ~match
             q = q+1;
         end
@@ -88,7 +90,10 @@ OMOV = {'MeanOS', 'MedianOS', ...
     'MPhMW', 'SPhMW', ...
     'SSMAD','SSMD'};
 
-
+% OMOV = {'MeanOS', 'MedianOS', ...
+%              'MeanOS_RAW', 'MedianOS_RAW', ...
+%              'TSM', ...
+%              'es', 'et', 'en'};
 
 
 %% ------  Parallel processing -------
@@ -105,7 +110,7 @@ for n = 1:N
 end
 
 % K = 10; %Number of groups to split processing into
-K = 4;
+K = 1;
 nsize = N/K;
 MOVs = zeros(N,size(OMOV,2));
 %M = load('MOVs_20200130Interpolate_to_test.mat');

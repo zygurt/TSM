@@ -11,9 +11,17 @@ MeanOS_RAW = side_data.MeanOS_RAW;
 MedianOS_RAW = side_data.MedianOS_RAW;
 % StdOS_RAW = side_data.StdOS_RAW;
 
-[sig_ref, ~] = audioread(ref);
+[sig_ref, ref_fs] = audioread(ref);
 [sig_test, General.fs] = audioread(test);
-
+if ref_fs~=44100
+    %Resample
+    sig_ref = resample(sig_ref,44100,ref_fs);
+end
+if General.fs~=44100
+    %Resample
+    sig_test = resample(sig_test,44100,General.fs);
+    General.fs = 44100;
+end
 General.version = 'basic';
 General.model = 'FFT';
 General.N = 2048;
@@ -22,8 +30,6 @@ General.AdvancedStepSize = 192;
 General.TSM = TSM;
 General.Testname = test;
 
-%PEAQ Implementation
-%Basic has been implemented, Advanced is partially implemented.
 %Prepare the signal
 [sig_ref, sig_test, General] = Signal_Prep(sig_ref, sig_test, General);
 
@@ -31,14 +37,18 @@ General.Testname = test;
 [Ph_NW, Ph_MW] = Phasiness4(sig_ref, sig_test, General);
 [SS_MAD, SS_MD] = Spec_Sim(sig_ref, sig_test);
 [peak_delta, transient_ratio, hpsep_transient_ratio] = Transientness(sig_ref, sig_test, General);
+% [es,et,en] = Fuzzy_Feat(sig_ref ,sig_test, General);
 
+
+%Old
 % MusNoise_framing = Spectral_Kurtosis(sig_ref, sig_test, General, 'framing');
 % MusNoise_up = Spectral_Kurtosis(sig_ref, sig_test, General, 'up');
 % MusNoise_down = Spectral_Kurtosis(sig_ref, sig_test, General, 'down');
 % MusNoise_to_ref = Spectral_Kurtosis(sig_ref, sig_test, General, 'to_ref');
 % MusNoise_to_test = Spectral_Kurtosis(sig_ref, sig_test, General, 'to_test');
 
-
+%PEAQ Implementation
+%Basic and Advanced have been implemented
 % Ear Model
 if (exist('Ear.mat', 'file') == 2 && debug_var)
     disp('Using Previously Generated Ear Model file');
@@ -149,17 +159,17 @@ MOV.std_P_ave_f_mag = Ph_MW.std_P_ave_f_mag;
 MOV.SS_MAD = SS_MAD;
 MOV.SS_MD = SS_MD;
 
-% %Used when testing musical noise features
-% OMOV = [MeanOS, MedianOS, StdOS, ...
-%         MeanOS_RAW, MedianOS_RAW, StdOS_RAW, ...
+% %Used when testing features
+% OMOV = [MeanOS, MedianOS, ...
+%         MeanOS_RAW, MedianOS_RAW, ...
 %         TSM, ...
-%         MOV.peak_delta, MOV.transient_ratio, MOV.hpsep_transient_ratio];
+%         es, et, en];
 % 
 % 
-% OMOV_name = {'MeanOS', 'MedianOS', 'StdOS', ...
-%              'MeanOS_RAW', 'MedianOS_RAW', 'StdOS_RAW', ...
+% OMOV_name = {'MeanOS', 'MedianOS', ...
+%              'MeanOS_RAW', 'MedianOS_RAW', ...
 %              'TSM', ...
-%              'peak_delta', 'transient_ratio', 'hpsep_transient_ratio'};
+%              'es', 'et', 'en'};
 
 % OMOV = [MOV.MeanOS, MOV.MedianOS, MOV.StdOS, TSM, ...
 %     MOV.WinModDiff1B, MOV.AvgModDiff1B, MOV.AvgModDiff2B, ...
@@ -203,6 +213,7 @@ MOV.SS_MD = SS_MD;
 %     'MusNoise_to_test_l', 'MusNoise_to_test_m', 'MusNoise_to_test_u', 'MusNoise_to_test_max'};
 
 
+% %Objective Paper selection of output features
 OMOV = [MeanOS, MedianOS, ...
     MeanOS_RAW, MedianOS_RAW, ...
     TSM, ...

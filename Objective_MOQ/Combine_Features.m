@@ -43,50 +43,86 @@
 
 
 
-%Create Incl Source features
+% %Create Incl Source features
 % close all
 % clear all
 % clc
 % 
 % load('Features/MOVs_20200620Interpolate_to_test.mat');
 % M = MOVs;
-% load('Features/MOVs_Source_20200620Interpolate_to_test.mat');
+% load('Features/New_MOVs_Source_20200701Interpolate_to_test.mat');
 % Comb_MOV = [MOVs;M];
 % MOVs = Comb_MOV;
-% save('Features/MOVs_20200620ToTest_Incl_Source.mat','MOVs','OMOV','-v7')
+% save('Features/MOVs_20200702ToTest_Incl_Source.mat','MOVs','OMOV','-v7')
 % 
 % load('Features/MOVs_20200620Framing_Test.mat');
 % M = MOVs;
-% load('Features/MOVs_Source_20200620Framing_Test.mat');
+% load('Features/New_MOVs_Source_20200701Framing_Test.mat');
 % Comb_MOV = [MOVs;M];
 % MOVs = Comb_MOV;
-% save('Features/MOVs_20200620Framing_Test_Incl_Source.mat','MOVs','OMOV','-v7')
-
-%Combine Interpolate to Test with Anchor Test Including Source
-
-% load('Features/MOVs_20200620ToTest_Incl_Source.mat');
+% save('Features/MOVs_20200702Framing_Test_Incl_Source.mat','MOVs','OMOV','-v7')
+% 
+% % Combine Interpolate to Test with Anchor Test Including Source
+% 
+% load('Features/MOVs_20200702ToTest_Incl_Source.mat');
 % M = MOVs;
 % O = OMOV;
-% load('Features/MOVs_20200620Framing_Test_Incl_Source.mat');
+% load('Features/MOVs_20200702Framing_Test_Incl_Source.mat');
 % Comb_MOV = [M,MOVs(:,[6:9,13:17,22,23])];
 % Comb_OMOV = [O,OMOV(:,[6:9,13:17,22,23])];
 % MOVs = Comb_MOV;
 % OMOV = Comb_OMOV;
-% save('Features/MOVs_20200620Combine_ToTest_AnchorTest_Incl_Source.mat','MOVs','OMOV','-v7')
+% save('Features/MOVs_20200702Combine_ToTest_AnchorTest_Incl_Source.mat','MOVs','OMOV','-v7')
 
 
-%Combine Evaluation Features
+% %Combine Evaluation Features
+% close all
+% clear all
+% clc
+% 
+% load('Features/MOVs_Eval_20200622Interpolate_to_test.mat');
+% M = MOVs;
+% O = OMOV;
+% load('Features/MOVs_Eval_20200622Framing_Test.mat');
+% Comb_MOV = [M,MOVs(:,[6:9,13:17,22,23])];
+% Comb_OMOV = [O,OMOV(:,[6:9,13:17,22,23])];
+% MOVs = Comb_MOV;
+% OMOV = Comb_OMOV;
+% save('Features/MOVs_Eval_20200622Combine_ToTest_AnchorTest.mat','MOVs','OMOV','-v7')
+
+
+%Concatenate the Fuzzy Features with original OMOQ features
+
 close all
 clear all
 clc
 
-load('Features/MOVs_Eval_20200622Interpolate_to_test.mat');
+load('Features/MOVs_20200620Interpolate_to_test.mat');
 M = MOVs;
 O = OMOV;
-load('Features/MOVs_Eval_20200622Framing_Test.mat');
-Comb_MOV = [M,MOVs(:,[6:9,13:17,22,23])];
-Comb_OMOV = [O,OMOV(:,[6:9,13:17,22,23])];
+load('Features/Fuzzy_Feat_MOVs_20200703Interpolate_to_test.mat');
+Comb_MOV = [M,MOVs(:,6:8)];
+Comb_OMOV = [O,OMOV(:,6:8)];
 MOVs = Comb_MOV;
 OMOV = Comb_OMOV;
-save('Features/MOVs_Eval_20200622Combine_ToTest_AnchorTest.mat','MOVs','OMOV','-v7')
+save('Features/MOVs_20200703ToTest_CatFuzzyFeat.mat','MOVs','OMOV','-v7')
+
+
+load('Features/Fuzzy_Feat_MOVs_20200703Interpolate_to_test.mat');
+M = MOVs;
+load('Features/Fuzzy_Feat_MOVs_Source_20200703Interpolate_to_test.mat');
+Comb_MOV = [MOVs;M];
+MOVs = Comb_MOV;
+save('Features/MOVs_20200703_FuzzyFeat_Incl_Source.mat','MOVs','OMOV','-v7')
+
+load('Features/MOVs_20200702ToTest_Incl_Source.mat');
+M = MOVs;
+O = OMOV;
+load('Features/MOVs_20200703_FuzzyFeat_Incl_Source.mat');
+Comb_MOV = [M,MOVs(:,6:8)];
+Comb_OMOV = [O,OMOV(:,6:8)];
+MOVs = Comb_MOV;
+OMOV = Comb_OMOV;
+save('Features/MOVs_20200703ToTest_Incl_Source_CatFuzzyFeat.mat','MOVs','OMOV','-v7')
+
 

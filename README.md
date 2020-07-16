@@ -20,3 +20,19 @@ Matlab Implementations of Time-Scale Modification
 - MATLAB 2017a or newer.
 - Python 3.6
 - Pytorch 1.3.1
+
+## Citations
+
+This repository covers multiple published papers.  Please use the following references when citing this work.
+
+[1] T. Roberts and K.K. Paliwal, (2018) "Stereo Time-Scale Modification Using Sum and Difference Transformation," In 2018 12th International Conference on Signal Processing and Communication Systems (ICSPCS). IEEE. https://doi.org/10.1109/icspcs.2018.8631776.
+
+[2] T. Roberts and K.K. Paliwal, (2018) "Frequency Dependent Time-Scale Modification," In 2018 12th International Conference on Signal Processing and Communication Systems (ICSPCS). IEEE. https://doi.org/10.1109/icspcs.2018.8631764.
+
+[3] T. Roberts and K.K. Paliwal, (2019) "Time-Scale Modification Using Fuzzy Epoch-Synchronous Overlap-Add (FESOLA)," In 2019 IEEE Workshop on Applications of Signal Processing to Audio and Acoustics (WASPAA) (pp. 31-34). IEEE. https://doi.org/10.1109/waspaa.2019.8937258.
+
+[4] T. Roberts and K.K. Paliwal, (2020) A time-scale modification dataset with subjective quality labels, The Journal of the Acoustical Society of America 148(1) 201-210, https://doi.org/10.1121/10.0001567.
+
+[5] Timothy Roberts, "A Time-Scale Modification Dataset with Subjective Quality Labels", IEEE Dataport, 2020. [Online]. Available: http://dx.doi.org/10.21227/ny9p-rv41. Accessed: Jul. 15, 2020.
+
+[6] T. Roberts and K.K. Paliwal, (2020) An Objective Measure of Quality for Time-Scale Modification of Audio, arXiv preprint arXiv:2006.06153.

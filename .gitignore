@@ -9,4 +9,5 @@ Objective_MOQ/Features/Interpolate_fd_up/
 Objective_MOQ/Features/Interpolate_fd_down/
 Subjective_Testing/Sets/
 ML\data\**
-
+External/**
+Subjective_Testing/Eval/**
