@@ -33,6 +33,6 @@ This repository covers multiple published papers.  Please use the following refe
 
 [4] T. Roberts and K.K. Paliwal, (2020) A time-scale modification dataset with subjective quality labels, The Journal of the Acoustical Society of America 148(1) 201-210, https://doi.org/10.1121/10.0001567.
 
-[5] Timothy Roberts, "A Time-Scale Modification Dataset with Subjective Quality Labels", IEEE Dataport, 2020. [Online]. Available: http://dx.doi.org/10.21227/ny9p-rv41. Accessed: Jul. 15, 2020.
+[5] T. Roberts, "A Time-Scale Modification Dataset with Subjective Quality Labels", IEEE Dataport, 2020. [Online]. Available: http://dx.doi.org/10.21227/ny9p-rv41. Accessed: Jul. 15, 2020.
 
 [6] T. Roberts and K.K. Paliwal, (2020) An Objective Measure of Quality for Time-Scale Modification of Audio, arXiv preprint arXiv:2006.06153.
