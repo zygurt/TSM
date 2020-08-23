@@ -10,15 +10,15 @@ function [ y ] = WSOLA_batch( x, N, TSM, filename )
 % Tim Roberts - Griffith University 2018
 num_chan = size(x,2);
 if(num_chan > 1)
-    disp('This WSOLA method currently only works for mono signals.');
+    disp('This WSOLA method currently only works for mono signals. Converting to Mono.');
     disp('Max cross correlation lag is single channel only.');
-    y = 0;
-    return;
+    x = sum(x,2);
 end
+num_chan = size(x,2);
 
 for t = 1:length(TSM)
     tsm = TSM(t);
-    
+
     alpha = 1/tsm;
     w = 0.5*(1 - cos(2*pi*(0:N-1)'/(N-1))); %hanning window
     wn = repmat(w,1,num_chan);
@@ -26,15 +26,15 @@ for t = 1:length(TSM)
     tol = N/4;              %Tolerance
     Sa = round(Ss/alpha);   %Analysis shift
     y = zeros(ceil(length(x)*alpha),num_chan); %1.1 is to allow for non exct time scaling
-    
-    
+
+
     low_lim = N/4;            %Cross correlation low limit
     high_lim = N/8;           %Cross correlation high limit
-    
+
     y(1:N,:) = x(1:N,:).*wn;     %Copy the first frame.
     nat_prog = x(Ss+1:Ss+N,:); %Set the first natural progression
     M = 2;                  %Frame number
-    
+
     while M*Sa<length(x)-(tol+2*N)
         %Create the new input grain
         in_grain_low = M*Sa+1-tol;
@@ -59,7 +59,7 @@ for t = 1:length(TSM)
                 in_grain = [in_grain ; zeros(N+2*tol-length(in_grain),num_chan)];
             end
         end
-        
+
         %Compute Correlation between input grain and the natural progression
         %from the previous overlapped grain
         [x_lag,y_lag] = maxcrosscorrlag(in_grain, nat_prog, low_lim, high_lim);
@@ -88,11 +88,10 @@ for t = 1:length(TSM)
         %Increment frame number
         M = M+1;
     end
-    
+
     y = y/max(max(abs(y)));
-    
+
     f = [filename(1:end-4) sprintf('_WSOLA_%g',tsm*100) '.wav'];
     audiowrite(f,y,fs);
 end
 end
-

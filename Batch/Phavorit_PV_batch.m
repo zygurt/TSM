@@ -8,6 +8,12 @@ function [ y_out ] = Phavorit_PV_batch( x, N, TSM, PL, filename )
 
 % Tim Roberts - Griffith University 2018
 for t = 1:length(TSM)
+    switch PL
+        case 0
+            fprintf('%s, Phavorit IPL, %g%%\n',filename, TSM(t)*100);
+        case 1
+            fprintf('%s, Phavorit SPL, %g%%\n',filename, TSM(t)*100);
+    end
     tsm = TSM(t);
     %Calculate the number of channels
     num_chan = size(x,2);
@@ -41,7 +47,7 @@ for t = 1:length(TSM)
     ptr_output = 1;
     ptr_end = length(x)-N; %When ptr_in = ptr_end, stop
     frame = 1;
-    
+
     while(ptr_input<ptr_end)
         frame_current = x(ptr_input:ptr_input+N-1,:).*wn;
         FRAME_CURRENT = fft(frame_current);
@@ -49,7 +55,7 @@ for t = 1:length(TSM)
         %Calculate Magnitude and phase
         mag = abs(FRAME_CROP);
         frame_phase = angle(FRAME_CROP);
-        
+
         switch PL
             case 0
                 %Code for Identity Phase Locking (Laroche and Dolson 1999)
@@ -84,7 +90,7 @@ for t = 1:length(TSM)
                 %Convert Y back to full length FFT
                 %Create y_frame
                 y_frame = real(ifft([Y;conj(Y(end-1:-1:2,:))])).*wn;
-                
+
             case 1
                 %Code for Scaled Phase Locking
                 %Find peaks in current frame
@@ -122,7 +128,7 @@ for t = 1:length(TSM)
                         pp(c).ru = p(c).ru;
                         prev_X_phase = frame_phase;
                         prev_Y_phase(:,c) = angle(Y(:,c));
-                        
+
                     else
                         Y = FRAME_CROP;
                         pp(c).a = p(c).pa;
@@ -135,7 +141,7 @@ for t = 1:length(TSM)
                 %Convert Y back to full length FFT
                 %Create y_frame
                 y_frame = real(ifft([Y;conj(Y(end-1:-1:2,:))])).*wn;
-                
+
             otherwise
                 error('Incorrect phase locking option')
         end
@@ -151,7 +157,7 @@ for t = 1:length(TSM)
     %toc
     %Normalise the output
     y_out = y(N+1:end,:)/max(max(abs(y)));
-    
+
     switch PL
         case 0
             f = [filename(1:end-4) sprintf('_Phavorit_IPL_%g',tsm*100) '.wav'];

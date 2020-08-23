@@ -14,6 +14,13 @@ function [ y ] = uTVS_batch( x, fs, TSM, filename )
 %Generate Instantaneous Amplitude (IA) and Instantaneous Phase (IP) without
 %the use for fft, which assumes quasi-stationarity
 
+num_chan = size(x,2);
+if(num_chan > 1)
+    disp('This uTVS method currently only works for mono signals. Converting to mono.');
+    x = sum(x,2);
+end
+num_chan = size(x,2);
+
 %Initial variables
 K = 2*floor(fs/1000);   %32 for fs=16kHz
 N = 2^nextpow2(fs/8);   %2048 for fs=16kHz
@@ -77,7 +84,7 @@ phik = unwrap(angle(xak_h));
 for t = 1:length(TSM)
     tsm = TSM(t);
     a = 1/tsm;
-    
+
     %Time scale through interpolation
     ak_hat = zeros(ceil(length(ak)*a),K);
     phik_hat = zeros(ceil(length(phik)*a),K);
@@ -106,10 +113,10 @@ for t = 1:length(TSM)
     y = resample(x_hat_sum,1,oversample);
     %Normalise the output
     y=y/max(abs(y));
-    
+
     f = [filename(1:end-4) sprintf('_muTVS_%g',tsm*100) '.wav'];
     audiowrite(f,y,fs);
-    
+
 end
 
 disp('File Processing Complete');

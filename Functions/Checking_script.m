@@ -440,10 +440,10 @@ addpath('../Time_Domain');
 % pathInput = '../Audio_test_files/';
 % % filename = 'Male_Speech.wav';
 % filename = 'Solo_flute_2.wav';
-% 
+%
 % [x,fs] = audioread([pathInput filename]);
 % x = sum(x,2)/max(sum(x,2));
-% 
+%
 % y = ZFR(x, 1, fs, 1);
 % % s, N_CALC, fs, N_scale
 % figure('Position',[0 0 500 300])
@@ -463,46 +463,46 @@ addpath('../Time_Domain');
 
 %% -------------ESOLA Testing---------------------
 
-pathInput = '../Audio_test_files/';
-%  filename = 'Male_Speech_ESOLA.wav';
-%   filename = 'mrds0_sx447.wav';
-% filename = 'fadg0_sa1.wav';
-% filename = 'female_waar.wav';
-% filename = 'Wash.wav';
-%filename = 'Female_opera_excerpt.wav';
-% filename = 'Male_Speech.wav';
-% filename = 'Alto_Sax_08.wav';
-% filename = 'Drums_2.wav';
-% filename = 'Mexican_Flute_02.wav';
-filename = 'Solo_flute_2.wav';
-
-[x,fs] = audioread([pathInput filename]);
-x = sum(x,2)/max(sum(x,2));
-TSM = 0.8;
-ms = 20;
-N = ms*(10^-3)*fs;
-
-y_ESOLA = ESOLA(x, N, TSM, fs);
-[y_FESOLA, N_ZFR] = FESOLA(x, N, TSM, fs);
-
-figure
-subplot(211)
-% soundsc(x,fs)
-plot(x)
-title('Original');
-% pause((length(x)/fs)*1.1);
-
-subplot(212)
-soundsc(y_ESOLA,fs)
-plot(y_ESOLA)
-title('ESOLA');
-
-%  audiowrite([filename(1:end-4) '_k2_20ms_50per.wav'],y_ESOLA,fs);
-
-% LogSpectrogram(x,fs,50,2);
-% title('Original')
-% LogSpectrogram(y_ESOLA,fs,50,2);
+% pathInput = '../Audio_test_files/';
+% %  filename = 'Male_Speech_ESOLA.wav';
+% %   filename = 'mrds0_sx447.wav';
+% % filename = 'fadg0_sa1.wav';
+% % filename = 'female_waar.wav';
+% % filename = 'Wash.wav';
+% %filename = 'Female_opera_excerpt.wav';
+% % filename = 'Male_Speech.wav';
+% % filename = 'Alto_Sax_08.wav';
+% % filename = 'Drums_2.wav';
+% % filename = 'Mexican_Flute_02.wav';
+% filename = 'Solo_flute_2.wav';
+%
+% [x,fs] = audioread([pathInput filename]);
+% x = sum(x,2)/max(sum(x,2));
+% TSM = 0.8;
+% ms = 20;
+% N = ms*(10^-3)*fs;
+%
+% y_ESOLA = ESOLA(x, N, TSM, fs);
+% [y_FESOLA, N_ZFR] = FESOLA(x, N, TSM, fs);
+%
+% figure
+% subplot(211)
+% % soundsc(x,fs)
+% plot(x)
+% title('Original');
+% % pause((length(x)/fs)*1.1);
+%
+% subplot(212)
+% soundsc(y_ESOLA,fs)
+% plot(y_ESOLA)
 % title('ESOLA');
+%
+% %  audiowrite([filename(1:end-4) '_k2_20ms_50per.wav'],y_ESOLA,fs);
+%
+% % LogSpectrogram(x,fs,50,2);
+% % title('Original')
+% % LogSpectrogram(y_ESOLA,fs,50,2);
+% % title('ESOLA');
 
 %% ------------Checking linear interpolation---------
 
@@ -550,23 +550,27 @@ title('ESOLA');
 
 %% -------------uTVS Testing---------------------
 
-% pathInput = '../Subjective_Testing/AudioIn/Music/';
-% filename = 'C_minor_Aeolian.wav';
-% %filename = 'mrds0_sx447.wav';
-%
-% [x,fs] = audioread([pathInput filename]);
-% x = sum(x,2)/max(sum(x,2));
-% TSM = 0.4427;
-%
-% y_uTVS = uTVS(x, fs, TSM);
-%
+pathInput = '../Subjective_Testing/Source/Objective/';
+filename = 'Alto_Sax_15.wav';
+%filename = 'mrds0_sx447.wav';
+
+[x,fs] = audioread([pathInput filename]);
+% x = rand(100000,1)*2-1;
+% fs = 44100;
+x = sum(x,2)/max(abs(sum(x,2)));
+TSM = [0.9842,1.312];
+% y = uTVS(x, fs, TSM(1));
+y = uTVS_batch(x, fs, TSM, 'Alto_Sax_15');
+
+% TSM = linspace(0.9, 1.1, 20 );
+% [~] = uTVS_batch( x, fs, TSM, 'White_noise' );
 % figure
 % subplot(211)
 % plot(x)
 % title('Original');
 %
 % subplot(212)
-% %     soundsc(y_muTVS,fs)
+% soundsc(y_uTVS,fs)
 % plot(y_uTVS)
 % title('uTVS');
 %
@@ -574,9 +578,9 @@ title('ESOLA');
 % t = sprintf('uTVS at %g percent',TSM*100);
 % title(t);
 % f = sprintf('uTVS_%g_percent',TSM*100);
-% print(f,'-dpng');
+% % print(f,'-dpng');
 % f = [f '.wav'];
-% audiowrite(f,y_uTVS,fs);
+% % audiowrite(f,y_uTVS,fs);
 
 %% ------------------Checking filterbank.m------------------
 % N = 2048;
@@ -795,7 +799,7 @@ title('ESOLA');
 % % TSM = 0.3838;
 % % TSM=1;
 % ms = 20;
-% 
+%
 % for n = 3:numel(d)
 %     [x,fs] = audioread([pathInput d(n).name]);
 %     x = sum(x,2)/max(sum(x,2));
@@ -824,7 +828,7 @@ title('ESOLA');
 % General.fs = 44100;
 % % [x,General.fs] = audioread('../Audio_test_files/Sine_Fade_Left.wav');
 % % x = mean(x,2);
-% 
+%
 % % x = rand(4*General.fs,1);
 % t = (1:(4*General.fs))/General.fs;
 % f = 1000;
@@ -832,12 +836,10 @@ title('ESOLA');
 % x = [zeros(General.fs,1) ; x ; zeros(General.fs,1)];
 % % x = x-mean(x);
 % y = PV(x,2048,General.TSM);
-% 
+%
 % addpath(genpath('../Objective_MOQ/Functions'));
-% 
-% 
+%
+%
 % [x, y, General] = Signal_Prep(x, y, General);
-% 
+%
 % [p_ave, p_std] = Phasiness2(x,y,General);
-
-
