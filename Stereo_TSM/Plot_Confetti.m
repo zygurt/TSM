@@ -26,7 +26,7 @@ min_val = 2;
 
 %% Plot all of the coherence values in the same figure
 % This section places overall stereo phase coherence for all methods on 1 graph.
-figure
+figure('Position',[680 508 889 590]);
 hold on
 for k=1:number_of_files
     for n=1:time_scales
@@ -36,10 +36,10 @@ for k=1:number_of_files
         end
         plot(x,original(k).C_o,'k.');
     end
-    line([(k-1)*time_scales+n+0.5 (k-1)*time_scales+n+0.5],[-1 1]);
+    line([(k-1)*time_scales+n+0.5 (k-1)*time_scales+n+0.5],[-1 1],'Color','black','LineStyle',':');
 end
-set(gca, 'FontName', 'Times New Roman')
-title('Mean Stereo Phase Coherence at Multiple Time-Scale Ratios');
+% set(gca, 'FontName', 'Times New Roman')
+% title('Mean Stereo Phase Coherence at Multiple Time-Scale Ratios');
 ylabel('Stereo Phase Coherence');
 xlabel('File and time scale. Vertical lines show file distinction.');
 
@@ -54,11 +54,17 @@ set(gca, 'XLim', [0 number_of_files*time_scales],  'YLim', [-1 1],...
 axis tight;
 xtickangle(90);
 
+set(gca,...
+    'FontSize', 12, ...
+    'FontName', 'Times');
 hold off
-legend(plotting_methods,'Location','NorthEastOutside');
+legend(plotting_methods,'Location','NorthOutside','numcolumns',5);
+
+print('Plots/SPC_Confetti', '-depsc');
+print('Plots/SPC_Confetti', '-dpng');
 
 %% Plot all Balance values on the same figure
-figure
+figure('Position',[680 508 889 590]);
 hold on
 for k=1:number_of_files
     for n=1:time_scales
@@ -68,10 +74,10 @@ for k=1:number_of_files
         end
         plot(x,original(k).B_o,'k.');
     end
-    line([(k-1)*time_scales+n+0.5 (k-1)*time_scales+n+0.5],[-1 1]);
+    line([(k-1)*time_scales+n+0.5 (k-1)*time_scales+n+0.5],[-1 1],'Color','black','LineStyle',':');
 end
-set(gca, 'FontName', 'Times New Roman')
-title('Mean Balance at Multiple Time-Scale Ratios');
+% set(gca, 'FontName', 'Times New Roman')
+% title('Mean Balance at Multiple Time-Scale Ratios');
 ylabel('Balance');
 xlabel('File and time scale. Vertical lines show file distinction.');
 
@@ -86,9 +92,14 @@ set(gca, 'XLim', [0 number_of_files*time_scales],  'YLim', [-1 1],...
 axis([0 (number_of_files-1)*time_scales+time_scales+0.5 -0.081 0.05]);
 xtickangle(90);
 
+set(gca,...
+    'FontSize', 12, ...
+    'FontName', 'Times');
 hold off
-legend(plotting_methods,'Location','NorthEastOutside');
+legend(plotting_methods,'Location','NorthOutside','numcolumns',5);
 
+print('Plots/Balance_Confetti', '-depsc');
+print('Plots/Balance_Confetti', '-dpng');
 
 
 %% Plot all of the files, time scales and methods

@@ -67,7 +67,7 @@ num_labels = length(labels);
 fig = figure;
 bar(1:num_labels,ave_st_coherence, 0.4, 'FaceColor', [0.7 0.7 0.7]);
 set(gca, 'FontName', 'Times New Roman')
-set(gcf, 'Position', [100, 100, 675, 430]);
+set(gcf, 'Position', [258 305 576 334]);
 set(gca, 'XLim', [0 num_labels+1],...
     'XTick', 1:num_labels,...
     'XTickLabel', labels);
@@ -78,17 +78,21 @@ for i = 1:size(st_C_dsim,2)
     line([i-inc i+inc], -1*[std_st_coherence(i) std_st_coherence(i)]+ave_st_coherence(i), 'Color', 'k', 'LineWidth', 1.5);
 end
 str = sprintf('Mean Stereo Phase Coherence Dissimilarity');
-title(str, 'FontWeight', 'Normal')
+% title(str, 'FontWeight', 'Normal')
 xlabel('Stereo Algorithm');
 ylabel('L2 Norm');
 xtickangle(30);
-% print(fig, ['Plots/Mean_Features' str ],'-depsc', '-r0')
-% print(fig, ['Plots/Mean_Features' str ],'-dpng', '-r0')
+set(gca,...
+    'FontSize', 12, ...
+    'FontName', 'Times');
+
+print(fig, ['Plots/Mean_Features/' str ],'-depsc', '-r0')
+print(fig, ['Plots/Mean_Features/' str ],'-dpng', '-r0')
 
 fig = figure;
 bar(1:num_labels,ave_st_centre, 0.4, 'FaceColor', [0.7 0.7 0.7])
 set(gca, 'FontName', 'Times New Roman')
-set(gcf, 'Position', [100, 100, 675, 430]);
+set(gcf, 'Position', [258, 305, 576, 334]);
 set(gca, 'XLim', [0 num_labels+1],...
     'XTick', 1:num_labels,...
     'XTickLabel', labels);
@@ -100,11 +104,14 @@ for i = 1:size(st_C_dsim,2)
 end
 
 str = sprintf('Mean Stereo Balance Dissimilarity');
-title(str, 'FontWeight', 'Normal')
+% title(str, 'FontWeight', 'Normal')
 xlabel('Stereo Algorithm');
 ylabel('L2 Norm');
 xtickangle(30);
-% print(fig, ['Plots/Mean_Features' str ],'-depsc', '-r0')
-% print(fig, ['Plots/Mean_Features' str ],'-dpng', '-r0')
+set(gca,...
+    'FontSize', 12, ...
+    'FontName', 'Times');
+print(fig, ['Plots/Mean_Features/' str ],'-depsc', '-r0')
+print(fig, ['Plots/Mean_Features/' str ],'-dpng', '-r0')
 
 disp('Feature Averaging and Plotting Complete')

@@ -1,18 +1,17 @@
-% Plot the Features and log features
-
 close all
 clear all
 clc
 
-%% Feature Correlation Plot
+% Feature Correlation Plot
 
 testing_var = 0;
 
 % figure %Maximize this figure before continuing
 % file_to_load = 'MOVs_Final_Interp_to_test_with_source.mat';  %TSMDB Add 88 to 5280 below
-file_to_load = 'Features/MOVs_20200620Interpolate_to_test.mat';  %TSMDB
+file_to_load = 'Features/MOVs_20200820Interpolate_to_test_Std.mat';
+% file_to_load = 'Features/MOVs_20200620Interpolate_to_test.mat';  %TSMDB
 % file_to_load = 'Features/MOVs_20200703ToTest_Incl_Source_CatFuzzyFeat.mat';  %Fuzzy Features
-num_files = 5280;
+num_files = 2250;
 % file_to_load = 'Features/MOVs_20200620ToTest_Incl_Source.mat';  %TSMDB
 % num_files = 5520;
 MOV_start = 6;
@@ -32,7 +31,8 @@ chosen_features = 1:size(M,2);
 % chosen_features = [1,4,7:32,37,38];
 chosen_OMOV = OMOV(chosen_features);
 % M(isinf(M(:,18)),18) = 80; %Remove INF values from old SER calculation
-small_MOV = M(:,chosen_features);
+% M(isnan(M(:,37)),37:39) = 0; %Remove INF values from old SER calculation
+small_MOV = M(1:num_files,chosen_features);
 
 for n = 1:size(chosen_OMOV,2)
     chosen_OMOV(n) = {strrep(char(chosen_OMOV(n)),'_',' ')};
@@ -105,42 +105,56 @@ M_min = min(small_MOV(1:num_files,MOV_start:end));
 M_max = max(small_MOV(1:num_files,MOV_start:end));
 % M_min = min(small_MOV(88:end,MOV_start:end));
 % M_max = max(small_MOV(88:end,MOV_start:end));
-small_MOV(:,MOV_start:end) = (small_MOV(:,MOV_start:end)-M_min)./(M_max-M_min);
+small_MOV(:,MOV_start:end) = (small_MOV(:,MOV_start:end)-repmat(M_min,[size(small_MOV,1),1]))./repmat(M_max-M_min,[size(small_MOV,1),1]);
 [~,I] = sort(small_MOV(:,5));
 s = small_MOV(I,:);
 
-feat_corr_slow = abs(corr(s(1:3876,:)));
+% feat_corr_slow = abs(corr(s(1:3876,:))); %FULL TSMDB
+feat_corr_slow = abs(corr(s(1:1577,:)));
 figure('Position',[0 0 880 600])
 imshow(feat_corr_slow,'InitialMagnification','fit','colormap',parula)
-% title('Slower')
-add_labels(chosen_OMOV)
-xticks([])
+title('Slower')
+axis on
+ax = gca;
+ax.YTick = 1:size(chosen_features,2);
+ax.YTickLabel = chosen_OMOV;
+% add_labels(chosen_OMOV)
+% xticks([])
 % set(gcf, 'Position', get(0, 'Screensize'));
-print('Plots/PNG/Slower_Feature_corr.png','-dpng')
-print('Plots/EPSC/Slower_Feature_corr.eps','-depsc')
+% print('Plots/PNG/Slower_Feature_corr.png','-dpng')
+% print('Plots/EPSC/Slower_Feature_corr.eps','-depsc')
 
 
-feat_corr_fast = abs(corr(s(3877:num_files,:)));
+% feat_corr_fast = abs(corr(s(3877:num_files,:))); %FULL TSMDB
+feat_corr_fast = abs(corr(s(1578:num_files,:)));
 figure('Position',[0 0 880 600])
 imshow(feat_corr_fast,'InitialMagnification','fit','colormap',parula)
-% title('Faster')
-add_labels(chosen_OMOV)
-xticks([])
+title('Faster')
+axis on
+ax = gca;
+ax.YTick = 1:size(chosen_features,2);
+ax.YTickLabel = chosen_OMOV;
+% add_labels(chosen_OMOV)
+% xticks([])
 % set(gcf, 'Position', get(0, 'Screensize'));
-print('Plots/PNG/Faster_Feature_corr.png','-dpng')
-print('Plots/EPSC/Faster_Feature_corr.eps','-depsc')
+% print('Plots/PNG/Faster_Feature_corr.png','-dpng')
+% print('Plots/EPSC/Faster_Feature_corr.eps','-depsc')
 
 feat_corr_split = 0.5.*(feat_corr_slow+feat_corr_fast);
 figure('Position',[0 0 880 600])
 % set(groot,'defaultAxesTickLabelInterpreter','latex');  
 imshow(feat_corr_split,'InitialMagnification','fit','colormap',parula)
-% title('Average')
-add_labels(chosen_OMOV)
-xticks([])
+title('Average')
+% add_labels(chosen_OMOV)
+% xticks([])
+axis on
+ax = gca;
+ax.YTick = 1:size(chosen_features,2);
+ax.YTickLabel = chosen_OMOV;
 % set(gcf, 'Position', get(0, 'Screensize'));
 % f = sprintf('/Plots/Combination_Feat_%s_AvgSplit_Correlation',file_to_load(1:end-4));
-print('Plots/PNG/Average_Feature_corr.png','-dpng')
-print('Plots/EPSC/Average_Feature_corr.eps','-depsc')
+% print('Plots/PNG/Average_Feature_corr.png','-dpng')
+% print('Plots/EPSC/Average_Feature_corr.eps','-depsc')
 
 %Print out useful information
 fprintf('Slower correlation results\n');
@@ -829,25 +843,25 @@ print(f,'-depsc')
 
 close all
 % 
-function add_labels(chosen_OMOV)
-h = gca;
-h.Visible = 'On';
-% xticks(1:size(chosen_OMOV,2))
-% xticklabels(chosen_OMOV)
-% xtickangle(90)
-yticks(1:size(chosen_OMOV,2))
-set(h,'TickLabelInterpreter', 'tex');
-yticklabels(chosen_OMOV)
-c = colorbar;
-c.Label.String = '|\rho|';
-set(gca,...
-    'FontSize', 12, ...
-    'FontName', 'Times');
-c.Label.FontSize = 18;
-c.Label.FontName = 'Times';
-c.Label.Position = [2.7 0.535];
-c.Label.Rotation = 0; % to rotate the text
-
-
-
-end
+% function add_labels(chosen_OMOV)
+% h = gca;
+% h.Visible = 'On';
+% % xticks(1:size(chosen_OMOV,2))
+% % xticklabels(chosen_OMOV)
+% % xtickangle(90)
+% yticks(1:size(chosen_OMOV,2))
+% set(h,'TickLabelInterpreter', 'tex');
+% yticklabels(chosen_OMOV)
+% c = colorbar;
+% c.Label.String = '|\rho|';
+% set(gca,...
+%     'FontSize', 12, ...
+%     'FontName', 'Times');
+% c.Label.FontSize = 18;
+% c.Label.FontName = 'Times';
+% c.Label.Position = [2.7 0.535];
+% c.Label.Rotation = 0; % to rotate the text
+% 
+% 
+% 
+% end
