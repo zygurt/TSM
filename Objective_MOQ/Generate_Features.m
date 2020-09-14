@@ -118,7 +118,7 @@ MOVs = zeros(N,size(OMOV,2));
 
 for k = 1:K
     fprintf('k = %d\n',k)
-    parfor n = (k-1)*nsize+1:k*nsize
+    for n = (k-1)*nsize+1:k*nsize
         test = char(filelist.test_file(n));
         ref = char(filelist.ref_file(n));
         f = fopen(log_name,'a');

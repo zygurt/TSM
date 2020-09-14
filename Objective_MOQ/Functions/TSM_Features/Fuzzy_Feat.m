@@ -57,8 +57,7 @@ for k = 1:round(0.1*size(Es_test,2))
     k_arr(k) = sum(Es_test(1:end-k+1).*Es_ref_interp(k:end));
     k_arr2(k) = sum(Es_test(k:end).*Es_ref_interp(1:end-k+1));
 end
-%This could be optimised for speed by removing fuzzyness and
-%summing after element-wise AND operations
+
 
 %This priorities the maximum for forwards and backwards
 %Find overall max in each correlation, then find the location
