@@ -1,0 +1,25 @@
+
+My Seed = 3
+Feature File: ./data/Features/MFCC_Delta_Delta_NoNorm_Trim_Source/Feat.p
+Normalisation = BatchNorm2d
+4 CNN layers: 16, 32, 64, 32
+Kernels: 3x33 FCN layers: 3584, 128, 128, 128, 1
+FCN Residual Connections
+Test Averaging = 16
+Training target = MeanOS
+Training Batch Size = 132
+Learning Rate = 0.0001
+Epochs = 100
+Loss Type = RMSE
+AdamW Optimisation
+Dropout = 0.1
+Final Training Loss = 0.4931390008682584
+Final Testing Loss = 0.8332112800496952
+Final Training Pearson Correlation Coefficient = 0.8496004166265888
+Final Testing Pearson Correlation Coefficient = 0.624106264015418
+Best Epoch = 62
+Best Training Pearson Correlation Coefficient = 0.8496004166265888
+Best Testing Pearson Correlation Coefficient = 0.6579929426032375
+Training Loss at best PCC = 0.5495078786118992
+Testing Loss at best PCC = 0.8041985334455747
+Best PCC Epoch = 62

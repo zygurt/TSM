@@ -1,0 +1,21 @@
+
+My Seed = 24
+Feature File: ./data/Features/MagPhasePow/Feat.p
+Test Averaging = 16
+Training target = MeanOS
+Training Batch Size = 8
+Learning Rate = 0.0001
+Epochs = 30
+Loss Type = RMSE
+AdamW Optimisation
+Dropout = 0
+Final Training Loss = 0.9297519300536656
+Final Testing Loss = 1.0875240766777197
+Final Training Pearson Correlation Coefficient = -0.024714070955940793
+Final Testing Pearson Correlation Coefficient = 0.3238521331952199
+Best Epoch = 20
+Best Training Pearson Correlation Coefficient = 0.011453572898832216
+Best Testing Pearson Correlation Coefficient = 0.3313746449986943
+Training Loss at best PCC = 0.9288186581211347
+Testing Loss at best PCC = 1.0642321912032562
+Best PCC Epoch = 20

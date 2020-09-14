@@ -1,0 +1,25 @@
+
+My Seed = 4
+Feature File: ./data/LSTM_Feat/MagPhasePow/Feat.p
+Normalisation = BatchNorm2d
+4 CNN layers: 16, 32, 64, 32
+Kernels: 3x33 FCN layers: 3584, 128, 128, 128, 1
+FCN Residual Connections
+Test Averaging = 16
+Training target = MeanOS
+Training Batch Size = 132
+Learning Rate = 0.0001
+Epochs = 100
+Loss Type = RMSE
+AdamW Optimisation
+Dropout = 0.1
+Final Training Loss = 0.7168473133360884
+Final Testing Loss = 0.9455128447006536
+Final Training Pearson Correlation Coefficient = 0.6350667977734672
+Final Testing Pearson Correlation Coefficient = 0.45252409368130997
+Best Epoch = 81
+Best Training Pearson Correlation Coefficient = 0.6350667977734672
+Best Testing Pearson Correlation Coefficient = 0.5282950548191747
+Training Loss at best PCC = 0.7535204861194849
+Testing Loss at best PCC = 0.9417281166835844
+Best PCC Epoch = 81
