@@ -6,6 +6,7 @@ function [ y ] = PV_batch(x, N, TSM, filename)
 
 % Tim Roberts - Griffith University 2018
 for t = 1:length(TSM)
+    fprintf('%s, Phase Vocoder, %g%%\n',filename, TSM(t)*100);
     tsm = TSM(t);
     %Calculate the number of channels
     num_chan = size(x,2);
@@ -32,7 +33,7 @@ for t = 1:length(TSM)
     ptr_end = length(x)-N; %When ptr_in = ptr_end, stop
     %Initialise time instance variable (frame)
     frame = 1;
-    
+
     while(ptr_input<ptr_end)
         frame_current = x(ptr_input:ptr_input+N-1,:).*wn;
         %Circular shift to place DC as first element (Not required in MATLAB)
@@ -42,7 +43,7 @@ for t = 1:length(TSM)
         %Calculate Magnitude and phase
         mag = abs(FRAME_CROP);
         frame_phase = angle(FRAME_CROP);
-        
+
         %Phase Vocoder
         if ptr_input == 1
             %Do initial setup
@@ -80,4 +81,3 @@ for t = 1:length(TSM)
     audiowrite(f,y,fs);
 end
 end
-

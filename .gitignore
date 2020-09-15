@@ -10,3 +10,5 @@ Objective_MOQ/Features/Interpolate_fd_down/
 Subjective_Testing/Sets/
 ML\data\**
 External/**
+ML/Email_Me.py
+ML/data/**
