@@ -291,29 +291,4 @@ file1.close()
 #         f.write('%s,%1.4f\n'%(i.replace('.csv',''),test_pred_submit[I]))
 
 
-#Send an email once the processing is complete.
-#Add code here so that the results are included in the email.
 
-import smtplib, ssl
-
-port = 465  # For SSL
-smtp_server = ""
-sender_email = ""  # Enter your address
-receiver_email = ""  # Enter receiver address
-# password = input("Type your password and press enter: ")
-password = ""
-message = """\
-From:
-
-Subject: RFN Processing Complete
-
-To: 
-
-Val pcc of {}, test pcc of {}.
-The processing on stink has finished.""".format(val_pcc, test_pcc)
-
-context = ssl.create_default_context()
-with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
-    server.login(sender_email, password)
-    server.sendmail(sender_email, receiver_email, message)
-print("Email Sent")
