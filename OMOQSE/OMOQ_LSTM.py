@@ -781,31 +781,7 @@ for seed_loop in seeds:
     # plt.savefig(save_name,dpi=300,format='png')
 
 
-print("Sending Email")
 
-import smtplib, ssl
-
-port = 465  # For SSL
-smtp_server = "cp-wc26.per01.ds.network"
-sender_email = "phd@timrobertssound.com.au"  # Enter your address
-receiver_email = "zygurt@gmail.com"  # Enter receiver address
-# password = input("Type your password and press enter: ")
-password = "tsmphd"
-message = """\
-From: phd@timrobertssound.com.au
-
-Subject: LSTM Processing Complete
-
-To: zygurt@gmail.com
-
-For final seed, Best Test RMSE of {}, Best Test PCC is {}.
-The processing on fist has finished.""".format(np.max(test_loss_vals),np.max(test_pcc_vals))
-
-context = ssl.create_default_context()
-with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
-    server.login(sender_email, password)
-    server.sendmail(sender_email, receiver_email, message)
-print("Email Sent")
 
 # print("Best PCC: ", best_pcc)
 
