@@ -478,31 +478,7 @@ save_name = new_folder_name + "/Subjective_vs_Objective_MeanPCC_" + load_file[:-
 plt.savefig(save_name,dpi=300,format='png')
 
 
-print("Sending Email")
 
-import smtplib, ssl
-
-port = 465  # For SSL
-smtp_server = ""
-sender_email = ""  # Enter your address
-receiver_email = ""  # Enter receiver address
-# password = input("Type your password and press enter: ")
-password = ""
-message = """\
-From:
-
-Subject: CNN Processing Complete
-
-To:
-
-Best pcc of {}. Best Mean PCC is {}
-The processing on stink has finished.""".format(np.max(pcc_vals),np.max(mean_pcc_vals))
-
-context = ssl.create_default_context()
-with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
-    server.login(sender_email, password)
-    server.sendmail(sender_email, receiver_email, message)
-print("Email Sent")
 
 print("Best PCC: ", best_pcc)
 
