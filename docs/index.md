@@ -35,3 +35,5 @@ This toolbox contains MATLAB implementations of:
 [Phase Vocoder with Fuzzy Classification of Bins](http://research.spa.aalto.fi/publications/papers/applsci-ats/) (MATLAB)
 
 [Time Scale Modification of Audio using Non-Negative Matrix Factorization](https://github.com/flucoma/DAFX-2019) (Python 3)
+
+[PyTSMod: Open-source TSM library in Python 3](https://github.com/KAIST-MACLab/PyTSMod) (Python)
