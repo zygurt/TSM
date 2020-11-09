@@ -7,7 +7,7 @@ addpath('.\Functions\');
 addpath('..\Functions\');
 load('..\Subjective_Testing\Plotting_Data_Anon_No_Outliers.mat')
 
-csv_filelist = rec_filelist('data\CSVs\');
+csv_filelist = rec_filelist('data\CSVs\Paper_Results');
 disp(csv_filelist)
 p = 1;
 for f = 1:size(csv_filelist,1)
@@ -88,12 +88,13 @@ for n = 1:size(res,2)
     best_a_data(:,n) = res(n).data.Best_Final_distance;
 end
 
-[~,I] = sort(min(best_a_data),'descend');
+[~,I] = sort(median(best_a_data),'descend');  %Sort by minimum or median
 figure('Position',[146 318 551 360])
 boxplot(best_a_data(:,I),'labels',legend_labels(I),'notch','on');
 
 % title('Boxplot for Best Overall Distance Measure')
 ylabel('Overall Distance ($\mathcal{D}$)','Interpreter','latex')
+xlabel('Network Input Features')
 xtickangle(45)
 set(gca,...
     'FontSize', 12, ...
@@ -101,8 +102,8 @@ set(gca,...
 
 % set(gcf, 'Position', get(0, 'Screensize'));
 % print('plots/MATLAB/TIFF/Boxplot_Overall_Dist_Median_Sort', '-dtiff');
-% print('plots/MATLAB/EPSC/Boxplot_Overall_Dist_Median_Sort', '-depsc');
-% print('plots/MATLAB/PNG/Boxplot_Overall_Dist_Median_Sort', '-dpng');
+print('plots/MATLAB/EPSC/Boxplot_Overall_Dist_Median_Sort', '-depsc');
+print('plots/MATLAB/PNG/Boxplot_Overall_Dist_Median_Sort', '-dpng');
 
 % close all
 

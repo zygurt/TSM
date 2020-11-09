@@ -13,41 +13,44 @@ epochs = 800;
 Dist = Import_Dist_CSV(distcsv, 2, epochs+1);
 % lines = {':', ':', ':', '--', '--', '--', '-', '-', '-'};
 lines = {'-', '-', '-', '-', '-', '-', '-', '-', '-'};
+grey_lines= {'k-', 'k:', 'k--', 'k-', 'k:', 'k--', 'k--', 'k--', 'k--'};
+alpha_val = [0 0 0 0.6 0.6 0.6];
 
 figure('Position',[0 50 575 335]);
 hold on
 chosen_cols = [1,2,3,4,5,6];
 for n = chosen_cols
-   plot(1:size(Dist,1),table2array(Dist(:,n)),lines{n},'LineWidth',2)
+   plot(1:size(Dist,1),table2array(Dist(:,n)),grey_lines{n},'color',[0 0 0]+alpha_val(n))%,'LineWidth',2)
     
 end
 hold off
 %xlabel
 xlabel('Epoch')
 %ylabel
-ylabel('RMSE and PCC')
+ylabel('RMSE($\mathcal{L}$) and PCC($\rho$)','interpreter','latex')
 
 %Plot a vertical line at the optimal epoch
 %Find the minimum Overall Distance
 [~,I] = min(table2array(Dist(:,9)));
 %Place vertical line at that location
 hold on
-line([I, I],[0.8*min(min(table2array(Dist(I,chosen_cols)))), 1.1*max(max(table2array(Dist(I,chosen_cols))))],'Color','red','LineStyle','--')
+line([I, I],[0.8*min(min(table2array(Dist(I,chosen_cols)))), 1.1*max(max(table2array(Dist(I,chosen_cols))))],'Color','black','LineStyle','-.')
 hold off
 
 axis([1 epochs, min(min(table2array(Dist(:,chosen_cols)))), max(max(table2array(Dist(:,chosen_cols))))])
 
-legend_items = Dist.Properties.VariableNames(chosen_cols);
-legend_items{length(legend_items)+1} = 'Chosen Epoch';
-legend(legend_items,'location','southeast')
+% legend_items = Dist.Properties.VariableNames(chosen_cols);
+% legend_items{length(legend_items)+1} = 'Chosen Epoch';
+new_legend_items = {'$\mathcal{L}_{tr}$','$\mathcal{L}_{val}$','$\mathcal{L}_{te}$','$\rho_{tr}$','$\rho_{val}$','$\rho_{te}$','Chosen Epoch'};
+legend(new_legend_items,'location','southeast','interpreter','latex')
 
 set(gca,...
     'FontSize', 12, ...
     'FontName', 'Times');
 
-% print('Plots/MATLAB/TIFF/All_Results_Hist_Mean', '-dtiff');
-print('Plots/MATLAB/EPSC/All_Results_Hist_Mean', '-depsc');
-print('Plots/MATLAB/PNG/All_Results_Hist_Mean', '-dpng');
+% print('Plots/MATLAB/TIFF/Distance_Measure', '-dtiff');
+print('plots/MATLAB/EPSC/Distance_Measure', '-depsc');
+print('plots/MATLAB/PNG/Distance_Measure', '-dpng');
 
 
 %Plot Confusion matrixes
@@ -87,9 +90,9 @@ set(gca,...
     'FontSize', 12, ...
     'FontName', 'Times');
 
-% print('Plots/MATLAB/TIFF/All_Results_Hist_Mean', '-dtiff');
-print('Plots/MATLAB/EPSC/All_Results_Hist_Mean', '-depsc');
-print('Plots/MATLAB/PNG/All_Results_Hist_Mean', '-dpng');
+% print('plots/MATLAB/TIFF/All_Results_Hist_Mean', '-dtiff');
+print('plots/MATLAB/EPSC/All_Results_Hist_Mean', '-depsc');
+print('plots/MATLAB/PNG/All_Results_Hist_Mean', '-dpng');
 
 
 %Test Confusion Matrix
@@ -127,9 +130,9 @@ set(gca,...
     'FontSize', 12, ...
     'FontName', 'Times');
 
-% print('Plots/MATLAB/TIFF/All_Results_Hist_Mean', '-dtiff');
-print('Plots/MATLAB/EPSC/All_Results_Hist_Mean', '-depsc');
-print('Plots/MATLAB/PNG/All_Results_Hist_Mean', '-dpng');
+% print('plots/MATLAB/TIFF/All_Results_Hist_Mean', '-dtiff');
+print('plots/MATLAB/EPSC/All_Results_Hist_Mean', '-depsc');
+print('plots/MATLAB/PNG/All_Results_Hist_Mean', '-dpng');
 
 
 %Validation Confusion Matrix
@@ -167,9 +170,9 @@ set(gca,...
     'FontSize', 12, ...
     'FontName', 'Times');
 
-% print('Plots/MATLAB/TIFF/All_Results_Hist_Mean', '-dtiff');
-print('Plots/MATLAB/EPSC/All_Results_Hist_Mean', '-depsc');
-print('Plots/MATLAB/PNG/All_Results_Hist_Mean', '-dpng');
+% print('plots/MATLAB/TIFF/All_Results_Hist_Mean', '-dtiff');
+print('plots/MATLAB/EPSC/All_Results_Hist_Mean', '-depsc');
+print('plots/MATLAB/PNG/All_Results_Hist_Mean', '-dpng');
 
 
 %% Find the files that are furtherst away for Subjective score.
