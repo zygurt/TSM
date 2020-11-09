@@ -13,3 +13,5 @@ External/**
 ML/Email_Me.py
 ML/data/CSVs_OldDM
 ML/data/split
+ML/data/**
+
