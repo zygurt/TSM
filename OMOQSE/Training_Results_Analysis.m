@@ -5,7 +5,7 @@ clear all
 clc
 addpath('./Functions/');
 addpath('../Functions/');
-load('../Subjective_Testing/Plotting_Data_RMSE.mat')
+load('../Subjective_Testing/Plotting_Data_Anon_No_Outliers.mat')
 rows_to_read = 30;
 csv_filelist = rec_filelist('data/CSVs/');
 disp(csv_filelist)
@@ -109,28 +109,42 @@ set(gca,...
 
 best_res_data = zeros(size(res,2),8);
 for n = 1:size(res,2)
-    best_res_data(n,1) = res(n).data.TestLoss(1); 
-    best_res_data(n,2) = res(n).data.TestPCC(1); 
-    best_res_data(n,3) = res(n).data.Best_Mean_Loss(1);
-    best_res_data(n,4) = res(n).data.Best_Diff_Loss(1);
-    best_res_data(n,5) = res(n).data.Best_Mean_PCC(1);
-    best_res_data(n,6) = res(n).data.Best_Diff_PCC(1);
+    best_res_data(n,1) = res(n).data.TrainLoss(1); 
+    best_res_data(n,2) = res(n).data.TrainPCC(1); 
+    best_res_data(n,3) = res(n).data.ValLoss(1); 
+    best_res_data(n,4) = res(n).data.ValPCC(1); 
+    best_res_data(n,5) = res(n).data.TestLoss(1); 
+    best_res_data(n,6) = res(n).data.TestPCC(1); 
+%     best_res_data(n,3) = res(n).data.Best_Mean_Loss(1);
+%     best_res_data(n,4) = res(n).data.Best_Diff_Loss(1);
+%     best_res_data(n,5) = res(n).data.Best_Mean_PCC(1);
+%     best_res_data(n,6) = res(n).data.Best_Diff_PCC(1);
     best_res_data(n,7) = median([res(n).data.Best_Final_distance]);
     best_res_data(n,8) = res(n).data.Best_Final_distance(1);
     configs{n} = strrep(res(n).name(1:end),'_',' ');
 end
 
+best_res_data(11,7) = 1.349895709; %Nan value adjustment for LSTM POW
+best_res_data(5,7) = 1.363956813; %Nan value adjustment for BLSTM POW
+
 [~, I] = sort(best_res_data(:,7),'descend');
+
 
 input.data = best_res_data(I,:);
 
+
 input.tablePlacement = 'ht';
-input.tableColLabels = {'$\mathcal{L}_{te}$', '$\rho_{te}$', '$\overline{\mathcal{L}}$','$\Delta\mathcal{L}$', '$\overline{\rho}$','$\Delta\rho$', '$\widetilde{\mathcal{D}}$', '$\text{min}(\mathcal{D})$'};
+% input.tableColLabels = {'$\mathcal{L}_{te}$', '$\rho_{te}$', '$\overline{\mathcal{L}}$','$\Delta\mathcal{L}$', '$\overline{\rho}$','$\Delta\rho$', '$\widetilde{\mathcal{D}}$', '$\text{min}(\mathcal{D})$'};
+input.tableColLabels = {'$\mathcal{L}_{te}$', '$\rho_{te}$', ...
+                        '$\mathcal{L}_{te}$', '$\rho_{te}$', ...
+                        '$\mathcal{L}_{te}$', '$\rho_{te}$', ...
+                        '$\widetilde{\mathcal{D}}$', '$\text{min}(\mathcal{D})$'};
+
 input.tableRowLabels = configs(I);
 input.dataFormat = {'%.3f'};
 input.tableColumnAlignment = 'c';
 input.tableBorders = 1;
-input.tableCaption = 'Test Loss and PCC, RSME loss mean ($\overline{\mathcal{L}}$) and range ($\Delta\mathcal{L}$), PCC mean ($\overline{\rho}$) and range ($\Delta\rho$), median overall distance ($\widetilde{\mathcal{D}}$) and minimum overall distance ($\text{min}(\mathcal{D})$).  Best results in bold.';
+input.tableCaption = 'Training, Validation and Test Loss ($\mathcal{L}$) and PCC ($\rho$), median overall distance ($\widetilde{\mathcal{D}}$) and minimum overall distance ($\text{min}(\mathcal{D})$).  Best results in bold.';
 input.tableLabel = 'RMSE_PCC';
 input.makeCompleteLatexDocument = 0;
 fprintf('Writing RMSE_PCC.tex latex table\n')

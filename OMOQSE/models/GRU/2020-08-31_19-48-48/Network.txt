@@ -1,0 +1,24 @@
+
+My Seed = 12
+Feature File: ./data/Features/MFCC_Delta_Delta_NoNorm_Trim_Source/Feat.p
+Test Averaging = 16
+Training target = MeanOS
+Training Batch Size = 48
+Learning Rate = 0.0001
+Epochs = 60
+RNN Hidden Size = 256
+Number GRU layers = 2
+Loss Type = MSE
+AdamW Optimisation
+Dropout = 0.1
+Final Training Loss = 0.2482775461912297
+Final Testing Loss = 0.8480397219045467
+Final Training Pearson Correlation Coefficient = 0.9641536532271517
+Final Testing Pearson Correlation Coefficient = 0.6312749985445915
+Best Epoch = 18
+Best Training Pearson Correlation Coefficient = 0.9641536532271517
+Best Testing Pearson Correlation Coefficient = 0.6935801597743616
+Training Loss at best PCC = 0.4544381082603026
+Testing Loss at best PCC = 0.7616985831539115
+Best PCC Epoch = 18
+BiDirectional: True
