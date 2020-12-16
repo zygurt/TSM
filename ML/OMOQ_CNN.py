@@ -164,6 +164,8 @@ class Net(nn.Module):
 
 #Create the network
 model = Net()
+OMOQ.count_parameters(model)
+sys.exit()
 model.to(device)
 # Setup the optimizer
 print('Setup the optimizer')
