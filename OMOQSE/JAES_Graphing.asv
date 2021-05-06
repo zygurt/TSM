@@ -1,0 +1,44 @@
+% JAES additional graphs script
+close all
+clear all
+clc
+
+load('DE_SE_RESULTS.mat');
+
+%Get difference between DE and SE results
+diff = results_OMOQDE(:,2:end,:)-results_OMOQSE(:,2:end,:);
+
+abs_diff = abs(diff);
+
+%Aim is to show performance for each file in evaluation set per method
+% results(file,TSM,method)
+
+MAD = squeeze(mean(abs_diff,2));
+
+MD = squeeze(mean(diff,2));
+
+Methods = {'DIPL','ESOLA','EL','FESOLA','FuzzyPV','HPTSM','IPL','NMFTSM','PV','PIPL','PSPL','SPL','WSOLA','SuTVS','uTVS'};
+
+Filenames = {'Alto Sax 15';'Ardour 2';'Brass and perc 9';'Child 4';'Female 2';'Female 4';'Jazz 3';'Male 16';'Male 22';'Male 6';'Mexican Flute 02';'Oboe piano 1';'Ocarina 02';'Rock 4';'Saxophones 6';'Solo flute 2';'Synth Bass 2';'Triangle 02';'Woodwinds 4';'You mean this one'};
+
+
+figure
+surf(MAD)
+title('MAD DE-SE MOS')
+colorbar
+xticks((1:15)+0.5);
+xticklabels(Methods);
+xtickangle(45);
+yticks((1:20)+0.5);
+yticklabels(Filenames);
+
+figure
+surf(MD);
+title('MD DE-SE MOS');
+colorbar;
+xticks((1:15)+0.5);
+xticklabels(Methods);
+xtickangle(45);
+yticks((1:20)+0.5);
+yticklabels(Filenames);
+
