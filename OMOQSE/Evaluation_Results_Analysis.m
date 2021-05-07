@@ -313,6 +313,10 @@ hold off
 xlabel('Time-Scale Ratio (\beta)')
 ylabel('OMOS')
 axis([0.2 2.2 1 5])
+title('BGRU-FT Overall')
+set(gca,...
+    'FontSize', 12, ...
+    'FontName', 'Times');
 
 % figure('Position',[50 50 640 320])
 figure(45)
