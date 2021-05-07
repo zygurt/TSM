@@ -213,7 +213,6 @@ Methods = {'DIPL','ESOLA','EL','FESOLA','FuzzyPV','HPTSM','IPL','NMFTSM','PV','P
 % points_spec = {'o','o','o','+','+','+','.','.','.','x','x','x','x'};
 points_spec= {'-^','-', '--d', '.-', '--^', '-x', '-+','--v', '-o', '-', '-', '-', '-*', '->', '-s'};
 grey_lines= {'k-^','k-', 'k--d', 'k.-', 'k--^', 'k-x', 'k-+','k--v', 'k-o', 'k-', 'k-', 'k-', 'k-*', 'k->', 'k-s'};
-line_colour = {[0,0.4470,0.7410],[0.8500, 0.3250, 0.0980],[0.9290, 0.6940, 0.1250],[0.4940, 0.1840, 0.5560],[0.4660, 0.6740, 0.1880],[0.3010, 0.7450, 0.9330],[0.6350, 0.0780, 0.1840]};
 % o+*.xsdv^ <>ph are the marker options
 m = 1;
 results = zeros(20,length(TSM),length(Methods)); % (source files,TSM,methods)
@@ -300,14 +299,12 @@ set(gca,...
 
 %Variance plotting example
 figure()
-colour_count = 0;
 for n=chosen_methods
-plot(TSM,method_TSM_means(:,:,n),points_spec{n}, 'Color', line_colour{1+mod(colour_count,length(line_colour))})
+plot(TSM,method_TSM_means(:,:,n),points_spec{n})
 hold on
 for k=1:length(TSM)
-    plot([TSM(k),TSM(k)],[method_TSM_means(1,k,n)-method_TSM_variance(1,k,n),method_TSM_means(1,k,n)+method_TSM_variance(1,k,n)],points_spec{n},'Color', line_colour{1+mod(colour_count,length(line_colour))})
+    line([TSM(k),TSM(k)],[method_TSM_means(1,k,n)-method_TSM_variance(1,k,n),method_TSM_means(1,k,n)+method_TSM_variance(1,k,n)])
 end
-colour_count = colour_count+1;
 end
 hold off
 xlabel('Time-Scale Ratio (\beta)')
