@@ -31,8 +31,10 @@ This repository covers multiple published papers.  Please use the following refe
 
 [3] T. Roberts and K.K. Paliwal, (2019) "Time-Scale Modification Using Fuzzy Epoch-Synchronous Overlap-Add (FESOLA)," In 2019 IEEE Workshop on Applications of Signal Processing to Audio and Acoustics (WASPAA) (pp. 31-34). IEEE. https://doi.org/10.1109/waspaa.2019.8937258.
 
-[4] T. Roberts and K.K. Paliwal, (2020) A time-scale modification dataset with subjective quality labels, The Journal of the Acoustical Society of America 148(1) 201-210, https://doi.org/10.1121/10.0001567.
+[4] T. Roberts and K.K. Paliwal (2020). "A Time-Scale Modification Dataset with Subjective Quality Labels," in J. Acoust. Soc. Am., 148(1), pp. 201-210.https://doi.org/10.1121/10.0001567.
 
 [5] T. Roberts, "A Time-Scale Modification Dataset with Subjective Quality Labels", IEEE Dataport, 2020. [Online]. Available: http://dx.doi.org/10.21227/ny9p-rv41. Accessed: Jul. 15, 2020.
 
-[6] T. Roberts and K.K. Paliwal, (2020) An Objective Measure of Quality for Time-Scale Modification of Audio, arXiv preprint arXiv:2006.06153.
+[6] T. Roberts and K.K. Paliwal (2021). "An Objective Measure of Quality for Time-Scale Modification of Audio," in J. Acoust. Soc. Am., 149(3), pp. 1843-1854. Available: https://doi.org/10.1121/10.0003753
+
+[7] T. Roberts, A. Nicolson and K.K. Paliwal (2021). "Deep Learning-Based Single-Ended Quality Prediction for Time-Scale Modified Audio," in J. Audio Eng. Soc., 69(9), pp. 644-655. Available: https://doi.org/10.17743/jaes.2021.0031
